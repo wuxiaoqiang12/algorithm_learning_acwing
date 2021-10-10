@@ -1,0 +1,125 @@
+examples/hitbook/chinese/thesis.pdf
+examples/hitart/reports/report.pdf
+hithesis.sty
+hithesis.pdf
+
+## OS file
+.DS_Store
+
+## for Bridge readding figure file
+.Bridge*
+
+## Core latex/pdflatex auxiliary files:
+*.aux
+*.listing
+*.lof
+*.log
+*.lot
+*.fls
+*.out
+*.toc
+*.fmt
+*.fot
+*.cb
+*.cb2
+.*.lb
+
+## Intermediate documents:
+*.dvi
+*.xdv
+*-converted-to.*
+# these rules might exclude image files for figures etc.
+# *.ps
+# *.eps
+# *.pdf
+
+## Generated if empty string is given at "Please type another file name for output:"
+.pdf
+
+## Bibliography auxiliary files (bibtex/biblatex/biber):
+*.bbl
+*.bcf
+*.blg
+*-blx.aux
+*-blx.bib
+*.run.xml
+
+## Build tool auxiliary files:
+*.fdb_latexmk
+*.synctex
+*.synctex(busy)
+*.synctex.gz
+*.synctex.gz(busy)
+*.pdfsync
+
+## Build tool directories for auxiliary files
+# latexrun
+latex.out/
+
+## Auxiliary and intermediate files from other packages:
+# algorithms
+*.alg
+*.loa
+
+# achemso
+acs-*.bib
+
+# amsthm
+*.thm
+
+# beamer
+*.nav
+*.pre
+*.snm
+*.vrb
+
+# changes
+*.soc
+
+auto
+node_modules
+dist
+
+*~
+*.bak
+*.glo
+*.gls
+*.idx
+*.ilg
+*.ind
+*.thm
+*.loe
+*.vrb
+*.hd
+*.fdb_latexmk
+*.doc
+*.toe
+*.zip
+/2.硕士论文撰写格式相关文件/
+/GPATH
+/GRTAGS
+/GTAGS
+/_region_.prv/
+/_region_.tex
+/dtx-style.sty
+/figures/bthesistitle.eps
+/figures/hitlogo.eps
+/hithesis.cls
+/linkfigure
+/main.ist
+/hithesis.ist
+/mainart.ist
+/examples/hitart/reportplus/dtx-style.sty
+/examples/hitart/reportplus/hithesis.bst
+/examples/hitart/reportplus/hithesis.cfg
+/examples/hitart/reportplus/hithesisartplus.cls
+/examples/hitart/reports/dtx-style.sty
+/examples/hitart/reports/hithesis.bst
+*.cfg
+*.cls
+*.bst
+*.ist
+hithesis.bst
+*.ins
+/bthesistitle.eps
+*.eps
