@@ -3,76 +3,77 @@
 \section{单链表}
 \subsection{AcWing 826. 单链表}
 
-\begin{mycpptwocol}
-	#include <stdio.h>
-	#include <stdlib.h>
-	#include <stdbool.h>
-	
-	#define N 100010
-	int idx; // 标识节点
-	int head; // 头节点指向的元素
-	int e[N]; // element array
-	int ne[N]; // next array
-	
-	void Init()
-	{
-	    idx = -1;
-	    head = -1;
-	}
-	
-	// 在头节点后插入元素
-	void AddHead(int x) {
-	    e[++idx] = x;
-	    ne[idx] = head;
-	    head = idx;
-	}
-	
-	// 在k节点之后插入元素
-	void Add(int k, int x)
-	{
-	    e[++idx] = x;
-	    ne[idx] = ne[k];
-	    ne[k] = idx;
-	}
-	
-	// 删除k之后的那个元素
-	void Remove(int k) {
-	    ne[k] = ne[ne[k]];
-	}
-	
-	int main()
-	{
-	    Init();
-	    int n;
-	    scanf("%d", &n);
-	    while (n--) {
-	        int x;
-	        int k;
-	        char op;
-	        scanf(" %c", &op);
-	        if (op == 'H') {
-	            scanf("%d", &x);
-	            AddHead(x);
-	        }
-	        if (op == 'I') {
-	            scanf("%d %d", &k, &x);
-	            Add(k - 1, x);
-	        }
-	        if (op == 'D') {
-	            scanf("%d", &k);
-	            if (k == 0) {
-	                head = ne[head];
-	            }
-	            Remove(k - 1);
-	        }
-	    }
-	    int tmp = head;
-	    while (tmp != -1) {
-	        printf("%d ", e[tmp]);
-	        tmp = ne[tmp];
-	    }
-	    return 0;
-		}
+\begin{mycpptwocol}[linked list]
+#include <stdio.h>
+#include <stdlib.h>
+#include <stdbool.h>
+
+#define N 100010
+int idx; // 标识节点
+int head; // 头节点指向的元素
+int e[N]; // element array
+int ne[N]; // next array
+
+void Init()
+{
+    idx = -1;
+    head = -1;
+}
+    
+// 在头节点后插入元素
+void AddHead(int x) {
+    e[++idx] = x;
+    ne[idx] = head;
+    head = idx;
+}
+
+// 在k节点之后插入元素
+void Add(int k, int x)
+{
+    e[++idx] = x;
+    ne[idx] = ne[k];
+    ne[k] = idx;
+}
+
+// 删除k之后的那个元素
+void Remove(int k) {
+    ne[k] = ne[ne[k]];
+}
+
+int main()
+{
+    Init();
+    int n;
+    scanf("%d", &n);
+    while (n--) {
+        int x;
+        int k;
+        char op;
+        scanf(" %c", &op);
+        if (op == 'H') {
+            scanf("%d", &x);
+            AddHead(x);
+        }
+        if (op == 'I') {
+            scanf("%d %d", &k, &x);
+            Add(k - 1, x);
+        }
+        if (op == 'D') {
+            scanf("%d", &k);
+            if (k == 0) {
+                head = ne[head];
+            }
+            Remove(k - 1);
+        }
+    }
+
+    int tmp = head;
+    while (tmp != -1) {
+        printf("%d ", e[tmp]);
+        tmp = ne[tmp];
+    }
+    return 0;
+}
 \end{mycpptwocol}
 
 \section{双链表}
@@ -92,7 +93,7 @@
 \subsection{AcWing 830. 单调栈}
 
 \section{单调队列}
-\ubsection{AcWing 154. 滑动窗口}
+\subsection{AcWing 154. 滑动窗口}
 
 \section{KMP}
 \subsection{AcWing 831. KMP字符串}

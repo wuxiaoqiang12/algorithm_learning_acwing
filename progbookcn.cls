@@ -216,8 +216,8 @@
     multicols = 2,
     % Line numbers
     numbers = left,
-    numbersep = -1em,
-    xleftmargin = -1em,
+    numbersep = 1em,
+    xleftmargin = 1em,
     showstringspaces = false,
     % Code design
     keywordstyle=\color{codecolorkeywords},
