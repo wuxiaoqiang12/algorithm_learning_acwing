@@ -255,6 +255,68 @@
   title = {\ttfamily #1}
 }
 
+\newtcblisting{mycpponecol}[1][]{%
+  enhanced,
+  arc = 3pt,
+  outer arc = 3pt,
+  colbacktitle = white,
+  coltitle = black,
+  colback = white,
+  colframe = violet,
+  boxrule=.5pt,
+  attach boxed title to top center = {yshift=-\tcboxedtitleheight/2},
+  boxed title style={size=normal,colframe=white,boxrule=0pt},
+  listing only,
+  fonttitle = \normalfont,
+  listing options = {%
+    language = Cpp,
+    basicstyle = \ttfamily\linespread{1}\small,
+    columns=fullflexible,
+    % multicols = 1,
+    % Line numbers
+    numbers = left,
+    numbersep = 1em,
+    xleftmargin = 1em,
+    showstringspaces = false,
+    % Code design
+    keywordstyle=\color{codecolorkeywords},
+    commentstyle=\color{codecolorcomments},
+    stringstyle=\color{codecolorstrings},
+    numberstyle=\small\color{gray},
+    breakatwhitespace=false,
+    breaklines=true,
+    captionpos=t,
+    keepspaces=true,
+    % Code
+    tabsize=4,
+    showspaces=false,
+    showstringspaces=false,
+    showtabs=false,
+    breaklines=true,
+  },
+  /utils/exec = {%
+    \def\thelstnumber{%
+      \texttt{\csname two@digits\endcsname{\the\value{lstnumber}}}}},
+  title = {\ttfamily #1}
+}
+
+%% 带标题的文本框
+\newtcolorbox{problembox}[1]{%
+  tikznode boxed title,
+  enhanced,
+  arc=3pt,
+  interior style={white},
+  attach boxed title to top center = {yshift=-\tcboxedtitleheight/2},
+  fonttitle=\normalfont,
+  colbacktitle=white,coltitle=black,
+  boxed title style={size=normal,colframe=white,boxrule=0pt},
+  boxrule=.5pt,
+  left=0pt, right=0pt, top=2pt, bottom=0pt,
+  boxsep=10pt,
+  colframe=violet,
+  title={#1}
+}
+
 %% 带标题的文本框
 \newtcolorbox{titledbox}[1]{%
   tikznode boxed title,
