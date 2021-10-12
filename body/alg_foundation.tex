@@ -16,15 +16,17 @@
 
   数据范围：$1 \le n \le 100000$
 
-  输入样例：
-
-  5
-
-  3 1 2 4 5
-
-  输出样例：
-
-  1 2 3 4 5
+  \begin{minipage}[t]{.5\textwidth}
+    % \raggedright
+    输入样例：\\
+    5 \\
+    3 1 2 4 5
+    \end{minipage}% <---------------- Note the use of "%"
+    \begin{minipage}[t]{.5\textwidth}
+    % \raggedcenter
+    输出样例：\\
+    1 2 3 4 5
+  \end{minipage}
 \end{titledbox}
 
 快速排序算法基于\textbf{分治}算法，以一个数来作为分治的节点。
@@ -335,7 +337,7 @@ long long merge_sort(int *q, int *tmp,
     int mid = (l + r) >> 1;
     // 左侧的数组已统计逆序对且已经排序，右侧同样
     long long res = merge_sort(q, tmp, l, mid) + merge_sort(q, tmp, mid + 1, r);
-    // 统计两个有序数组合起来的逆序对
+    // 统计两个有序数组合起来的逆序对数量
     int i = l;
     int j = mid + 1;
     int k = 0;
