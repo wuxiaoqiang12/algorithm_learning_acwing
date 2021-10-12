@@ -213,6 +213,7 @@
   listing options = {%
     language = Cpp,
     basicstyle = \ttfamily\linespread{1}\small,
+    columns=fullflexible,
     multicols = 2,
     % Line numbers
     numbers = left,
