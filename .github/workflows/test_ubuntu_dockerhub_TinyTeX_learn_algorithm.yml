@@ -19,7 +19,7 @@ jobs:
         docker pull xiaoqiangwu/ubuntu-texlive:v2.0
     - name: Test doc
       run: |
-        docker run --rm -i -v $(pwd):/home/runner xiaoqiangwu/ubuntu-texlive:latest xelatex -interaction nonstopmode main.tex
+        docker run --rm -i -v $(pwd):/home/runner xiaoqiangwu/ubuntu-texlive:v2.0 xelatex -interaction nonstopmode main.tex
 
     # steps:
     # - uses: actions/checkout@v2
