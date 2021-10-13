@@ -22,4 +22,5 @@ tlmgr install l3build \
     footmisc varwidth changepage placeins multirow subfigure ccaption splitindex\
     xltxtra realscripts siunitx jknapltx algorithm2e ifoddpage relsize\
     listings glossaries mfirstuc textcase xfor datatool tracklang pdflscape rsfs\
-    txfonts xecjk tex-gyre newpx mhchem makecell xstring graphbox wrapfig titlesec
+    txfonts xecjk tex-gyre newpx mhchem makecell xstring graphbox wrapfig titlesec \
+    fontawesome
