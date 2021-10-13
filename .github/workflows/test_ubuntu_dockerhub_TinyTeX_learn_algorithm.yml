@@ -14,9 +14,18 @@ jobs:
 
     steps:
     - uses: actions/checkout@v2
-    - name: Install TeX Live
-      run:  bash .github/workflows/install-texlive.sh
-    - name: Test thesis
+    - name: Pull docker image
       run: |
-        export PATH="/tmp/texlive/bin/x86_64-linux:$PATH"
-        xelatex -interaction nonstopmode main.tex
+        docker pull xiaoqiangwu/ubuntu-texlive:latest
+    - name: Test doc
+      run: |
+        docker run --rm -i -v $(pwd):/home/runner xiaoqiangwu/ubuntu-texlive:latest xelatex -interaction nonstopmode main.tex
+
+    # steps:
+    # - uses: actions/checkout@v2
+    # - name: Install TeX Live
+    #   run:  bash .github/workflows/install-texlive.sh
+    # - name: Test thesis
+    #   run: |
+    #     export PATH="/tmp/texlive/bin/x86_64-linux:$PATH"
+    #     xelatex -interaction nonstopmode main.tex
