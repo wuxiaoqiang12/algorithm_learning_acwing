@@ -29,6 +29,8 @@ if [ ! -d $HOME/.fonts ]; then
     mkdir $HOME/.fonts;
 fi
 
+wget https://github.com/wuxiaoqiang12/algorithm_learning_acwing/raw/main/fonts/FontAwesome.otf -O $HOME/.fonts/FontAwesome.otf
+
 wget https://github.com/wuxiaoqiang12/algorithm_learning_acwing/raw/main/fonts/%E6%96%B9%E6%AD%A3%E4%B8%AD%E7%AD%89%E7%BA%BF_GBK.ttf -O $HOME/.fonts/%E6%96%B9%E6%AD%A3%E4%B8%AD%E7%AD%89%E7%BA%BF_GBK.ttf
 wget https://github.com/wuxiaoqiang12/algorithm_learning_acwing/raw/main/fonts/%E6%96%B9%E6%AD%A3%E4%B9%A6%E5%AE%8B_GBK.ttf -O $HOME/.fonts/%E6%96%B9%E6%AD%A3%E4%B9%A6%E5%AE%8B_GBK.ttf
 wget https://github.com/wuxiaoqiang12/algorithm_learning_acwing/raw/main/fonts/%E6%96%B9%E6%AD%A3%E4%BB%BF%E5%AE%8B_GBK.ttf -O $HOME/.fonts/%E6%96%B9%E6%AD%A3%E4%BB%BF%E5%AE%8B_GBK.ttf
