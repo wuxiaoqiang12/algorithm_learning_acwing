@@ -16,7 +16,11 @@ jobs:
     - uses: actions/checkout@v2
     - name: Pull docker image
       run: |
+<<<<<<< HEAD
         docker pull xiaoqiangwu/ubuntu-texlive:v2.0
+=======
+        docker pull xiaoqiangwu/ubuntu-texlive:latest
+>>>>>>> bb39104bf0475a082513540e95726eab70318c6c
     - name: Test doc
       run: |
         docker run --rm -i -v $(pwd):/home/runner xiaoqiangwu/ubuntu-texlive:latest xelatex -interaction nonstopmode main.tex
