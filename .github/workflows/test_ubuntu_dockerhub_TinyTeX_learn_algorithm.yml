@@ -19,8 +19,4 @@ jobs:
     - name: Test thesis
       run: |
         export PATH="/tmp/texlive/bin/x86_64-linux:$PATH"
-        make thesis
-    - name: Test doc
-      run: |
-        export PATH="/tmp/texlive/bin/x86_64-linux:$PATH"
-        make doc
+        xelatex -interaction nonstopmode main.tex
