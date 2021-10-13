@@ -402,6 +402,17 @@
   }
 }
 
+\newenvironment{inputblock}{
+    \begin{minipage}[t]{.5\textwidth}
+        输入样例：\\
+        \linespread{1.0}\selectfont
+}{\end{minipage}}
+
+\newenvironment{outputblock}{
+    \begin{minipage}[t]{.5\textwidth}
+        输出样例：\\
+        \linespread{1.0}\selectfont
+}{\end{minipage}}
 
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
