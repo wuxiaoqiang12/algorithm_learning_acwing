@@ -47,5 +47,22 @@ wget https://github.com/wuxiaoqiang12/algorithm_learning_acwing/raw/main/fonts/M
 wget https://github.com/wuxiaoqiang12/algorithm_learning_acwing/raw/main/fonts/Myriad%20Pro/MyriadPro-It.otf -O $HOME/.fonts/Myriad\ Pro/MyriadPro-It.otf
 wget https://github.com/wuxiaoqiang12/algorithm_learning_acwing/raw/main/fonts/Myriad%20Pro/MyriadPro-Regular.otf -O $HOME/.fonts/Myriad\ Pro/MyriadPro-Regular.otf
 
+if [ ! -d $HOME/.fonts/Minion\ Pro ]; then
+    mkdir $HOME/.fonts/Minion\ Pro;
+fi
+
+wget https://github.com/wuxiaoqiang12/algorithm_learning_acwing/raw/main/fonts/Minion%20Pro/MinionPro-Bold.otf -O $HOME/.fonts/Minion\ Pro/MinionPro-Bold.otf
+wget https://github.com/wuxiaoqiang12/algorithm_learning_acwing/raw/main/fonts/Minion%20Pro/MinionPro-BoldIt.otf -O $HOME/.fonts/Minion\ Pro/MinionPro-BoldIt.otf
+wget https://github.com/wuxiaoqiang12/algorithm_learning_acwing/raw/main/fonts/Minion%20Pro/MinionPro-It.otf -O $HOME/.fonts/Minion\ Pro/MinionPro-It.otf
+wget https://github.com/wuxiaoqiang12/algorithm_learning_acwing/raw/main/fonts/Minion%20Pro/MinionPro-Regular.otf -O $HOME/.fonts/Minion\ Pro/MinionPro-Regular.otf
+
+if [ ! -d $HOME/.fonts/Courier\ Std ]; then
+    mkdir $HOME/.fonts/Courier\ Std;
+fi
+
+wget https://github.com/wuxiaoqiang12/algorithm_learning_acwing/raw/main/fonts/Courier%20Std/CourierStd-Bold.otf -O $HOME/.fonts/Courier\ Std/CourierStd-Bold.otf
+wget https://github.com/wuxiaoqiang12/algorithm_learning_acwing/raw/main/fonts/Courier%20Std/CourierStd-BoldOblique.otf -O $HOME/.fonts/Courier\ Std/CourierStd-BoldOblique.otf
+wget https://github.com/wuxiaoqiang12/algorithm_learning_acwing/raw/main/fonts/Courier%20Std/CourierStd-Oblique.otf -O $HOME/.fonts/Courier\ Std/CourierStd-Oblique.otf
+wget https://github.com/wuxiaoqiang12/algorithm_learning_acwing/raw/main/fonts/Courier%20Std/CourierStd.otf -O $HOME/.fonts/Courier\ Std/CourierStd.otf
 
 fc-cache -f $HOME/.fonts/
