@@ -14,13 +14,13 @@ jobs:
 
     steps:
     - uses: actions/checkout@v2
-    - name: Pull docker image
+    - name: Install TeX Live
+      run:  bash .github/workflows/install-texlive.sh
+    - name: Test thesis
       run: |
-        docker pull dustincys/tinytex-hithesis:latest
-
-    - name: Test algorithm book
+        export PATH="/tmp/texlive/bin/x86_64-linux:$PATH"
+        make thesis
+    - name: Test doc
       run: |
-        CURRENTDIR=$(pwd)
-        docker run --rm -i -v $(pwd):/home/runner dustincys/tinytex-hithesis:latest xelatex -interaction nonstopmode main.tex
-        cd $CURRENTDIR
-      
+        export PATH="/tmp/texlive/bin/x86_64-linux:$PATH"
+        make doc
