@@ -749,13 +749,484 @@ int main()
         3 4 5 3 4 2
     \end{outputblock}
 \end{titledbox}
+
+\begin{mycpptwocol}[差分]
+#include <stdio.h>
+#include <stdlib.h>
+
+void Insert(int *diff, int l, int r, int c)
+{
+    diff[l] += c;
+    diff[r + 1] -= c;
+}
+
+int main()
+{
+    int n;
+    int m;
+    scanf("%d %d", &n, &m);
+    int *q = (int *)calloc(n + 1, sizeof(int));
+    int *diff = (int *)calloc(n + 1, sizeof(int));
+    for (int i = 1; i <= n; i++) {
+        scanf("%d", q + i);
+        Insert(diff, i, i, q[i]);
+    }
+    while (m--) {
+        int l;
+        int r;
+        int c;
+        scanf("%d %d %d", &l, &r, &c);
+        Insert(diff, l, r, c);
+    }
+    for (int i = 1; i <= n; i++) {
+        diff[i] += diff[i - 1];
+        printf("%d ", diff[i]);
+    }
+    free(diff);
+    free(q);
+    return 0;
+}
+\end{mycpptwocol}
+
+\subsection{AcWing 798. 差分矩阵}
+\begin{titledbox}{AcWing 798. 差分矩阵}
+    输入一个 $n$ 行 $m$ 列的整数矩阵，再输入 $q$ 个操作，每个操作包含五个整数 $x_1, y_1, x_2, y_2, c$，其中 $(x_1, y_1)$ 和 $(x_2, y_2)$ 表示一个子矩阵的左上角坐标和右下角坐标。每个操作都要将选中的子矩阵中的每个元素的值加上 $c$。请你将进行完所有操作后的矩阵输出。
+
+    输入格式：
+
+    第一行包含整数 $n,m,q$。接下来 $n$ 行，每行包含 $m$ 个整数，表示整数矩阵。接下来 $q$ 行，每行包含 $5$ 个整数 $x_1, y_1, x_2, y_2, c$，表示一个操作。
+
+    输出格式：
+
+    共 $n$ 行，每行 $m$ 个整数，表示所有操作进行完毕后的最终矩阵。
+    
+    数据范围：
+
+    $1 \le n,m \le 1000$, $1 \le q \le 100000$, $1 \le x_1 \le x_2 \le n$, $1 \le y_1 \le y_2 \le m$, $-1000 \le c \le 1000$, $-1000 \le 矩阵内元素的值 \le 1000$
+
+    \begin{inputblock}
+        3 4 3 \\
+        1 2 2 1 \\
+        3 2 2 1 \\
+        1 1 1 1 \\
+        1 1 2 2 1 \\
+        1 3 2 3 2 \\
+        3 1 3 4 1
+    \end{inputblock}
+    \begin{outputblock}
+        4 3 4 1 \\
+        2 2 2 2
+    \end{outputblock}
+\end{titledbox}
+
+\begin{mycpptwocol}[差分矩阵]
+#include <stdio.h>
+#include <stdlib.h>
+
+#define N 1010
+
+int arr[N][N];
+int diff[N][N];
+
+void Insert(int x1, int y1, int x2, int y2, int c)
+{
+    diff[x1][y1] += c;
+    diff[x1][y2 + 1] -= c;
+    diff[x2 + 1][y1] -= c;
+    diff[x2 + 1][y2 + 1] += c;
+}
+
+int main()
+{
+    int n;
+    int m;
+    int q;
+    scanf("%d %d %d", &n, &m, &q);
+    for (int i = 1; i <= n; i++) {
+        for (int j = 1; j <= m; j++) {
+            scanf("%d", &arr[i][j]);
+            Insert(i, j, i, j, arr[i][j]);
+        }
+    }
+    while (q--) {
+        int x1, y1, x2, y2, c;
+        scanf("%d %d %d %d %d", &x1, &y1, &x2, &y2, &c);
+        Insert(x1, y1, x2, y2, c);
+    }
+    
+    // construct origin matrix
+    for (int i = 1; i <= n; i++) {
+        for (int j = 1; j <= m; j++) {
+            diff[i][j] += diff[i - 1][j] + diff[i][j - 1] - diff[i - 1][j - 1];
+            printf("%d ", diff[i][j]);
+        }
+        printf("\n");
+    }
+    return 0;
+}
+\end{mycpptwocol}
+
+
+
 \section{双指针算法}
+归并排序中的双指针，分别指向两个序列；指向同一个序列的不同位置，同向移动或者相向而行
 
+\subsection{AcWing 799. 最长连续不重复子序列}
+\begin{titledbox}{AcWing 799. 最长连续不重复子序列}
+给定一个长度为 $n$ 的整数序列，请找出最长的不包含重复的数的连续区间，输出它的长度。
 
+输入格式：
+
+第一行包含整数 $n$。第二行包含 $n$ 个整数（均在 $0 \sim 10^5$ 范围内），表示整数序列。
+
+输出格式：
+
+共一行，包含一个整数，表示最长的不包含重复的数的连续区间的长度。
+
+数据范围：
+
+$1 \le n \le 10^5$
+
+\begin{inputblock}
+    5 \\
+    1 2 2 3 5
+\end{inputblock}
+\begin{outputblock}
+    3
+\end{outputblock}
+\end{titledbox}
+滑动窗口，需要有个visited数组来统计每个元素的出现数量
+
+\begin{mycpptwocol}[最长连续不重复子序列]
+#include <stdio.h>
+#include <stdlib.h>
+
+#define N 100010
+int visited[N];
+
+int main()
+{
+    int n;
+    scanf("%d", &n);
+    int *q = (int *)calloc(n, sizeof(int));
+    if (q == NULL) {
+        return -1;
+    }
+    for (int i = 0; i < n; i++) {
+        scanf("%d", &q[i]);
+    }
+    int start = 0;
+    int end = 0;
+    int max = 0;
+    for (end = 0; end < n; end++) {
+        // 标记当前元素
+        visited[q[end]] += 1;
+        while (visited[q[end]] > 1) {
+            // 如果当前元素重复出现，缩小窗口
+            visited[q[start]]--;
+            start++;
+        }
+        max = max > (end - start + 1) ? max : (end - start + 1);
+    }
+    printf("%d", max);
+    free(arr);
+    return 0;
+}
+\end{mycpptwocol}
+
+\subsection{AcWing 800. 数组元素的目标和}
+\begin{titledbox}{AcWing 800. 数组元素的目标和}
+给定两个升序排序的有序数组 $A$ 和 $B$，以及一个目标值 $x$。数组下标从 $0$ 开始。
+请你求出满足 $A[i] + B[j] = x$ 的数对 $(i, j)$。数据保证有唯一解。
+
+输入格式：
+
+第一行包含三个整数 $n,m,x$，分别表示 $A$ 的长度，$B$ 的长度以及目标值 $x$。第二行包含 $n$ 个整数，表示数组 $A$。第三行包含 $m$ 个整数，表示数组 $B$。
+
+输出格式：
+
+共一行，包含两个整数 $i$ 和 $j$。
+
+数据范围：
+
+数组长度不超过 $10^5$。同一数组内元素各不相同。$1 \le \text{数组元素} \le 10^9$
+
+\begin{inputblock}
+    4 5 6 \\
+    1 2 4 7 \\
+    3 4 6 8 9
+\end{inputblock}
+\begin{outputblock}
+    1 1
+\end{outputblock}
+\end{titledbox}
+
+\begin{mycpptwocol}[数组元素的目标和]
+#include <stdio.h>
+#include <stdlib.h>
+
+int main()
+{
+    int n;
+    int m;
+    int x;
+    scanf("%d %d %d", &n, &m, &x);
+    int *a = (int *)calloc(n, sizeof(int));
+    int *b = (int *)calloc(m, sizeof(int));
+    for (int i = 0; i < n; i++) {
+        scanf("%d", a + i);
+    }
+    for (int i = 0; i < m; i++) {
+        scanf("%d", b + i);
+    }
+    
+    int i = 0;
+    int j = m - 1;
+    while (i < n && j >= 0) {
+        int sum = a[i] + b[j];
+        if (sum == x) {
+            printf("%d %d", i, j);
+            return 0;
+        } else if (sum > x) {
+            j--;
+        } else {
+            i++;
+        }
+    }
+    free(a);
+    free(b);
+    return 0;
+}
+\end{mycpptwocol}
+
+\subsection{AcWing 2816. 判断子序列}
+\begin{titledbox}{AcWing 2816. 判断子序列}
+给定一个长度为 $n$ 的整数序列 $a_1,a_2,\dots;,a_n$ 以及一个长度为 $m$ 的整数序列 $b_1,b_2,\dots;,b_m$。</p>
+请你判断 $a$ 序列是否为 $b$ 序列的子序列。子序列指序列的一部分项按\textbf{原有次序排列}而得的序列，例如序列 $\{a_1,a_3,a_5\}$ 是序列 $\{a_1,a_2,a_3,a_4,a_5\}$ 的一个子序列。
+
+输入格式：
+
+第一行包含两个整数 $n,m$。第二行包含 $n$ 个整数，表示 $a_1,a_2,\dots;,a_n$。第三行包含 $m$ 个整数，表示 $b_1,b_2,\dots;,b_m$。
+
+输出格式：
+
+如果 $a$ 序列是 $b$ 序列的子序列，输出一行 Yes。否则，输出 No。
+
+数据范围：
+
+$1 \le n \le m \le 10^5$, $-10^9 \le a_i,b_i \le 10^9$
+
+\begin{inputblock}
+    3 5 \\
+    1 3 5 \\
+    1 2 3 4 5
+\end{inputblock}
+\begin{outputblock}
+    Yes
+\end{outputblock}
+\end{titledbox}
+
+\begin{mycpptwocol}[判断子序列]
+#include <stdio.h>
+#include <stdlib.h>
+#include <stdbool.h>
+
+bool IsSubSeq(int *a, int n, int *b, int m)
+{
+    int i = 0;
+    int j = 0;
+    while (i < n && j < m) {
+        if (a[i] == b[j]) {
+            i++;
+            j++;
+        } else {
+            j++;
+        }
+    }
+    return i == n;
+}
+
+int main()
+{
+    int n;
+    int m;
+    scanf("%d %d", &n, &m);
+    int *a = (int *)calloc(n, sizeof(int));
+    int *b = (int *)calloc(m, sizeof(int));
+    for (int i = 0; i < n; i++) {
+        scanf("%d", a + i);
+    }
+    for (int i = 0; i < m; i++) {
+        scanf("%d", b + i);
+    }
+    printf("%s",
+      IsSubSeq(a, n, b, m) ? "Yes" : "No");
+    free(a);
+    free(b);
+    return 0;
+}
+\end{mycpptwocol}
 \section{位运算}
+\subsection{AcWing 801. 二进制中1的个数}
+\begin{titledbox}{AcWing 801. 二进制中1的个数}
+给定一个长度为 $n$ 的数列，请你求出数列中每个数的二进制表示中 $1$ 的个数。
 
+输入格式：
+
+第一行包含整数 $n$。第二行包含 $n$ 个整数，表示整个数列。
+
+输出格式：
+共一行，包含 $n$ 个整数，其中的第 $i$ 个数表示数列中的第 $i$ 个数的二进制表示中 $1$ 的个数。
+
+数据范围：
+
+$1 \le n \le 100000$, $0 \le \text{数列中元素的值} \le 10^9$
+
+\begin{inputblock}
+    5 \\
+    1 2 3 4 5
+\end{inputblock}
+\begin{outputblock}
+    1 1 2 1 2
+\end{outputblock}
+\end{titledbox}
+
+\begin{mycpptwocol}[LowBit 运算]
+#include <stdio.h>
+#include <stdlib.h>
+
+int LowBit(int x)
+{
+    return x & (-x);
+}
+
+int Count(int x)
+{
+    int cnt = 0;
+    while (x != 0) {
+        cnt++;
+        x -= LowBit(x);
+    }
+    return cnt;
+}
+
+int main()
+{
+    int n;
+    scanf("%d", &n);
+    while (n--) {
+        int x;
+        scanf("%d", &x);
+        printf("%d ", Count(x));
+    }
+    return 0;
+}
+\end{mycpptwocol}
 
 \section{离散化}
+\subsection{AcWing 802. 区间和}
+\begin{titledbox}{AcWing 802. 区间和}
+假定有一个无限长的数轴，数轴上每个坐标上的数都是 $0$。现在，我们首先进行 $n$ 次操作，每次操作将某一位置 $x$ 上的数加 $c$。接下来，进行 $m$ 次询问，每个询问包含两个整数 $l$ 和 $r$，你需要求出在区间 $[l, r]$ 之间的所有数的和。
+
+输入格式：
+
+第一行包含两个整数 $n$ 和 $m$。接下来 $n$ 行，每行包含两个整数 $x$ 和 $c$。再接下来 $m$ 行，每行包含两个整数 $l$ 和 $r$。
+
+输出格式：
+
+共 $m$ 行，每行输出一个询问中所求的区间内数字和。
+
+数据范围：
+
+$-10^9 \le x \le 10^9$, $1 \le n,m \le 10^5$, $-10^9 \le l \le r \le 10^9$,$-10000 \le c \le 10000$
+
+\begin{inputblock}
+    3 3 \\
+    1 2 \\
+    3 6 \\
+    7 5 \\
+    1 3 \\
+    4 6 \\
+    7 8
+\end{inputblock}
+\begin{outputblock}
+    8 \\
+    0 \\
+    5
+\end{outputblock}
+\end{titledbox}
 
 
 \section{区间合并}
+\subsection{AcWing 803. 区间合并}
+\begin{titledbox}{AcWing 803. 区间合并}
+给定 $n$ 个区间 $[l_i, r_i]$，要求合并所有有交集的区间。注意如果在端点处相交，也算有交集。
+输出合并完成后的区间个数。例如：$[1,3]$ 和 $[2,6]$ 可以合并为一个区间 $[1,6]$。
+
+输入格式：
+
+第一行包含整数 $n$。接下来 $n$ 行，每行包含两个整数 $l$ 和 $r$。
+
+输出格式：
+
+共一行，包含一个整数，表示合并区间完成后的区间个数。
+
+数据范围：
+
+$1 \le n \le 100000$, $-10^9 \le l_i \le r_i \le 10^9$
+
+\begin{inputblock}
+    5 \\
+    1 2 \\
+    2 4 \\
+    5 6 \\
+    7 8 \\
+    7 9
+\end{inputblock}
+\begin{outputblock}
+    3
+\end{outputblock}
+\end{titledbox}
+
+\begin{mycpptwocol}[区间合并]
+#include <stdio.h>
+#include <stdlib.h>
+
+typedef struct {
+    int l;
+    int r;
+} Seg;
+
+int Max(int a, int b)
+{
+    return a > b ? a : b;
+}
+
+int CmpFunc(const void *a, const void *b)
+{
+    return ((Seg *)a)->l - ((Seg *)b)->l;
+}
+
+int main()
+{
+    int n;
+    scanf("%d", &n);
+    Seg *segs = (Seg *)calloc(n, sizeof(Seg));
+    for (int i = 0; i < n; i++) {
+        scanf("%d %d", &(segs[i].l), &(segs[i].r));
+    }
+    qsort(segs, n, sizeof(Seg), CmpFunc);
+    Seg init = segs[0];
+    int ans = 1;
+    for (int i = 1; i < n; i++) {
+        if (segs[i].l > init.r) {
+            ans++;
+            init = segs[i];
+        } else {
+            init.r = Max(segs[i].r, init.r);
+        }
+    }
+    printf("%d", ans);
+    return 0;
+}
+\end{mycpptwocol}
