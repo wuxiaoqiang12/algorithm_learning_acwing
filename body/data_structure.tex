@@ -3,6 +3,55 @@
 \section{单链表}
 \subsection{AcWing 826. 单链表}
 
+\begin{titledbox}{AcWing 826. 单链表}
+实现一个单链表，链表初始为空，支持三种操作：
+\begin{enumerate}
+    \itemsep=-5pt
+    \item 向链表头插入一个数；
+    \item 删除第 $k$ 个插入的数后面的数；
+    \item 在第 $k$ 个插入的数后插入一个数。
+\end{enumerate}
+
+现在要对该链表进行 $M$ 次操作，进行完所有操作后，从头到尾输出整个链表。
+\textbf{注意}: 题目中第 $k$ 个插入的数并不是指当前链表的第 $k$ 个数。例如操作过程中一共插入了 $n$ 个数，则按照插入的时间顺序，这 $n$ 个数依次为：第 $1$ 个插入的数，第 $2$ 个插入的数，$\dots$第 $n$ 个插入的数。
+
+输入格式：
+
+第一行包含整数 $M$，表示操作次数。接下来 $M$ 行，每行包含一个操作命令，操作命令可能为以下几种：
+
+\begin{enumerate}
+    \itemsep=-5pt
+    \item H x，表示向链表头插入一个数 $x$。
+    \item D k，表示删除第 $k$ 个插入的数后面的数（当 $k$ 为 $0$ 时，表示删除头结点）。
+    \item I k x，表示在第 $k$ 个插入的数后面插入一个数 $x$（此操作中 $k$ 均大于 $0$）。
+\end{enumerate}
+
+输出格式：
+
+共一行，将整个链表从头到尾输出。
+
+数据范围：
+
+$1 \le M \le 100000$ 所有操作保证合法。
+
+\begin{inputblock}
+    10 \\
+    H 9 \\
+    I 1 1 \\
+    D 1 \\
+    D 0 \\
+    H 6 \\
+    I 3 6 \\
+    I 4 5 \\
+    I 4 5 \\
+    I 3 4 \\
+    D 6
+\end{inputblock}
+\begin{outputblock}
+    6 4 6 5
+\end{outputblock}
+\end{titledbox}
+
 \begin{mycpptwocol}[linked list]
 #include <stdio.h>
 #include <stdlib.h>
@@ -79,10 +128,211 @@ int main()
 \section{双链表}
 
 \subsection{AcWing 827. 双链表}
+\begin{titledbox}{AcWing 827. 双链表}
+实现一个双链表，双链表初始为空，支持 $5$ 种操作：
 
+\begin{enumerate}
+    \itemsep=-5pt
+    \item 在最左侧插入一个数；
+    \item 在最右侧插入一个数；
+    \item 将第 $k$ 个插入的数删除；
+    \item 在第 $k$ 个插入的数左侧插入一个数；
+    \item 在第 $k$ 个插入的数右侧插入一个数。
+\end{enumerate}
+
+现在要对该链表进行 $M$ 次操作，进行完所有操作后，从左到右输出整个链表。\textbf{注意}: 题目中第 $k$ 个插入的数并不是指当前链表的第 $k$ 个数。例如操作过程中一共插入了 $n$ 个数，则按照插入的时间顺序，这 $n$ 个数依次为：第 $1$ 个插入的数，第 $2$ 个插入的数，…第 $n$ 个插入的数。
+
+输入格式：
+
+第一行包含整数 $M$，表示操作次数。接下来 $M$ 行，每行包含一个操作命令，操作命令可能为以下几种：
+
+\begin{enumerate}
+    \itemsep=-5pt
+    \item L x，表示在链表的最左端插入数 $x$。
+    \item R x，表示在链表的最右端插入数 $x$。
+    \item D k，表示将第 $k$ 个插入的数删除。
+    \item IL k x，表示在第 $k$ 个插入的数左侧插入一个数。
+    \item IR k x，表示在第 $k$ 个插入的数右侧插入一个数。
+\end{enumerate}
+
+输出格式：
+
+共一行，将整个链表从左到右输出
+
+数据范围：
+
+$1 \le M \le 100000$ 所有操作保证合法。
+
+\begin{inputblock}
+    10 \\
+    R 7 \\
+    D 1 \\
+    L 3 \\
+    IL 2 10 \\
+    D 3 \\
+    IL 2 7 \\
+    L 8 \\
+    R 9 \\
+    IL 4 7 \\
+    IR 2 2
+\end{inputblock}
+\begin{outputblock}
+    8 7 7 3 2 9
+\end{outputblock}
+\end{titledbox}
+
+\begin{mycpptwocol}[双链表]
+#include <stdio.h>
+#include <stdlib.h>
+
+#define N 100010
+
+int e[N];
+int l[N];
+int r[N];
+int idx = 1;
+
+void Init()
+{
+    r[0] = 1;
+    l[1] = 0;
+    idx = 1;
+}
+
+void AddRight(int k, int x)
+{
+    e[++idx] = x;
+    r[idx] = r[k];
+    l[r[k]] = idx;
+    l[idx] = k;
+    r[k] = idx;
+}
+
+void Remove(int k)
+{
+    r[l[k]] = r[k];
+    l[r[k]] = l[k];
+}
+
+int main()
+{
+    Init();
+    int n;
+    scanf("%d", &n);
+    while (n--) {
+        char op[3];
+        scanf("%s", op);
+        int k;
+        int x;
+        if (op[0] == 'R') {
+            scanf("%d", &x);
+            AddRight(l[1], x);
+        }
+        if (op[0] == 'D') {
+            scanf("%d", &k);
+            Remove(k + 1);
+        }
+        if (op[0] == 'L') {
+            scanf("%d", &x);
+            AddRight(0, x);
+        }
+        if (op[0] == 'I') {
+            scanf("%d %d", &k, &x);
+            if (op[1] == 'L') {
+                AddRight(l[k + 1], x);
+            } else {
+                AddRight(k + 1, x);
+            }
+        }
+    }
+    for (int i = r[0]; i != 1; i = r[i]) {
+        printf("%d ", e[i]);
+    }
+    return 0;
+}
+\end{mycpptwocol}
 
 \section{栈}
 \subsection{AcWing 828. 模拟栈}
+\begin{titledbox}{AcWing 828. 模拟栈}
+实现一个栈，栈初始为空，支持四种操作：
+
+\begin{enumerate}
+    \itemsep=-5pt
+    \item push x - 向栈顶插入一个数 $x$；
+    \item pop - 从栈顶弹出一个数；
+    \item empty - 判断栈是否为空；
+    \item query - 查询栈顶元素
+\end{enumerate}
+
+现在要对栈进行 $M$ 个操作，其中的每个操作 $3$ 和操作 $4$ 都要输出相应的结果。
+
+输入格式：
+
+第一行包含整数 $M$，表示操作次数。接下来 $M$ 行，每行包含一个操作命令，操作命令为 <code>push x</code>，<code>pop</code>，<code>empty</code>，<code>query</code> 中的一种。
+
+输出格式：
+
+对于每个 <code>empty</code> 和 <code>query</code> 操作都要输出一个查询结果，每个结果占一行。其中，<code>empty</code> 操作的查询结果为 <code>YES</code> 或 <code>NO</code>，<code>query</code> 操作的查询结果为一个整数，表示栈顶元素的值。
+
+数据范围：
+
+$1 \le M \le 100000$, $1 \le x \le 10^9$ 所有操作保证合法。
+
+\begin{inputblock}
+    10 \\
+    push 5  \\
+    query  \\
+    push 6  \\
+    pop  \\
+    query  \\
+    pop  \\
+    empty  \\
+    push 4  \\
+    query  \\
+    empty 
+\end{inputblock}
+\begin{outputblock}
+    5 \\
+    5 \\
+    YES \\
+    4 \\
+    NO
+\end{outputblock}
+\end{titledbox}
+
+\begin{mycpptwocol}[模拟栈]
+#include <stdio.h>
+#include <stdlib.h>
+
+int main()
+{
+    int n;
+    scanf("%d", &n);
+    int *stack = (int *)calloc(n, sizeof(int));
+    int top = 0;
+    while (n--) {
+        char op[10];
+        scanf("%s", op);
+        int x;
+        if (strcmp(op, "push") == 0) {
+            scanf("%d", &x);
+            stack[top++] = x;
+        }
+        if (strcmp(op, "query") == 0) {
+            printf("%d\n", stack[top - 1]);
+        }
+        if (strcmp(op, "pop") == 0) {
+            top--;
+        }
+        if (strcmp(op, "empty") == 0) {
+            printf("%s\n", top == 0 ? "YES" : "NO");
+        }
+    }
+    free(stack);
+    return 0;
+}
+\end{mycpptwocol}
 \subsection{AcWing 3302. 表达式求值}
 
 \section{队列}
