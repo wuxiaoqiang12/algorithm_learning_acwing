@@ -596,7 +596,113 @@ int main()
 
 \section{并查集}
 \subsection{AcWing 836. 合并集合}
+
+\begin{mycpptwocol}[合并集合]
+#include <stdlib.h>
+#include <stdio.h>
+#include <string.h>
+#include <stdbool.h>
+
+int Find(int *parent, int a)
+{
+	if (parent[a] != a) {
+		parent[a] = Find(parent, parent[a]);
+	}
+	return parent[a];
+}
+
+void Union(int *parent, int a, int b)
+{
+	int aP = Find(parent, a);
+	int bP = Find(parent, b);
+	parent[aP] = bP;
+}
+
+int main()
+{
+	int m, n;
+	scanf("%d %d", &m, &n);
+	int *parent = (int *) calloc(n + 1, sizeof(int));
+	if (parent == NULL) {
+		return -1;
+	}
+	for (int i = 0; i < n + 1; i++) {
+		parent[i] = i;
+	}
+	while (n--) {
+		char op[2];
+		int a, b;
+		scanf("%s %d %d", op, &a, &b);
+		if (op[0] == 'M') {
+			Union(parent, a, b);
+		}
+		if (op[0] == 'Q') {
+			printf("%s\n", Find(parent, a) == Find(parent, b) ? "Yes" : "No");
+		}
+	}
+	free(parent);
+	return 0;
+}
+\end{mycpptwocol}
 \subsection{AcWing 837. 连通块中点的数量}
+
+\begin{mycpptwocol}[]
+#include <stdio.h>
+
+int Find(int *p, int a)
+{
+    if (p[a] != a) {
+        p[a] = Find(p, p[a]);
+    }
+    return p[a];
+}
+
+void Union(int *p, int *cnt, int a, int b)
+{
+    int ap = Find(p, a);
+    int bp = Find(p, b);
+    if (ap != bp) {
+        p[ap] = bp;
+        cnt[bp] += cnt[ap];
+    }
+}
+
+int main()
+{
+    int n;
+    int m;
+    scanf("%d %d", &n, &m);
+    int *p = (int *)calloc(sizeof(int), n + 1);
+    int *cnt = (int *)calloc(sizeof(int), n + 1);
+    for (int i = 0; i <= n; i++) {
+        p[i] = i;
+        cnt[i] = 1;
+    }
+    char op[3];
+    int a;
+    int b;
+    while (m--) {
+        scanf("%s", op);
+        if (op[0] == 'C') {
+            scanf("%d %d", &a, &b);
+            Union(p, cnt, a, b);
+        }
+        if (op[0] == 'Q') {
+            if (op[1] == '1') {
+                scanf("%d %d", &a, &b);
+                printf("%s\n", Find(p, a) == Find(p, b) ? "Yes" : "No");
+            } else {
+                scanf("%d", &a);
+                printf("%d\n", cnt[Find(p, a)]);
+            }
+        }
+    }
+    free(cnt);
+    free(p);
+    return 0;
+}
+\end{mycpptwocol}
+
 \subsection{AcWing 240. 食物链}
 
 \section{堆}
