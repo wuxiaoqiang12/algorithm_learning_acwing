@@ -676,6 +676,99 @@ int main()
 
 \subsection{AcWing 839. 模拟堆}
 
+\begin{mycpptwocol}[可修改任意元素的堆]
+#include <stdio.h>
+#include <stdlib.h>
+#include <string.h>
+
+#define N 100010
+int heap[N];
+int hp[N];
+int ph[N];
+int size;
+
+void Swap(int *a, int *b)
+{
+	int tmp = *a;
+	*a = *b;
+	*b = tmp;
+}
+
+void HeapSwap(int k, int t)
+{
+	Swap(&ph[hp[k]], &ph[hp[t]]);
+	Swap(&hp[k], &hp[t]);
+	Swap(&heap[k], &heap[t]);
+}
+
+void Up(int k)
+{
+	while (k / 2 > 0 && heap[k / 2] > heap[k]) {
+		HeapSwap(k, k / 2);
+		k >>= 1;
+	}
+}
+
+void Down(int k)
+{
+	int t = k;
+	if (2 * k <= size && heap[2 * k] < heap[t]) {
+		t = 2 * k;
+	}
+	if (2 * k + 1 <= size && heap[2 * k + 1] < heap[t]) {
+		t = 2 * k + 1;
+	}
+	if (k != t) {
+		HeapSwap(k, t);
+		Down(t);
+	}
+}
+
+int main()
+{
+	int n;
+	scanf("%d", &n);
+	int idx = 0;
+	while (n--) {
+		char op[3];
+		scanf("%s", op);
+		int x;
+		if (strcmp(op, "I") == 0) {
+			scanf("%d", &x);
+			heap[++size] = x;
+			hp[size] = ++idx;
+			ph[idx] = size;
+			Up(size);
+		}
+		if (strcmp(op, "PM") == 0) {
+			printf("%d\n", heap[1]);
+		}
+		if (strcmp(op, "DM") == 0) {
+			HeapSwap(1, size);
+			size--;
+			Down(1);
+		}
+		if (strcmp(op, "D") == 0) {
+			int k;
+			scanf("%d", &k);
+			k = ph[k];
+			HeapSwap(k, size--);
+			Down(k);
+			Up(k);
+		}
+		if (strcmp(op, "C") == 0) {
+			int k;
+			scanf("%d %d", &k, &x);
+			k = ph[k];
+			heap[k] = x;
+			Down(k);
+			Up(k);
+		}
+	}
+	return 0;
+}
+\end{mycpptwocol}
+
 \section{哈希表}
 \subsection{AcWing 840. 模拟散列表}
 \subsection{AcWing 841. 字符串哈希}
