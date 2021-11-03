@@ -592,6 +592,89 @@ int main()
 
 \section{Trie}
 \subsection{AcWing 835. Trie字符串统计}
+
+这里有两种写法：链表形式和数组模拟的方式
+
+\begin{mycpptwocol}[链表形式的Trie]
+#include <stdio.h>
+#include <stdlib.h>
+#include <string.h>
+#include <stdbool.h>
+
+#define ALPH_NUM 26
+#define N 100
+
+typedef struct Node_ {
+    struct Node_ *nodes[ALPH_NUM];
+    int cnt;
+    bool isEnd;
+} Node;
+
+void Insert(Node *head, char *str)
+{
+    int len = strlen(str);
+    Node *tmp = head;
+    for (int i = 0; i < len; i++) {
+        int idx = str[i] - 'a';
+        if (tmp->nodes[idx] == NULL) {
+            tmp->nodes[idx] = (Node *)calloc(sizeof(Node), 1);
+        }
+        tmp = tmp->nodes[idx];
+    }
+    tmp->cnt += 1;
+    tmp->isEnd = true;
+}
+
+int Query(Node *head, char *str)
+{
+    int len = strlen(str);
+    Node *tmp = head;
+    for (int i = 0; i < len; i++) {
+        int idx = str[i] - 'a';
+        if (tmp->nodes[idx] == NULL) {
+            return 0;
+        }
+        tmp = tmp->nodes[idx];
+    }
+    return tmp->isEnd ? tmp->cnt : 0;
+}
+
+void Free(Node *head) {
+    Node *tmp = head;
+    for (int i = 0; i < ALPH_NUM; i++) {
+        if (tmp->nodes[i] == NULL) {
+            continue;
+        }
+        Free(tmp->nodes[i]);
+    }
+    free(tmp);
+}
+
+int main()
+{
+    int n;
+    scanf("%d", &n);
+    char op[2];
+    char str[N];
+    Node *head = (Node *)calloc(sizeof(Node), 1);
+    while (n--) {
+        scanf("%s %s", op, str);
+        if (op[0] == 'I') {
+            Insert(head, str);
+        }
+        if (op[0] == 'Q') {
+            printf("%d\n", Query(head, str));
+        }
+    }
+    Free(head);
+    return 0;
+}
+\end{mycpptwocol}
+
+\begin{mycpptwocol}[数组模拟Trie]
+
+\end{mycpptwocol}
+
 \subsection{AcWing 143. 最大异或对}
 
 \section{并查集}
