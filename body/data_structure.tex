@@ -786,14 +786,14 @@ int main()
     \item 询问两个元素是否在一个集合中
 \end{enumerate}
 
-基本原理：每个集合用一棵树来表示。树根的编号就是整个集合的编号，每个节点存储它的父节点，\lstinline{p[x]}标识\lstinline{x}的父节点
+基本原理：每个集合用一棵树来表示。树根的编号就是整个集合的编号，每个节点存储它的父节点， \lstinline{p[x]}标识 \lstinline{x}的父节点
 
 问题：
 
 \begin{enumerate}
-    \item 如何判断树根：\lstinline{if(p[x] == x)}
-    \item 如何求x的集合编号：\lstinline{while(p[x] != x) x = p[x]}
-    \item 如何合并两个集合：\lstinline{p[p[x]] = p[y]}
+    \item 如何判断树根： \lstinline{if(p[x] == x)}
+    \item 如何求x的集合编号： \lstinline{while(p[x] != x) x = p[x]}
+    \item 如何合并两个集合： \lstinline{p[p[x]] = p[y]}
 \end{enumerate}
 
 \subsection{AcWing 836. 合并集合}
@@ -894,7 +894,7 @@ int main()
 
 输出格式：
 
-对于每个询问指令 \lstinline{Q1 a b}，如果 $a$ 和 $b$ 在同一个连通块中，则输出 \lstinline{Yes}，否则输出 \lstinline{No}。对于每个询问指令 \lstinline{Q2 a}，输出一个整数表示点 $a$ 所在连通块中点的数量，每个结果占一行。
+对于每个询问指令 \lstinline{Q1 a b}，如果 $a$ 和 $b$ 在同一个连通块中，则输出 \lstinline{Yes} ，否则输出 \lstinline{No} 。对于每个询问指令 \lstinline{Q2 a} ，输出一个整数表示点 $a$ 所在连通块中点的数量，每个结果占一行。
 
 数据范围：
 
@@ -973,25 +973,25 @@ int main()
 \end{mycpptwocol}
 
 \begin{information}
-    此处维护了一个size数组来标记集合中的元素个数，仅保证根节点的size是有意义的。
+    此处维护了一个 \lstinline{cnt} 数组来标记集合中的元素个数，仅保证根节点的 \lstinline{cnt} 是有意义的。
 \end{information}
 
 \subsection{AcWing 240. 食物链}
 
 \section{堆}
 
-用一维数组来模拟一个堆，起始坐标从\lstinline{1}开始，因为\lstinline{x}节点的左儿子是\lstinline{2x}右儿子是\lstinline{2x + 1}，不能用0开始。几种操作的实现如下：
+用一维数组来模拟一个堆，起始坐标从 \lstinline{1} 开始，因为 \lstinline{x} 节点的左儿子是 \lstinline{2x} 右儿子是 \lstinline{2x + 1} ，不能用0开始。几种操作的实现如下：
 
 \begin{enumerate}
-    \item 插入一个数：\lstinline{heap[++size] = x; up(size);}
-    \item 求集合中的最小值：\lstinline{heap[1];}
-    \item 删除最小值：\lstinline{heap[1] = heap[size]; size--; down(1);}
-    \item 删除任意一个元素：\lstinline{heap[k] = heap[size]; size--; down(k); up(k);}
-    \item 修改任意一个元素：\lstinline{heap[k] = x; down(k); up(k);}
+    \item 插入一个数： \lstinline{heap[++size] = x; up(size);}
+    \item 求集合中的最小值： \lstinline{heap[1];}
+    \item 删除最小值： \lstinline{heap[1] = heap[size]; size--; down(1);}
+    \item 删除任意一个元素： \lstinline{heap[k] = heap[size]; size--; down(k); up(k);}
+    \item 修改任意一个元素： \lstinline{heap[k] = x; down(k); up(k);}
 \end{enumerate}
 
 \subsection{AcWing 838. 堆排序}
-此时只涉及到2和3两个操作即可，故仅需使用\lstinline{down}操作，无需\lstinline{up}操作。
+此时只涉及到2和3两个操作即可，故仅需使用 \lstinline{down} 操作，无需 \lstinline{up} 操作。
 
 \begin{titledbox}{AcWing 838. 堆排序}
 输入一个长度为 $n$ 的整数数列，从小到大输出前 $m$ 小的数。
@@ -1067,7 +1067,7 @@ int main()
 
 \subsection{AcWing 839. 模拟堆}
 
-此处为了支持删除和修改任意一个元素，用了两个数组\lstinline{hp}和\lstinline{ph}来保存从堆(\lstinline{h}, heap)到插入的操作数(\lstinline{p}, pointer)之间的映射关系。
+此处为了支持删除和修改任意一个元素，用了两个数组 \lstinline{hp} 和 \lstinline{ph} 来保存从堆( \lstinline{h} , heap)到插入的操作数( \lstinline{p} , pointer)之间的映射关系。
 
 \begin{titledbox}{AcWing 839. 模拟堆}
 
@@ -1215,18 +1215,20 @@ int main()
 
 1. 开放寻址法
 
-此法将从哈希后的那个位置开始查找，如果已经有了不是自己的人占用该位置则继续向后寻找，直到找到一个空位置，返回该位置。此法中Find函数将返回\lstinline{x}应该存放的位置。此法仅需开一个数组即可，通常来讲要开数据规模的两倍到三倍，以防buffer overflow。
+此法将从哈希后的那个位置开始查找，如果已经有了不是自己的人占用该位置则继续向后寻找，直到找到一个空位置，返回该位置。此法中Find函数将返回 \lstinline{x}应该存放的位置。此法仅需开一个数组即可，通常来讲要开数据规模的两倍到三倍，以防buffer overflow。
 
 2. 拉链法
 
-此法将在哈希数组的每一个位置\lstinline{h[t]}处放置一个单链表，来存储所有哈希值为\lstinline{t}的数字。该单链表可以仅有一个数组表示，每个\lstinline{h[t]}中存储这一个数组中的不同下标表示单链表的头节点位置。
+此法将在哈希数组的每一个位置 \lstinline{h[t]} 处放置一个单链表，来存储所有哈希值为 \lstinline{t} 的数字。该单链表可以仅有一个数组表示，每个 \lstinline{h[t]} 中存储这一个数组中的不同下标表示单链表的头节点位置。
 
 \subsection{AcWing 841. 字符串哈希}
 
-注意：此处将字符串存储在下标为1的地方开始。是因为这里将字符串看作是\lstinline{P}进制数，如果从0开始会将同一个字符构成的字符串都算做相同的值，会有问题。
+注意：此处将字符串存储在下标为1的地方开始。是因为这里将字符串看作是 \lstinline{P} 进制数，如果从0开始会将同一个字符构成的字符串都算做相同的值，会有问题。
 
 \begin{enumerate}
-    \item 将字符串存储在下标为1的\lstinline{char}数组中
-    \item 计算字符串的前缀数字，将他们哈希化，看作\lstinline{P}进制数，这里\lstinline{P = 131} 或者 \lstinline{P = 13331}按照经验来说，这两个值对字符串哈希会产生非常小的冲突可能。
-    \item 对于Find函数，将计算字符串中从l到r的哈希值，通过前缀哈希表以及公式\lstinline{h[r] - h[l - 1] * p[r - l + 1]}其中\lstinline{p}数组存放了从$P^0 - P^N$的所有数字，方便查询。
+    \item 将字符串存储在下标为1的 \lstinline{char} 数组中
+    \item 计算字符串的前缀数字，将他们哈希化，看作 \lstinline{P} 进制数，这里 \lstinline{P = 131} 或者 \lstinline{P = 13331} 按照经验，这两个值对字符串哈希会产生非常小的冲突可能。
+    \item 对于Find函数，将计算字符串中从l到r的哈希值，通过前缀哈希表以及公式
+    
+    \lstinline{h[r] - h[l - 1] * p[r - l + 1]} ，其中 \lstinline{p} 数组存放了从 $P^0 - P^N$ 的所有数字，方便查询。
 \end{enumerate}
