@@ -1,12 +1,129 @@
 \chapter{搜索和图论}
 
+\begin{table}[!ht]
+    \centering
+    \begin{tabular}{|c|c|c|l|}
+    \hline
+        ~ & 数据结构 & 空间 & ~ \\ \hline
+        DFS & stack & O($h$) & 不具有最短性 \\ \hline
+        BFS & queue & O($2^h$) & 第一次扩展到最近点，最短路性质（边的权重为1时） \\ \hline
+    \end{tabular}
+\end{table}
+
+
 稠密图：邻接矩阵 \lstinline{g[N][N]}, a和b之间是否有边，且边的权重是多少
 
 稀疏图：邻接表 \lstinline{h[N], e[N], ne[N], idx}, 和拉链法的哈希是一样的数据结构
 
 \section{DFS}
+从搜索树的角度来看。
+
+回溯：
+
+剪枝：
+
 \subsection{AcWing 842. 排列数字}
+\begin{titledbox}{AcWing 842. 排列数字}
+给定一个整数 $n$，将数字 $1 \sim n$ 排成一排，将会有很多种排列方法。现在，请你按照字典序将所有的排列方法输出。
+
+输入格式：
+
+共一行，包含一个整数 $n$。
+
+输出格式：
+
+按字典序输出所有排列方案，每个方案占一行。
+
+数据范围：
+
+$1 \le n \le 7$
+
+\begin{inputblock}
+    3
+\end{inputblock}
+\begin{outputblock}
+    1 2 3 \\
+    1 3 2 \\
+    2 1 3 \\
+    2 3 1 \\
+    3 1 2 \\
+    3 2 1
+\end{outputblock}
+\end{titledbox}
+
+\begin{mycpptwocol}[排列数字]
+#include <stdio.h>
+#include <stdbool.h>
+
+#define N 10
+
+int path[N];
+bool st[N];
+
+void dfs(int u, int n)
+{
+    if (u == n) {
+        for (int i = 0; i < n; i++) {
+            printf("%d ", path[i]);
+        }
+        printf("\n");
+        return;
+    }
+    for (int i = 1; i <= n; i++) {
+        if (!st[i]) {
+            path[u] = i;
+            st[i] = true;
+            dfs(u + 1, n);
+            st[i] = false;
+        }
+    }
+}
+
+int main()
+{
+    int n;
+    scanf("%d", &n);
+    dfs(0, n);
+    return 0;
+}
+\end{mycpptwocol}
+
 \subsection{AcWing 843. n-皇后问题}
+\begin{titledbox}{AcWing 843. n-皇后问题}
+$n-$皇后问题是指将 $n$ 个皇后放在 $n \times n$ 的国际象棋棋盘上，使得皇后不能相互攻击到，即任意两个皇后都不能处于同一行、同一列或同一斜线上。
+
+\includegraphics[width=0.3\textwidth]{n-queen.png}
+
+现在给定整数 $n$，请你输出所有的满足条件的棋子摆法。
+
+输入格式：
+
+共一行，包含整数 $n$。
+
+输出格式：
+
+每个解决方案占 $n$ 行，每行输出一个长度为 $n$ 的字符串，用来表示完整的棋盘状态。
+其中 \lstinline{.} 表示某一个位置的方格状态为空，\lstinline{Q} 表示某一个位置的方格上摆着皇后。每个方案输出完成后，输出一个空行。\textbf{注意：行末不能有多余空格。}输出方案的顺序任意，只要不重复且没有遗漏即可。
+
+数据范围：
+
+$1 \le n \le 9$
+
+\begin{inputblock}
+    4
+\end{inputblock}
+\begin{outputblock}
+    .Q.. \\
+    ...Q \\
+    Q... \\
+    ..Q. \\
+    
+    ..Q. \\
+    Q... \\
+    ...Q \\
+    .Q..
+\end{outputblock}
+\end{titledbox}
 
 有两种解法，第一种：因发现每一行每一列有且仅有一个皇后，可以枚举每一行，来看看可以将皇后放置在第几列。
 
@@ -118,39 +235,366 @@ int main()
 
 \section{BFS}
 \subsection{AcWing 844. 走迷宫}
+\begin{titledbox}{AcWing 844. 走迷宫}
+给定一个 $n \times m$ 的二维整数数组，用来表示一个迷宫，数组中只包含 $0$ 或 $1$，其中 $0$ 表示可以走的路，$1$ 表示不可通过的墙壁。最初，有一个人位于左上角 $(1, 1)$ 处，已知该人每次可以向上、下、左、右任意一个方向移动一个位置。请问，该人从左上角移动至右下角 $(n, m)$ 处，至少需要移动多少次。数据保证 $(1, 1)$ 处和 $(n, m)$ 处的数字为 $0$，且一定至少存在一条通路。
+
+输入格式：
+
+第一行包含两个整数 $n$ 和 $m$。接下来 $n$ 行，每行包含 $m$ 个整数（$0$ 或 $1$），表示完整的二维数组迷宫。
+
+输出格式：
+
+输出一个整数，表示从左上角移动至右下角的最少移动次数。
+
+数据范围：
+
+$1 \le n, m \le 100$
+
+\begin{inputblock}
+    5 5 \\
+    0 1 0 0 0 \\
+    0 1 0 1 0 \\
+    0 0 0 0 0 \\
+    0 1 1 1 0 \\
+    0 0 0 1 0
+\end{inputblock}
+\begin{outputblock}
+    8
+\end{outputblock}
+\end{titledbox}
+
 \subsection{AcWing 845. 八数码}
+\begin{titledbox}{AcWing 845. 八数码}
+在一个 $3 \times 3$ 的网格中，$1 \sim 8$ 这 $8$ 个数字和一个 \lstinline{x} 恰好不重不漏地分布在这 $3 \times 3$ 的网格中。
+
+例如：
+
+1 2 3 \\
+x 4 6 \\
+7 5 8
+
+在游戏过程中，可以把 \lstinline{x} 与其上、下、左、右四个方向之一的数字交换（如果存在）。
+我们的目的是通过交换，使得网格变为如下排列（称为正确排列）：
+
+1 2 3 \\
+4 5 6 \\
+7 8 x
+
+例如，示例中图形就可以通过让 \lstinline{x} 先后与右、下、右三个方向的数字交换成功得到正确排列。
+交换过程如下：
+
+1 2 3 \hspace{1em} 1 2 3 \hspace{1em} 1 2 3 \hspace{1em} 1 2 3 \\
+x 4 6 \hspace{1em} 4 x 6 \hspace{1em} 4 5 6 \hspace{1em} 4 5 6 \\
+7 5 8 \hspace{1em} 7 5 8 \hspace{1em} 7 x 8 \hspace{1em} 7 8 x
+
+现在，给你一个初始网格，请你求出得到正确排列至少需要进行多少次交换。
+
+输入格式：
+
+输入占一行，将 $3 \times 3$ 的初始网格描绘出来。例如，如果初始网格如下所示：
+
+1 2 3 \\
+x 4 6 \\
+7 5 8 
+
+则输入为：\lstinline{1 2 3 x 4 6 7 5 8}
+
+输出格式：
+
+输出占一行，包含一个整数，表示最少交换次数。如果不存在解决方案，则输出 $-1$。
+
+\begin{inputblock}
+    2  3  4  1  5  x  7  6  8
+\end{inputblock}
+\begin{outputblock}
+    19
+\end{outputblock}
+\end{titledbox}
+
 
 \section{树与图的深度优先遍历}
 \subsection{AcWing 846. 树的重心}
+\begin{titledbox}{AcWing 846. 树的重心}
+给定一棵树，树中包含 $n$ 个结点（编号 $1 \sim n$）和 $n-1$ 条无向边。请你找到树的重心，并输出将重心删除后，剩余各个连通块中点数的最大值。
+
+重心定义：重心是指树中的一个结点，如果将这个点删除后，剩余各个连通块中点数的最大值最小，那么这个节点被称为树的重心。
+
+输入格式：
+
+第一行包含整数 $n$，表示树的结点数。接下来 $n-1$ 行，每行包含两个整数 $a$ 和 $b$，表示点 $a$ 和点 $b$ 之间存在一条边。
+
+输出格式：
+
+输出一个整数 $m$，表示将重心删除后，剩余各个连通块中点数的最大值。
+
+数据范围：
+
+$1 \le n \le 10^5$
+
+\begin{inputblock}
+    9 \\
+    1 2 \\
+    1 7 \\
+    1 4 \\
+    2 8 \\
+    2 5 \\
+    4 3 \\
+    3 9 \\
+    4 6
+\end{inputblock}
+\begin{outputblock}
+    4
+\end{outputblock}
+\end{titledbox}
+
 
 \section{树与图的广度优先遍历}
 \subsection{AcWing 847. 图中点的层次}
+\begin{titledbox}{AcWing 847. 图中点的层次}
+给定一个 $n$ 个点 $m$ 条边的有向图，图中可能存在重边和自环。所有边的长度都是 $1$，点的编号为 $1 \sim n$。请你求出 $1$ 号点到 $n$ 号点的最短距离，如果从 $1$ 号点无法走到 $n$ 号点，输出 $-1$。
+
+输入格式：
+
+第一行包含两个整数 $n$ 和 $m$。接下来 $m$ 行，每行包含两个整数 $a$ 和 $b$，表示存在一条从 $a$ 走到 $b$ 的长度为 $1$ 的边。
+
+输出格式：
+
+输出一个整数，表示 $1$ 号点到 $n$ 号点的最短距离。
+
+数据范围：
+
+$1 \le n,m \le 10^5$
+
+\begin{inputblock}
+    4 5 \\
+    1 2 \\
+    2 3 \\
+    3 4 \\
+    1 3 \\
+    1 4
+\end{inputblock}
+\begin{outputblock}
+    1
+\end{outputblock}
+\end{titledbox}
+
 
 \section{拓扑排序}
 \subsection{AcWing 848. 有向图的拓扑序列}
+\begin{titledbox}{AcWing 848. 有向图的拓扑序列}
+给定一个 $n$ 个点 $m$ 条边的有向图，点的编号是 $1$ 到 $n$，图中可能存在重边和自环。请输出任意一个该有向图的拓扑序列，如果拓扑序列不存在，则输出 $-1$。若一个由图中所有点构成的序列 $A$ 满足：对于图中的每条边 $(x, y)$，$x$ 在 $A$ 中都出现在 $y$ 之前，则称 $A$ 是该图的一个拓扑序列。
 
-\section{Dijkstra}
+输入格式：
+
+第一行包含两个整数 $n$ 和 $m$。接下来 $m$ 行，每行包含两个整数 $x$ 和 $y$，表示存在一条从点 $x$ 到点 $y$ 的有向边 $(x, y)$。
+
+输出格式：
+
+共一行，如果存在拓扑序列，则输出任意一个合法的拓扑序列即可。否则输出 $-1$。
+
+数据范围：
+
+$1 \le n,m \le 10^5$
+
+\begin{inputblock}
+    3 3 \\
+    1 2 \\
+    2 3 \\
+    1 3 \\
+\end{inputblock}
+\begin{outputblock}
+    1 2 3
+\end{outputblock}
+\end{titledbox}
+
+\section{有向图的最短路问题}
+这一节将关注在图的最短路的求解上，最短路问题及其常见方法如下：
+
+最短路问题：$n$ 表示点数，$m$ 表示边数
+
+\begin{enumerate}
+    \item 单源最短路：求一个点到其他所有点的最短路
+        \begin{itemize}
+            \item 所有边权都是正数：1. 朴素dijkstra算法\bigo{$n^2$}，与边数无关，适合稠密图 2. 堆优化版的dijkstra算法 \bigo{$m\log{}n$} 稀疏图：$m$ 与 $n$ 量级相同
+            \item 存在负权边：1. Bellman-Ford算法 \bigo{$nm$} 2. SPFA \bigo{$m$}最坏 \bigo{$nm$}
+        \end{itemize}
+    \item 多源汇最短路：起点和终点不确定，问 $a$ 到 $b$ 的最短路
+        \begin{itemize}
+            \item Floyd算法 \bigo{$n^3$}
+        \end{itemize}
+\end{enumerate}
+
 \subsection{AcWing 849. Dijkstra求最短路 I}
+
+朴素版的Dijkstra算法：
+
+1. 用邻接矩阵存储图；\lstinline{g[N][N]}
+
+2. 用一个数组存储每一个点到起始点的距离\lstinline{d[N]}；
+
+3. \lstinline{st[N]}，存储每一个点是否已经找到了最短路
+
+算法逻辑：
+
+1. 将距离数组初始化为\lstinline{d[i] = +∞; d[k] = 0;} $k$ 表示起始点
+
+2. 从第$0$个点到第$n - 1$个点，找到距离当前点最近的下一个点(遍历$1 - n$) \lstinline{}{t; st[t] = true;}
+
+3. 用$t$更新其他点的距离(遍历$1 - n$)
+
+
+\begin{titledbox}{AcWing 849. Dijkstra求最短路 I}
+给定一个 $n$ 个点 $m$ 条边的有向图，图中可能存在重边和自环，所有边权均为正值。请你求出 $1$ 号点到 $n$ 号点的最短距离，如果无法从 $1$ 号点走到 $n$ 号点，则输出 $-1$。
+
+输入格式：
+
+第一行包含整数 $n$ 和 $m$。接下来 $m$ 行每行包含三个整数 $x,y,z$，表示存在一条从点 $x$ 到点 $y$ 的有向边，边长为 $z$。
+
+输出格式：
+
+输出一个整数，表示 $1$ 号点到 $n$ 号点的最短距离。如果路径不存在，则输出 $-1$。
+
+数据范围：
+
+$1 \le n \le 500$, $1 \le m \le 10^5$，图中涉及边长均不超过10000。
+
+\begin{inputblock}
+    3 3 \\
+    1 2 2 \\
+    2 3 1 \\
+    1 3 4
+\end{inputblock}
+\begin{outputblock}
+    3
+\end{outputblock}
+\end{titledbox}
+
 \subsection{AcWing 850. Dijkstra求最短路 II}
 
-\section{bellman-ford}
+注意到在朴素版的Dijkstra算法中需要找到当前节点之后的所有节点中距离最小的那个点的复杂度是 \bigo{$n$}，而堆中寻找最小值的复杂度则为 \bigo{$1$}。所以可以用堆来优化这个过程。后面用到了修改堆中元素，为了简单起见，直接插入即可。
+
+如果稠密图中 $n$ 的量为 $10^5$ 时 \bigo{$n^2$} 将会超时，所以选择使用堆对其进行优化，将其降低到 \bigo{$m \log{}n$}
+
+\begin{titledbox}{AcWing 850. Dijkstra求最短路 II}
+给定一个 $n$ 个点 $m$ 条边的有向图，图中可能存在重边和自环，所有边权均为正值。请你求出 $1$ 号点到 $n$ 号点的最短距离，如果无法从 $1$ 号点走到 $n$ 号点，则输出 $-1$。
+
+输入格式：
+
+第一行包含整数 $n$ 和 $m$。接下来 $m$ 行每行包含三个整数 $x,y,z$，表示存在一条从点 $x$ 到点 $y$ 的有向边，边长为 $z$。
+
+输出格式：
+
+输出一个整数，表示 $1$ 号点到 $n$ 号点的最短距离。如果路径不存在，则输出 $-1$。
+
+数据范围：
+
+$1 \le n, m \le 1.5 \times 10^5$，图中涉及边长均不小于 0，且不超过 10000。
+
+\begin{inputblock}
+    3 3 \\
+    1 2 2 \\
+    2 3 1 \\
+    1 3 4
+\end{inputblock}
+\begin{outputblock}
+    3
+\end{outputblock}
+\end{titledbox}
+
+
+\subsection{bellman-ford}
+处理有负权边的图，如果有负权回路的话最短路不一定存在。所以一般不能有负权回路。
+
+算法逻辑：
+
+1. 循环n个点
+
+2. 循环所有边 \lstinline{a, b, w: dist[b] = min(dist[b], dist[a] + w)} 更新所有距离
+
+因为算法特点存储图时不必使用邻接矩阵或者邻接表，开一个结构体数组：
+
+\begin{mycpponecol}[边集]
+struct {
+    int a;
+    int b;
+    int w;
+} Edges[N]
+\end{mycpponecol}
+
+只要能够遍历到所有边即可。可以证明，该算法完成后一定有\textbf{三角不等式}：\lstinline{dist[b] <= dist[a] + w}成立
+更新距离数组的过程叫做\textbf{松弛操作}。
+
+第一个循环中，如果当前迭代了 $k$ 次，此时的 \lstinline{dist} 数组表示的是从$1$号点经过不超过$k$条边走到每个点的距离，所以可以用这个原理来找负环，迭代到第 $n$ 次仍能更新则表示有 $n+1$ 个点，但实际只有 $n$ 个点，所以一定存在负环。但一般不用该算法找负环。
+
 \subsection{AcWing 853. 有边数限制的最短路}
 
-\section{spfa}
+\subsection{spfa}
+spfa算法是对bellman-ford算法的优化，在松弛操作中，不一定每一次都会对该点的距离减小有所贡献，只有与之相连的前驱节点距离减小了，此时才有可能有所贡献。
+
+用一个bfs来做优化，队列中存储所有变小了距离的节点
+
 \subsection{AcWing 851. spfa求最短路}
 \subsection{AcWing 852. spfa判断负环}
 
-\section{Floyd}
+\subsection{Floyd}
+求多源汇最短路，用邻接矩阵来存储 \lstinline{d[i, j]}
+
+\begin{mycpponecol}[Floyd算法]
+for (int k = 1; k <= n; ++k) {
+    for (int i = 1; i <= n; ++i) {
+        for (int j = 1; j <= n; ++j) {
+            d[i, j] = min(d[i, j], d[i, k] + d[k, j]);
+        }
+    }
+}
+\end{mycpponecol}
+
+初始时， \lstinline{d[i, j]} 就是邻接矩阵，结束之后 \lstinline{d[i, j]} 是最短路长度
+
 \subsection{AcWing 854. Floyd求最短路}
 
-\section{Prim}
-\subsection{AcWing 858. Prim算法求最小生成树}
+\section{无向图的最小生成树问题}
 
-\section{Kruskal}
+1. 普里姆算法（Prim算法）1. 朴素版Prim（稠密图）\bigo{$n^2$} 2.堆优化版Prim（稀疏图）\bigo{$m\log{} n$}，一般用不到
+
+2. 克鲁斯卡尔算法（Kruskal算法）\bigo{$m\log{} m$} 稀疏图
+
+\subsection{AcWing 858. Prim算法求最小生成树}
+Prim算法，与dijkstra算法类似：
+
+Prim算法：
+
+1. 用邻接矩阵存储图；\lstinline{g[N][N]}
+
+2. 用一个数组存储每一个点到集合的距离 \lstinline{d[N]}, 即存储该点所连接边的最小权重；
+
+3. 集合 \lstinline{st[N]}，存储当前已经在连通块中的点
+
+算法逻辑：
+
+1. 将距离数组初始化为 \lstinline{d[i] = +∞; d[0] = 1;}
+
+2. 从第 $0$ 个点到第 $n - 1$ 个点，找到集合外距离最近的点 \lstinline{t; st[t] = true;}
+
+3. 用 $t$ 更新其他点到集合的距离
+
 \subsection{AcWing 859. Kruskal算法求最小生成树}
 
-\section{染色法判定二分图}
+1. 将所有边按照权重从小到大排序；\bigo{$m\log{} m$}
+
+2. 枚举每条边 $a$, $b$, 权重 $c$，如果 $a$ 和 $b$ 不连通，就把这条边加入到集合中。并查集
+
+\section{二分图}
+
+定义：一个图的所有节点可以划分到两个集合中使得图中的边都只存在于集合之间的图称其为可二分的图。
+
+性质：一个图是二分图，当且仅当一个图可以被二染色，当且仅当图中没有奇数环（环中边个数为奇数）
+
+1. 染色法 \bigo{$n + m$}
+
+2. 匈牙利算法 最坏 \bigo{$mn$}, 实际运行时间一般远小于 \bigo{$mn$}
+
 \subsection{AcWing 860. 染色法判定二分图}
 
-\section{匈牙利算法}
+\subsection{匈牙利算法}
 \subsection{AcWing 861. 二分图的最大匹配}
