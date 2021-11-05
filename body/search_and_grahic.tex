@@ -8,6 +8,114 @@
 \subsection{AcWing 842. 排列数字}
 \subsection{AcWing 843. n-皇后问题}
 
+有两种解法，第一种：因发现每一行每一列有且仅有一个皇后，可以枚举每一行，来看看可以将皇后放置在第几列。
+
+\begin{mycpptwocol}[n-皇后问题：解法一]
+#include <stdio.h>
+#include <stdlib.h>
+#include <string.h>
+#include <stdbool.h>
+
+#define N 20
+
+char g[N][N];
+bool col[N];
+bool dg[N];
+bool udg[N];
+
+void dfs(int u, int n)
+{
+    if (u == n) {
+        for (int i = 0; i < n; i++) {
+            puts(g[i]);
+        }
+        printf("\n");
+        return;
+    }
+    for (int i = 0; i < n; i++) {
+        if (col[i] || dg[u + i] || udg[u - i + n]) {
+            continue;
+        }
+        g[u][i] = 'Q';
+        col[i] = dg[u + i] = udg[u - i + n] = true;
+        dfs(u + 1, n);
+        g[u][i] = '.';
+        col[i] = dg[u + i] = udg[u - i + n] = false;
+    }
+}
+
+int main()
+{
+    int n;
+    scanf("%d", &n);
+    for (int i = 0; i < n; i++) {
+        for (int j = 0; j < n; j++) {
+            g[i][j] = '.';
+        }
+    }
+    dfs(0,  n);
+    return 0;
+}
+\end{mycpptwocol}
+
+解法二：从左上角开始枚举每一个格子，每个格子有两种状态（放或者不放），在枚举过程中检查每一个格子是否可以继续放置。若皇后数量已经达到最大数量则找到了一个方案
+
+\begin{mycpptwocol}[n-皇后问题：解法二]
+#include <stdio.h>
+#include <stdlib.h>
+#include <string.h>
+#include <stdbool.h>
+
+#define N 20
+
+char g[N][N];
+bool row[N];
+bool col[N];
+bool dg[N];
+bool udg[N];
+
+void dfs(int x, int y, int s, int n)
+{
+    if (y == n) {
+        y = 0;
+        x++;
+    }
+    if (x == n) {
+        if (s == n) {
+            for (int i = 0; i < n; i++) {
+                puts(g[i]);
+            }
+            puts("");
+        }
+        return;
+    }
+    // do not put queen here
+    dfs(x, y + 1, s, n);
+
+    // put queen here
+    if (!row[x] && !col[y] && !dg[x + y] && !udg[x - y + n]) {
+        g[x][y] = 'Q';
+        row[x] = col[y] = dg[x + y] = udg[x - y + n] = true;
+        dfs(x, y + 1, s + 1, n);
+        g[x][y] = '.';
+        row[x] = col[y] = dg[x + y] = udg[x - y + n] = false;
+    }
+}
+
+int main()
+{
+    int n;
+    scanf("%d", &n);
+    for (int i = 0; i < n; i++) {
+        for (int j = 0; j < n; j++) {
+            g[i][j] = '.';
+        }
+    }
+    dfs(0, 0, 0, n);
+    return 0;
+}
+\eng{mycpptwocol}
+
 \section{BFS}
 \subsection{AcWing 844. 走迷宫}
 \subsection{AcWing 845. 八数码}
