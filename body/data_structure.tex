@@ -58,11 +58,12 @@ $1 \le M \le 100000$ 所有操作保证合法。
 #include <stdbool.h>
 
 #define N 100010
-int idx; // 标识节点
+int idx; // 标识当前用到了哪个节点
 int head; // 头节点指向的元素
-int e[N]; // element array
-int ne[N]; // next array
+int e[N]; // 存储节点的值
+int ne[N]; // 存储节点的next指针
 
+// 初始化
 void Init()
 {
     idx = -1;
@@ -155,9 +156,8 @@ int main()
     \item IR k x，表示在第 $k$ 个插入的数右侧插入一个数。
 \end{enumerate}
 
-输出格式：
-
-共一行，将整个链表从左到右输出
+输出格式： 
+一行，将整个链表从左到右输出
 
 数据范围：
 
@@ -1276,7 +1276,8 @@ void HeapSwap(int k, int t)
 
 void Up(int k)
 {
-    while (k / 2 > 0 && heap[k / 2] > heap[k]) {
+    while (k / 2 > 0 &&
+        heap[k / 2] > heap[k]) {
         HeapSwap(k, k / 2);
         k >>= 1;
     }
@@ -1285,10 +1286,12 @@ void Up(int k)
 void Down(int k)
 {
     int t = k;
-    if (2 * k <= size && heap[2 * k] < heap[t]) {
+    if (2 * k <= size &&
+        heap[2 * k] < heap[t]) {
         t = 2 * k;
     }
-    if (2 * k + 1 <= size && heap[2 * k + 1] < heap[t]) {
+    if (2 * k + 1 <= size &&
+        heap[2 * k + 1] < heap[t]) {
         t = 2 * k + 1;
     }
     if (k != t) {
@@ -1386,19 +1389,127 @@ $1 \le N \le 10^5$，$-10^9 \le x \le 10^9$
 
 此法将从哈希后的那个位置开始查找，如果已经有了不是自己的人占用该位置则继续向后寻找，直到找到一个空位置，返回该位置。此法中Find函数将返回 \lstinline{x}应该存放的位置。此法仅需开一个数组即可，通常来讲要开数据规模的两倍到三倍，以防buffer overflow。
 
+\begin{mycpptwocol}[开放寻址法]
+#include <stdio.h>
+#include <stdlib.h>
+#include <string.h>
+
+#define N 200003
+
+int h[N];
+const int null = 0x3f3f3f3f;
+
+int Find(int x)
+{
+    int k = (x % N + N) % N;
+    while (h[k] != null && h[k] != x) {
+        k++;
+        if (k == N) {
+            k = 0;
+        }
+    }
+    return k;
+}
+
+int main()
+{
+    int n;
+    scanf("%d", &n);
+    memset(h, 0x3f, sizeof(h));
+    int x;
+    int k;
+    while (n--) {
+        char op[2];
+        scanf("%s %d", op, &x);
+        k = Find(x);
+        if (op[0] == 'I') {
+            h[k] = x;
+        } else {
+            if (h[k] == x) {
+                puts("Yes");
+            } else {
+                puts("No")
+            }
+        }
+    }
+    return 0;
+}
+\end{mycpptwocol}
+
 2. 拉链法
 
 此法将在哈希数组的每一个位置 \lstinline{h[t]} 处放置一个单链表，来存储所有哈希值为 \lstinline{t} 的数字。该单链表可以仅有一个数组表示，每个 \lstinline{h[t]} 中存储这一个数组中的不同下标表示单链表的头节点位置。
 
-\begin{mycpptwocol}[开放寻址法]
-    
-\end{mycpptwocol}
-
 \begin{mycpptwocol}[拉链法]
-    
+#include <stdio.h>
+#include <stdlib.h>
+#include <stdbool.h>
+#include <string.h>
+
+#define N 100003
+
+int h[N];
+int e[N];
+int ne[N];
+int idx;
+
+void Insert(int x)
+{
+    int t = (x % N + N) % N;
+    e[++idx] = x;
+    ne[idx] = h[t];
+    h[t] = idx;
+}
+
+bool Find(int x)
+{
+    int k = (x % N + N) % N;
+    for (int i = h[k]; i != -1; i = ne[i]) {
+        if (e[i] == x) {
+            return true;
+        }
+    }
+    return false;
+}
+
+int main()
+{
+    int n;
+    scanf("%d", &n);
+    memset(h, -1, sizeof(h));
+    int x;
+    int k;
+    while (n--) {
+        char op[2];
+        scanf("%s %d", op, &x);
+        if (op[0] == 'I') {
+            Insert(x);
+        } else {
+            if (Find(x)) {
+                puts("Yes");
+            } else {
+                puts("No");
+            }
+        }
+    }
+    return 0;
+}
 \end{mycpptwocol}
 
 \subsection{AcWing 841. 字符串哈希}
+
+字符串哈希使用的方法叫做：字符串前缀哈希法。若有一字符串 \lstinline{str = "abcedacbd"}，则哈希表中的元素表示从左边起到第i个位置上的子字符串的哈希值。即， \lstinline{h[1] -> "a"; h[2] -> "ab"; h[3] -> "abc"}，以此类推。
+
+\begin{enumerate}
+    \item 将字符串存储在下标为1的 \lstinline{char} 数组中；
+    \item 计算字符串的前缀数字，将他们哈希化，将字符串看作是一个 \lstinline{P} 进制数，这里 \lstinline{P = 131} 或者 \lstinline{P = 13331} 按照经验，这两个值对字符串哈希会产生非常小的冲突可能。
+    \item 将这个 \lstinline{P} 进制数转换为10进制，通常转换出来的数字会很大，则将其对 \lstinline{Q} 取模。这样任意一个字符串都可以转换成 $0 \cdots Q - 1$ 之间的数字：$(1234)_P => (1 * P^3 + 2 * P^2 + 3 * P^1 + 4 * P^0) \mod Q$
+    \item 对于 \lstinline{Hash} 函数，将计算字符串中从 $l$ 到 $r$ 的哈希值，通过前缀哈希表以及下公式计算，注意左侧为低位，右侧为高位。
+    
+    \lstinline{h[r] - h[l - 1] * p[r - l + 1]} ，其中 \lstinline{p} 数组存放了从 $P^0 - P^N$ 的所有数字，方便查询。
+\end{enumerate}
+
+注意：一般来讲不能将字符串映射成 $0$ ，因为任意进制的 $0$ 都将映射成十进制的 $0$ 。此时有：$\mlq A \mrq \mapsto 0; \mlq AA \mrq \mapsto 0$，这样不同的字符串映射成了相同的值。另外，这种方法假定了冲突不存在，不需要解决冲突。按照经验一般取 $P = 131 or 13331, Q = 2^{64}$ 时冲突的概率几乎为 $0$ 。
 
 \begin{titledbox}{AcWing 841. 字符串哈希}
 给定一个长度为 $n$ 的字符串，再给定 $m$ 个询问，每个询问包含四个整数 $l_1, r_1, l_2, r_2$，请你判断 $[l_1, r_1]$ 和 $[l_2, r_2]$ 这两个区间所包含的字符串子串是否完全相同。
@@ -1430,12 +1541,51 @@ $1 \le n, m \le 10^5$
 \end{outputblock}
 \end{titledbox}
 
-注意：此处将字符串存储在下标为1的地方开始。是因为这里将字符串看作是 \lstinline{P} 进制数，如果从0开始会将同一个字符构成的字符串都算做相同的值，会有问题。
+\begin{mycpptwocol}[字符串前缀哈希法]
+#include <stdio.h>
+#include <stdbool.h>
 
-\begin{enumerate}
-    \item 将字符串存储在下标为1的 \lstinline{char} 数组中
-    \item 计算字符串的前缀数字，将他们哈希化，看作 \lstinline{P} 进制数，这里 \lstinline{P = 131} 或者 \lstinline{P = 13331} 按照经验，这两个值对字符串哈希会产生非常小的冲突可能。
-    \item 对于Find函数，将计算字符串中从l到r的哈希值，通过前缀哈希表以及公式
+#define N 100010
+char str[N];
+unsigned long long h[N];
+unsigned long long p[N];
+const int P = 131;
+
+int Hash(int l, int r)
+{
+    return h[r] - h[l - 1] * p[r - l + 1];
+}
+
+int main()
+{
+    int n;
+    int m;
+    scanf("%d %d", &n, &m);
+    scanf("%s", str + 1);
+
+    p[0] = 1;
+    for (int i = 1; i <= n; i++) {
+        p[i] = p[i - 1] * P;
+        h[i] = str[i] + h[i - 1] * P;
+    }
+
+    while (m--) {
+        int l1, r1, l2, r2;
+        scanf("%d %d", &l1, &r1);
+        scanf("%d %d", &l2, &r2);
+        if (Hash(l1, r1) == Hash(l2, r2)) {
+            puts("Yes");
+        } else {
+            puts("No");
+        }
+    }
+    return 0;
+}
+\end{mycpptwocol}
+
+\begin{information}
+    注意：此处将字符串存储在下标为1的地方开始。是因为这里将字符串看作是 \lstinline{P} 进制数，如果从0开始会将同一个字符构成的字符串都算做相同的值，会有问题。
     
-    \lstinline{h[r] - h[l - 1] * p[r - l + 1]} ，其中 \lstinline{p} 数组存放了从 $P^0 - P^N$ 的所有数字，方便查询。
-\end{enumerate}
+    另外，这里没有显式的对 \lstinline{Q = $2^64$} 取模，是因为用了 \lstinline{unsinged long long} 溢出后就相当于对 \lstinline{Q} 取模。
+\end{information}
+
