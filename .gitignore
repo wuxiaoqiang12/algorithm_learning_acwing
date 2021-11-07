@@ -87,11 +87,8 @@ dist
 *.idx
 *.ilg
 *.ind
-*.thm
 *.loe
-*.vrb
 *.hd
-*.fdb_latexmk
 *.doc
 *.toe
 *.zip
