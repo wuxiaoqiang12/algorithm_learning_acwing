@@ -1,12 +1,14 @@
 \chapter{搜索和图论}
 
+用树来展示DFS和BFS的区别如下，其中 $h$ 表示树的深度。可见，DFS在空间上具有更大的优势，而BFS则为指数级别。
+
 \begin{table}[!ht]
     \centering
     \begin{tabular}{|c|c|c|l|}
     \hline
         ~ & 数据结构 & 空间 & ~ \\ \hline
-        DFS & stack & O($h$) & 不具有最短性 \\ \hline
-        BFS & queue & O($2^h$) & 第一次扩展到最近点，最短路性质（边的权重为1时） \\ \hline
+        DFS & stack & \bigo{$h$} & 不具有最短性 \\ \hline
+        BFS & queue & \bigo{$2^h$} & 第一次扩展到最近点，最短路性质（边的权重为1时） \\ \hline
     \end{tabular}
 \end{table}
 
@@ -262,6 +264,63 @@ $1 \le n, m \le 100$
     8
 \end{outputblock}
 \end{titledbox}
+
+\begin{mycpptwocol}[BFS 走迷宫]
+#include <stdio.h>
+#include <stdlib.h>
+
+#define N 110
+
+int g[N][N];
+int d[N][N];
+
+typedef struct {
+    int x;
+    int y;
+} Pair;
+
+Pair queue[N * N];
+
+int bfs(int n, int m)
+{
+    int head = 0;
+    int tail = 0;
+    Pair init = {0, 0};
+    queue[tail++] = init;
+    memset(d, -1, sizeof(d));
+    d[0][0] = 0;
+    
+    int dx[4] = {0, 1, 0, -1};
+    int dy[4] = {1, 0, -1, 0};
+    
+    while (head <= tail) {
+        Pair t = queue[head++];
+        for (int i = 0; i < 4; i++) {
+            int x = t.x + dx[i];
+            int y = t.y + dy[i];
+            if (x >= 0 && x < n && y >= 0 && y < m && d[x][y] == -1 && g[x][y] == 0) {
+                queue[tail++] = (Pair){x, y};
+                d[x][y] = d[t.x][t.y] + 1;
+            }
+        }
+    }
+    return d[n - 1][m - 1];
+}
+
+int main()
+{
+    int n;
+    int m;
+    scanf("%d %d", &n, &m);
+    for (int i = 0; i < n; i++) {
+        for (int j = 0; j < m; j++) {
+            scanf("%d", &g[i][j]);
+        }
+    }
+    printf("%d", bfs(n, m));
+    return 0;
+}
+\end{mycpptwocol}
 
 \subsection{AcWing 845. 八数码}
 \begin{titledbox}{AcWing 845. 八数码}

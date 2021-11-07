@@ -1255,8 +1255,13 @@ $1 \le N \le 10^5$， $−10^9 \le x \le 10^9$
 #include <string.h>
 
 #define N 100010
+
+// heap[N]存储堆中的值, heap[1]是堆顶，
+// x的左儿子是2x, 右儿子是2x + 1
 int heap[N];
+// hp[k]存储堆中下标是k的点是第几个插入的
 int hp[N];
+// ph[k]存储第k个插入的点在堆中的位置
 int ph[N];
 int size;
 
@@ -1346,6 +1351,8 @@ int main()
 \end{mycpptwocol}
 
 \section{哈希表}
+哈希表可以用来将一堆范围很大（$10^9$）很分散的数据集合存储在相对较小的范围内（约 $10^5 \sim 10^6$）。
+
 \subsection{AcWing 840. 模拟散列表}
 
 \begin{titledbox}{AcWing 840. 模拟散列表}
@@ -1383,7 +1390,13 @@ $1 \le N \le 10^5$，$-10^9 \le x \le 10^9$
 \end{outputblock}
 \end{titledbox}
 
-两种写法：
+从该题描述可看出：操作的数据范围很大（$-10^9 \sim 10^9$），但是操作次数却不大（$10^5$）。是故，这里使用哈希表进行离散即可。Hash函数的设计通常是对大质数取模，这里使用的函数为：
+\begin{equation*}
+    h(x) = (x \mod N + N) \mod N, \quad N = 200003
+\end{equation*}
+该函数第一次取模后加$N$的原因在于：在C/C++中，负数取模会得到负数，这与数学定义不同（数学定义中不论正数还是负数取模的结果都是正数）。为保证结果始终是正数，需要做此操作。
+
+Hash函数难免产生碰撞（冲突：$h(t_1) = h(t_2), \text{当} t_1 \neq t_2$），解决冲突通常有两种写法：
 
 1. 开放寻址法
 
@@ -1448,14 +1461,17 @@ int main()
 
 #define N 100003
 
-int h[N];
+// 这几个结构为一个数组拉了很多链，
+// 图的邻接表同此写法
+int h[N]; // Hash表的N个槽
 int e[N];
 int ne[N];
 int idx;
 
 void Insert(int x)
 {
-    int t = (x % N + N) % N;
+    int t = (x % N + N) % N; // 找到对应的槽
+    // 链表的头插法
     e[++idx] = x;
     ne[idx] = h[t];
     h[t] = idx;
@@ -1502,7 +1518,7 @@ int main()
 
 \begin{enumerate}
     \item 将字符串存储在下标为1的 \lstinline{char} 数组中；
-    \item 计算字符串的前缀数字，将他们哈希化，将字符串看作是一个 \lstinline{P} 进制数，这里 \lstinline{P = 131} 或者 \lstinline{P = 13331} 按照经验，这两个值对字符串哈希会产生非常小的冲突可能。
+    \item 计算字符串的前缀数字，将他们哈希化，将字符串看作是一个 \lstinline{P} 进制数，这里 \lstinline{P = 131} 或者 \lstinline{P = 13331}。按照经验，这两个值对字符串哈希会产生非常小的冲突可能。
     \item 将这个 \lstinline{P} 进制数转换为10进制，通常转换出来的数字会很大，则将其对 \lstinline{Q} 取模。这样任意一个字符串都可以转换成 $0 \cdots Q - 1$ 之间的数字：$(1234)_P => (1 * P^3 + 2 * P^2 + 3 * P^1 + 4 * P^0) \mod Q$
     \item 对于 \lstinline{Hash} 函数，将计算字符串中从 $l$ 到 $r$ 的哈希值，通过前缀哈希表以及下公式计算，注意左侧为低位，右侧为高位。
     
