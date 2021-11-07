@@ -1,7 +1,6 @@
 \chapter{搜索和图论}
 
 用树来展示DFS和BFS的区别如下，其中 $h$ 表示树的深度。可见，DFS在空间上具有更大的优势，而BFS则为指数级别。
-
 \begin{table}[!ht]
     \centering
     \begin{tabular}{|c|c|c|l|}
@@ -11,7 +10,7 @@
         BFS & queue & \bigo{$2^h$} & 第一次扩展到最近点，最短路性质（边的权重为1时） \\ \hline
     \end{tabular}
 \end{table}
-
+可见，因为BFS的最短路性质，当需要解决最小操作数、最短距离、最短路等问题时，可以尝试使用BFS。而当题目难以思考时，可尝试DFS。
 
 稠密图：邻接矩阵 \lstinline{g[N][N]}, a和b之间是否有边，且边的权重是多少
 
@@ -19,9 +18,9 @@
 
 
 \section{DFS}
-从搜索树的角度来看。
+从搜索树的角度来看，每一个DFS都对应一个搜索树。DFS最重要的是考虑搜索顺序，以什么顺序进行解空间的遍历。
 
-回溯：
+回溯：回溯的过程由递归处理，每次需要手动维护自己的数据结构，保证恢复现场。
 
 剪枝：
 
@@ -239,6 +238,8 @@
 
 \section{BFS}
 
+宽度优先搜索的基本思路是初始化一个队列，需要决定队列中存储的是什么。进入队列循环后从对头弹出元素 $t$ 之后，选择 $t$ 可拓展的节点之后将拓展节点入队。
+
 \subsection{AcWing 844. 走迷宫}
 \begin{titledbox}{AcWing 844. 走迷宫}
     给定一个 $n \times m$ 的二维整数数组，用来表示一个迷宫，数组中只包含 $0$ 或 $1$，其中 $0$ 表示可以走的路，$1$ 表示不可通过的墙壁。最初，有一个人位于左上角 $(1, 1)$ 处，已知该人每次可以向上、下、左、右任意一个方向移动一个位置。请问，该人从左上角移动至右下角 $(n, m)$ 处，至少需要移动多少次。数据保证 $(1, 1)$ 处和 $(n, m)$ 处的数字为 $0$，且一定至少存在一条通路。
@@ -325,6 +326,10 @@
     }
 \end{mycpptwocol}
 
+\begin{information}
+    若想要输出最短路径，则可以开一个数组 \lstinline{Pair prev[N][N];} 来存储每一个点的前一个节点（在扩展 $t$ 时可以操作），最后从后往前循环输出即可。
+\end{information}
+
 \subsection{AcWing 845. 八数码}
 \begin{titledbox}{AcWing 845. 八数码}
     在一个 $3 \times 3$ 的网格中，$1 \sim 8$ 这 $8$ 个数字和一个 \lstinline{x} 恰好不重不漏地分布在这 $3 \times 3$ 的网格中。
@@ -374,7 +379,43 @@
 \end{titledbox}
 
 
+\section{树与图的存储}
+树是一种特殊的图（无环联通图）；图分为有向图和无向图，无向图又可看作是特殊的有向图（每两个相连的节点之间有两条分别指向对方的边）。所以树和图均可统一看作图，故此处仅讨论有向图的存储方式。
+
+有向图的存储有两种方式：
+\begin{description}
+    \item[邻接矩阵]
+    使用二维数组存储图 \lstinline{g[a][b]} 表示边 $a \rightarrow b$ 上的权重，若无权图则表示边的存在性。空间复杂度为 \bigo{$n^2$} ，比较浪费空间，常用来存储稠密图。
+    \item[邻接表]
+    使用链表的形式，每一个节点对应一个单链表来存储由该点出发可以走到的所有点。
+\end{description}
+由上可见，邻接表的存储方式和Hash表的拉链法是一样的。
+
+
 \section{树与图的深度优先遍历}
+
+模版如下：
+\begin{mycpptwocol}[dfs in tree and graphic]
+    int h[N], e[M], ne[M], idx;
+    bool st[N]; // 状态数组，存储节点时候已访问
+
+    void add(int a, int b) {
+        e[++idx] = b;
+        ne[idx] = h[a];
+        h[a] = idx;
+    }
+
+    void dfs(int u) {
+        st[u] = true;
+        for (int i = h[t]; i != -1; i = ne[i]) {
+            int j = e[i];
+            if (!st[j] && check(j)) {
+                dfs(j);
+            }
+        }
+    }
+\end{mycpptwocol}
+其中，14行的 \lstinline{check(j)} 的作用是剪枝。
 
 \subsection{AcWing 846. 树的重心}
 \begin{titledbox}{AcWing 846. 树的重心}
@@ -410,6 +451,69 @@
     \end{outputblock}
 \end{titledbox}
 
+\begin{mycpptwocol}[树的DFS]
+    #include <stdio.h>
+    #include <stdlib.h>
+    #include <stdbool.h>
+
+    #define N 100010
+
+    int h[N], e[N], ne[N], idx;
+    bool st[N];
+    int ans = N;
+
+    void add(int a, int b) {
+        e[++idx] = b;
+        ne[idx] = h[a];
+        h[a] = idx;
+    }
+
+    int max(int a, int b) {
+        return a > b ? a : b;
+    }
+
+    int min(int a, int b) {
+        return a < b ? a : b;
+    }
+
+    // 返回以节点u为根的子树的节点数
+    int dfs(int u, int n) {
+        st[u] = true;
+
+        int sum = 1; // 计入当前节点
+        // res为去掉u之后所有连通块中节点数最大值
+        int res = 0;
+        for (int i = h[u]; i != -1; i = ne[i]) {
+            int j = e[i];
+            if (!st[j]) {
+                int s = dfs(j, n);
+                res = max(res, s);
+                sum += s;
+            }
+        }
+        res = max(res, n - sum);
+        ans = min(ans, res);
+        return sum;
+    }
+
+    int main() {
+        memset(h, -1, sizeof(h));
+        int n;
+        scanf("%d", &n);
+
+        int a;
+        int b;
+        for (int i = 0; i < n - 1; i++) {
+            scanf("%d %d", &a, &b);
+            add(a, b);
+            add(b, a);
+        }
+        dfs(1, n);
+        printf("%d", ans);
+        return 0;
+    }
+\end{mycpptwocol}
+
 
 \section{树与图的广度优先遍历}
 
@@ -442,6 +546,58 @@
     \end{outputblock}
 \end{titledbox}
 
+\begin{mycpptwocol}[图的BFS]
+    #include <stdio.h>
+    #include <stdlib.h>
+
+    #define N 100010
+
+    int h[N], e[N], ne[N], idx;
+
+    int d[N];
+
+    void add(int a, int b) {
+        e[++idx] = b;
+        ne[idx] = h[a];
+        h[a] = idx;
+    }
+
+    int bfs(int n) {
+        int *q = (int *)calloc(n, sizeof(int));
+        int tt = 0;
+        int hh = 0;
+        q[tt++] = 1;
+        d[1] = 0;
+        while (hh < tt) {
+            int t = q[hh++];
+            for (int i = h[t]; i != -1; i = ne[i]) {
+                int j = e[i];
+                if (d[j] == -1) {
+                    d[j] = d[t] + 1;
+                    q[tt++] = j;
+                }
+            }
+        }
+        return d[n];
+    }
+
+    int main() {
+        memset(h, -1, sizeof(h));
+        memset(d, -1, sizeof(d));
+        int n;
+        int m;
+        scanf("%d %d", &n, &m);
+        int a;
+        int b;
+        while (m--) {
+            scanf("%d %d", &a, &b);
+            add(a, b);
+        }
+        printf("%d", bfs(n));
+        return 0;
+    }
+\end{mycpptwocol}
+
 
 \section{拓扑排序}
 
@@ -471,6 +627,68 @@
         1 2 3
     \end{outputblock}
 \end{titledbox}
+
+\begin{mycpptwocol}[拓扑排序]
+    #include <stdio.h>
+    #include <stdlib.h>
+    #include <stdbool.h>
+
+    #define N 100010
+
+    int h[N], e[N], ne[N], idx;
+    int degree[N];
+
+    int q[N], hh, tt;
+
+    void Add(int a, int b) {
+        e[++idx] = b;
+        ne[idx] = h[a];
+        h[a] = idx;
+        degree[b]++;
+    }
+
+    bool TopoSort(int n) {
+        for (int i = 1; i <= n; i++) {
+            if (degree[i] == 0) {
+                q[tt++] = i;
+            }
+        }
+        while (hh < tt) {
+            int t = q[hh++];
+            for (int i = h[t]; i != -1; i = ne[i]) {
+                int j = e[i];
+                degree[j]--;
+                if (degree[j] == 0) {
+                    q[tt++] = j;
+                }
+            }
+        }
+        return tt == n;
+    }
+
+    int main()
+        {
+        memset(h, -1, sizeof(h));
+        int n;
+        int m;
+        scanf("%d %d", &n, &m);
+        int a;
+        int b;
+        while (m--) {
+            scanf("%d %d", &a, &b);
+            Add(a, b);
+        }
+        if (TopoSort(n)) {
+            int hh = 0;
+            while (hh < tt) {
+                printf("%d ", q[hh++]);
+            }
+        } else {
+            puts("-1");
+        }
+        return 0;
+    }
+\end{mycpptwocol}
 
 
 \section{有向图的最短路问题}
