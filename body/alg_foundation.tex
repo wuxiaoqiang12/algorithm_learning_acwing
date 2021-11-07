@@ -1,6 +1,8 @@
 \chapter{算法基础}
 
+
 \section{快速排序}
+
 \subsection{AcWing 785. 快速排序}
 
 \begin{titledbox}{AcWing 785. 快速排序}
@@ -17,15 +19,15 @@
     数据范围：$1 \le n \le 100000$
 
     \begin{minipage}[t]{.5\textwidth}
-    % \raggedright
-    输入样例：\\
-    5 \\
-    3 1 2 4 5
+        % \raggedright
+        输入样例：\\
+        5 \\
+        3 1 2 4 5
     \end{minipage}% <---------------- Note the use of "%"
     \begin{minipage}[t]{.5\textwidth}
-    % \raggedcenter
-    输出样例：\\
-    1 2 3 4 5
+        % \raggedcenter
+        输出样例：\\
+        1 2 3 4 5
     \end{minipage}
 \end{titledbox}
 
@@ -35,59 +37,59 @@
 
 主要步骤如下：
 \begin{enumerate}
-  \item 确定分界点$x$，可取值：\lstinline{q[l]}, \lstinline{q[r]}, \lstinline{q[(l + r) >> 1]}, random value
-  \item 调整数组，使得左边小于等于$x$，右边大于等于$x$
-  \item 递归处理左右两段
+    \item 确定分界点$x$，可取值：\lstinline{q[l]}, \lstinline{q[r]}, \lstinline{q[(l + r) >> 1]}, random value
+    \item 调整数组，使得左边小于等于$x$，右边大于等于$x$
+    \item 递归处理左右两段
 \end{enumerate}
 
 \begin{mycpptwocol}[quick sort]
-#include <stdio.h>
-#include <stdlib.h>
+    #include <stdio.h>
+    #include <stdlib.h>
 
-void swap(int *q, int a, int b) {
-    int tmp = q[a];
-    q[a] = q[b];
-    q[b] = tmp;
-}
-
-void quick_sort(int *q, int l, int r)
-{
-    if (l >= r) {
-        return;
+    void swap(int *q, int a, int b) {
+        int tmp = q[a];
+        q[a] = q[b];
+        q[b] = tmp;
     }
-    int x = q[(l + r) >> 1];
-    int i = l - 1;
-    int j = r + 1;
-    while (i < j) {
-        do i++; while (q[i] < x);
-        do j--; while (q[j] > x);
-        if (i < j) {
-            swap(q, i, j);
+
+    void quick_sort(int *q, int l, int r)
+        {
+        if (l >= r) {
+            return;
         }
-    }
-    quick_sort(q, l, j);
-    quick_sort(q, j + 1, r);
-}
-
-int main() {
-    int n;
-    scanf("%d", &n);
-    int *q = (int *)calloc(sizeof(int), n);
-    if (q == NULL) {
-        return -1;
-    }
-    for (int i = 0; i < n; i++) {
-        scanf("%d", q + i);
+        int x = q[(l + r) >> 1];
+        int i = l - 1;
+        int j = r + 1;
+        while (i < j) {
+            do i++; while (q[i] < x);
+            do j--; while (q[j] > x);
+            if (i < j) {
+                swap(q, i, j);
+            }
+        }
+        quick_sort(q, l, j);
+        quick_sort(q, j + 1, r);
     }
 
-    quick_sort(q, 0, n - 1);
+    int main() {
+        int n;
+        scanf("%d", &n);
+        int *q = (int *)calloc(sizeof(int), n);
+        if (q == NULL) {
+            return -1;
+        }
+        for (int i = 0; i < n; i++) {
+            scanf("%d", q + i);
+        }
 
-    for (int i = 0; i < n; i++) {
-        printf("%d ", q[i]);
-    } 
-    free(q);
-    return 0;
-}
+        quick_sort(q, 0, n - 1);
+
+        for (int i = 0; i < n; i++) {
+            printf("%d ", q[i]);
+        }
+        free(q);
+        return 0;
+    }
 \end{mycpptwocol}
 
 从上述代码段中可以清晰看到递归处理的过程，每次选取分界点，之后将左右两侧的元素进行调整，此处采用双指针算法。
@@ -103,9 +105,9 @@ int main() {
 \end{keypoint}
 
 \begin{information}
-  该算法\textbf{不稳定}，因为\lstinline{q[i]}和\lstinline{q[j]}相等的时候会发生交换。
+    该算法\textbf{不稳定}，因为\lstinline{q[i]}和\lstinline{q[j]}相等的时候会发生交换。
 
-  这里调整数组的部分是难点，怎么优雅的调整数组？暴力做法可以开辟两个辅助数组来存储。双指针做法优雅简洁。
+    这里调整数组的部分是难点，怎么优雅的调整数组？暴力做法可以开辟两个辅助数组来存储。双指针做法优雅简洁。
 \end{information}
 
 时间复杂度分析：
@@ -114,87 +116,88 @@ int main() {
 快速选择算法可选出有序数组中的第$k$个数，与快排中逻辑相同，左侧的元素都小于$x$右侧元素都大于$x$。如果左侧元素的数量大于等于$k$则表示第$k$个元素在左侧数组中，反之则在右侧数组中寻找$k-\text{left length}$的元素。
 
 \begin{titledbox}{AcWing 786. 第k个数}
-给定一个长度为 $n$ 的整数数列，以及一个整数 $k$，请用快速选择算法求出数列从小到大排序后的第 $k$ 个数。
+    给定一个长度为 $n$ 的整数数列，以及一个整数 $k$，请用快速选择算法求出数列从小到大排序后的第 $k$ 个数。
 
-输入格式：
+    输入格式：
 
-第一行包含两个整数 $n$ 和 $k$。
-第二行包含 $n$ 个整数（所有整数均在 $1 \sim 10^9$ 范围内），表示整数数列。
+    第一行包含两个整数 $n$ 和 $k$。
+    第二行包含 $n$ 个整数（所有整数均在 $1 \sim 10^9$ 范围内），表示整数数列。
 
-输出格式：
+    输出格式：
 
-输出一个整数，表示数列的第 $k$ 小数。
+    输出一个整数，表示数列的第 $k$ 小数。
 
-数据范围：
+    数据范围：
 
-$1 \le n \le 100000$,
-$1 \le k \le n$
+    $1 \le n \le 100000$,
+    $1 \le k \le n$
 
-\begin{minipage}[t]{.5\textwidth}
-    % \raggedright
-    输入样例：\\
-    5 3\\
-    3 1 2 4 5
+    \begin{minipage}[t]{.5\textwidth}
+        % \raggedright
+        输入样例：\\
+        5 3\\
+        3 1 2 4 5
     \end{minipage}% <---------------- Note the use of "%"
     \begin{minipage}[t]{.5\textwidth}
-    % \raggedcenter
-    输出样例：\\
-    3
-\end{minipage}
+        % \raggedcenter
+        输出样例：\\
+        3
+    \end{minipage}
 \end{titledbox}
 
 
 \begin{mycpptwocol}[find kth smallest number]
-#include <stdio.h>
-#include <stdlib.h>
+    #include <stdio.h>
+    #include <stdlib.h>
 
-int q_select(int *q, int l,
-             int r, int k) {
-    if (r <= l) {
-        return q[l];
-    }
+    int q_select(int *q, int l,
+    int r, int k) {
+        if (r <= l) {
+            return q[l];
+        }
 
-    int x = q[(l + r) >> 1];
-    int i = l - 1;
-    int j = r + 1;
+        int x = q[(l + r) >> 1];
+        int i = l - 1;
+        int j = r + 1;
 
-    while (i < j) {
-        do i++; while(q[i] < x);
-        do j--; while(q[j] > x);
+        while (i < j) {
+            do i++; while(q[i] < x);
+            do j--; while(q[j] > x);
 
-        if (i < j) {
-            int tmp = q[i];
-            q[i] = q[j];
-            q[j] = tmp;
+            if (i < j) {
+                int tmp = q[i];
+                q[i] = q[j];
+                q[j] = tmp;
+            }
+        }
+
+        int length = j - l + 1;
+        if (length < k) {
+            return q_select(q, j + 1, r,
+            k - length);
+        } else {
+            return q_select(q, l, j, k);
         }
     }
 
-    int length = j - l + 1;
-    if (length < k) {
-        return q_select(q, j + 1, r,
-            k - length);
-    } else {
-        return q_select(q, l, j, k);
+    int main()
+        {
+        int n;
+        int k;
+        scanf("%d %d", &n, &k);
+        int *q = (int *)calloc(sizeof(int), n);
+        if (q == NULL) {
+            return -1;
+        }
+        for (int i = 0; i < n; i++) {
+            scanf("%d", q + i);
+        }
+        int ret = q_select(q, 0, n - 1, k);
+        printf("%d", ret);
+        return 0;
     }
-}
-
-int main()
-{
-    int n;
-    int k;
-    scanf("%d %d", &n, &k);
-    int *q = (int *)calloc(sizeof(int), n);
-    if (q == NULL) {
-        return -1;
-    }
-    for (int i = 0; i < n; i++) {
-        scanf("%d", q + i);
-    }
-    int ret = q_select(q, 0, n - 1, k);
-    printf("%d", ret);
-    return 0;
-}
 \end{mycpptwocol}
+
 
 \section{归并排序}
 归并排序同样是基于\textbf{分治}算法，不过是以整个数组的中间位置来分。
@@ -203,30 +206,30 @@ int main()
 
 主要步骤如下：
 \begin{enumerate}
-  \item 确定分界点，\lstinline{mid = (l + r) >> 1}
-  \item 递归排序左右两边
-  \item 归并，将两个有序的子数组合二为一
+    \item 确定分界点，\lstinline{mid = (l + r) >> 1}
+    \item 递归排序左右两边
+    \item 归并，将两个有序的子数组合二为一
 \end{enumerate}
 
 \subsection{AcWing 787. 归并排序}
 \begin{titledbox}{AcWing 787. 归并排序}
     给定你一个长度为 $n$ 的整数数列。请你使用归并排序对这个数列按照从小到大进行排序。并将排好序的数列按顺序输出。
-  
+
     输入格式：
-  
+
     输入共两行，第一行包含整数 $n$。第二行包含 $n$ 个整数（所有整数均在 $1 \sim 10^9$ 范围内），表示整个数列。
-  
+
     输出格式：
-  
+
     输出共一行，包含 $n$ 个整数，表示排好序的数列。
-  
+
     数据范围：$1 \le n \le 100000$
-  
+
     \begin{inputblock}
         5 \\
         3 1 2 4 5
-        \end{inputblock}% <---------------- Note the use of "%"
-        \begin{minipage}[t]{.5\textwidth}
+    \end{inputblock}% <---------------- Note the use of "%"
+    \begin{minipage}[t]{.5\textwidth}
         % \raggedcenter
         输出样例：\\
         1 2 3 4 5
@@ -234,61 +237,61 @@ int main()
 \end{titledbox}
 
 \begin{mycpptwocol}[merge sort]
-#include <stdio.h>
-#include <stdlib.h>
+    #include <stdio.h>
+    #include <stdlib.h>
 
-#define N 100010
+    #define N 100010
 
-int backup[N];
+    int backup[N];
 
-void merge_sort(int *q, int l, int r)
-{
-    if (r <= l) {
-        return;
-    }
-    int mid = (l + r) >> 1;
-    merge_sort(q, l, mid);
-    merge_sort(q, mid + 1, r);
-    int k = 0;
-    int i = l;
-    int j = mid + 1;
-    while (i <= mid && j <= r) {
-        if (q[i] <= q[j]) {
+    void merge_sort(int *q, int l, int r)
+        {
+        if (r <= l) {
+            return;
+        }
+        int mid = (l + r) >> 1;
+        merge_sort(q, l, mid);
+        merge_sort(q, mid + 1, r);
+        int k = 0;
+        int i = l;
+        int j = mid + 1;
+        while (i <= mid && j <= r) {
+            if (q[i] <= q[j]) {
+                backup[k++] = q[i++];
+            }
+            if (q[j] < q[i]) {
+                backup[k++] = q[j++];
+            }
+        }
+        while (i <= mid) {
             backup[k++] = q[i++];
         }
-        if (q[j] < q[i]) {
+        while (j <= r) {
             backup[k++] = q[j++];
         }
-    }
-    while (i <= mid) {
-        backup[k++] = q[i++];
-    }
-    while (j <= r) {
-        backup[k++] = q[j++];
-    }
-    
-    for (i = l, j = 0; j < k; i++, j++) {
-        q[i] = backup[j];
-    }
-}
 
-int main()
-{
-    int n;
-    scanf("%d", &n);
-    int *q = (int *)calloc(sizeof(int), n);
-    if (q == NULL) {
-        return -1;
+        for (i = l, j = 0; j < k; i++, j++) {
+            q[i] = backup[j];
+        }
     }
-    for (int i = 0; i < n; i++) {
-        scanf("%d", q + i);
+
+    int main()
+        {
+        int n;
+        scanf("%d", &n);
+        int *q = (int *)calloc(sizeof(int), n);
+        if (q == NULL) {
+            return -1;
+        }
+        for (int i = 0; i < n; i++) {
+            scanf("%d", q + i);
+        }
+        merge_sort(q, 0, n - 1);
+        for (int i = 0; i < n; i++) {
+            printf("%d ", q[i]);
+        }
+        return 0;
     }
-    merge_sort(q, 0, n - 1);
-    for (int i = 0; i < n; i++) {
-        printf("%d ", q[i]);
-    }
-    return 0;
-}
 \end{mycpptwocol}
 
 双指针算法做归并
@@ -301,26 +304,26 @@ int main()
 \begin{titledbox}{AcWing 788. 逆序对的数量}
     给定一个长度为 $n$ 的整数数列，请你计算数列中的逆序对的数量。
     逆序对的定义如下：对于数列的第 $i$ 个和第 $j$ 个元素，如果满足 $i < j$ 且 $a[i] > a[j]$，则其为一个逆序对；否则不是。
-    
+
     输入格式：
 
     第一行包含整数 $n$，表示数列的长度。第二行包含 $n$ 个整数，表示整个数列。
-    
+
     输出格式：
-    
+
     输出一个整数，表示逆序对的个数。
 
     数据范围
 
     $1 \le n \le 100000$，
     数列中的元素的取值范围 $[1,10^9]$。
-    
+
     \begin{minipage}[t]{.5\textwidth}
         % \raggedright
         输入样例：\\
         2 3 4 5 6 1
-        \end{minipage}% <---------------- Note the use of "%"
-        \begin{minipage}[t]{.5\textwidth}
+    \end{minipage}% <---------------- Note the use of "%"
+    \begin{minipage}[t]{.5\textwidth}
         % \raggedcenter
         输出样例：\\
         5
@@ -330,97 +333,99 @@ int main()
 分治思路，将整个区间一分为二。考虑到归并排序的时候需要将两个有序数组合并，此时恰好可以做逆序对的统计。假设有一种算法，可以将数组排序的过程中统计该数组中的逆序对数量，则问题变为怎么统计两个有序数组中合起来的逆序对。
 
 \begin{mycpptwocol}[归并排序计算逆序对数量]
-#include <stdio.h>
-#include <stdlib.h>
+    #include <stdio.h>
+    #include <stdlib.h>
 
-long long merge_sort(int *q, int *tmp,
-                     int l, int r) {
-    if (l >= r) {
-        return 0;
-    }
-    int mid = (l + r) >> 1;
-    // 左侧的数组已统计逆序对且已经排序，右侧同样
-    long long res = merge_sort(q, tmp, l, mid) + merge_sort(q, tmp, mid + 1, r);
-    // 统计两个有序数组合起来的逆序对数量
-    int i = l;
-    int j = mid + 1;
-    int k = 0;
-    while (i <= mid && j <= r) {
-        if (q[i] > q[j]) {
-            res += mid - i + 1;
-            tmp[k++] = q[j++];
-        } else {
+    long long merge_sort(int *q, int *tmp,
+    int l, int r) {
+        if (l >= r) {
+            return 0;
+        }
+        int mid = (l + r) >> 1;
+        // 左侧的数组已统计逆序对且已经排序，右侧同样
+        long long res = merge_sort(q, tmp, l, mid) + merge_sort(q, tmp, mid + 1, r);
+        // 统计两个有序数组合起来的逆序对数量
+        int i = l;
+        int j = mid + 1;
+        int k = 0;
+        while (i <= mid && j <= r) {
+            if (q[i] > q[j]) {
+                res += mid - i + 1;
+                tmp[k++] = q[j++];
+            } else {
+                tmp[k++] = q[i++];
+            }
+        }
+
+        while (i <= mid) {
             tmp[k++] = q[i++];
         }
-    }
-    
-    while (i <= mid) {
-        tmp[k++] = q[i++];
-    }
-    while (j <= r) {
-        tmp[k++] = q[j++];
-    }
-    for (i = l, j = 0; i <= r;
-         i++, j++) {
-        q[i] = tmp[j];
-    }
-    
-    return res;
-}
+        while (j <= r) {
+            tmp[k++] = q[j++];
+        }
+        for (i = l, j = 0; i <= r;
+        i++, j++) {
+            q[i] = tmp[j];
+        }
 
-int main()
-{
-    int n;
-    scanf("%d", &n);
-    int *q = (int *)calloc(n, sizeof(int));
-    if (q == NULL) {
-        return -1;
+        return res;
     }
-    int *tmp = (int *)calloc(n, sizeof(int));
-    if (tmp == NULL) {
-        free(q);
-        return -1;
-    }
-    for(int i = 0; i < n; i++) {
-        scanf("%d", &q[i]);
-    }
-    
-    printf("%ld", merge_sort(q, tmp, 0, n - 1));
 
-    return 0;
-}
+    int main()
+        {
+        int n;
+        scanf("%d", &n);
+        int *q = (int *)calloc(n, sizeof(int));
+        if (q == NULL) {
+            return -1;
+        }
+        int *tmp = (int *)calloc(n, sizeof(int));
+        if (tmp == NULL) {
+            free(q);
+            return -1;
+        }
+        for(int i = 0; i < n; i++) {
+            scanf("%d", &q[i]);
+        }
+
+        printf("%ld", merge_sort(q, tmp, 0, n - 1));
+
+        return 0;
+    }
 \end{mycpptwocol}
+
+
 \section{二分}
 整数二分和浮点数二分，二分即查找一个边界值，在左侧满足某种性质，右侧不满足。
 
 二分用模版如下：
 \begin{mycpptwocol}[二分模版]
-// 区间[l, r]被划分为[l, mid] 和
-// [mid + 1, r]时使用, 往左找
-int bsearch_1(int l, int r)
-{
-    while (l < r) {
-        mid = (l + r) / 2;
-        if (Check(mid)) {
-            r = mid;
-        } else {
-            l = mid + 1;
+    // 区间[l, r]被划分为[l, mid] 和
+    // [mid + 1, r]时使用, 往左找
+    int bsearch_1(int l, int r)
+        {
+        while (l < r) {
+            mid = (l + r) / 2;
+            if (Check(mid)) {
+                r = mid;
+            } else {
+                l = mid + 1;
+            }
         }
     }
-}
-// 区间[l, r]被划分为[l, mid - 1] 和
-// [mid, r]时使用，往右找
-int bsearch_2(int l, int r)
-{
-    while (l < r) {
-        mid = (l + r + 1) / 2;
-        if (Check(mid)) {
-            l = mid;
-        } else {
-            r = mid - 1;
+    // 区间[l, r]被划分为[l, mid - 1] 和
+    // [mid, r]时使用，往右找
+    int bsearch_2(int l, int r)
+        {
+        while (l < r) {
+            mid = (l + r + 1) / 2;
+            if (Check(mid)) {
+                l = mid;
+            } else {
+                r = mid - 1;
+            }
         }
     }
-}
 \end{mycpptwocol}
 
 \begin{keypoint}
@@ -431,97 +436,97 @@ int bsearch_2(int l, int r)
 
 \subsection{AcWing 789. 数的范围}
 \begin{titledbox}{AcWing 789. 数的范围}
-给定一个按照升序排列的长度为 $n$ 的整数数组，以及 $q$ 个查询。对于每个查询，返回一个元素 $k$ 的起始位置和终止位置（位置从 $0$ 开始计数）。如果数组中不存在该元素，则返回\lstinline{-1 -1}。
+    给定一个按照升序排列的长度为 $n$ 的整数数组，以及 $q$ 个查询。对于每个查询，返回一个元素 $k$ 的起始位置和终止位置（位置从 $0$ 开始计数）。如果数组中不存在该元素，则返回\lstinline{-1 -1}。
 
-输入格式：
+    输入格式：
 
-第一行包含整数 $n$ 和 $q$，表示数组长度和询问个数。第二行包含 $n$ 个整数（均在 $1 \sim 10000$ 范围内），表示完整数组。接下来 $q$ 行，每行包含一个整数 $k$，表示一个询问元素。
+    第一行包含整数 $n$ 和 $q$，表示数组长度和询问个数。第二行包含 $n$ 个整数（均在 $1 \sim 10000$ 范围内），表示完整数组。接下来 $q$ 行，每行包含一个整数 $k$，表示一个询问元素。
 
-输出格式：
+    输出格式：
 
-共 $q$ 行，每行包含两个整数，表示所求元素的起始位置和终止位置。
+    共 $q$ 行，每行包含两个整数，表示所求元素的起始位置和终止位置。
 
-数据范围
-$1 \le n \le 100000$，
-$1 \le q \le 10000$，
-$1 \le k \le 10000$
+    数据范围
+    $1 \le n \le 100000$，
+    $1 \le q \le 10000$，
+    $1 \le k \le 10000$
 
-\begin{minipage}[t]{.5\textwidth}
-    % \raggedright
-    输入样例：\\
-    6 3 \\
-    1 2 2 3 3 4 \\
-    3 \\
-    4 \\
-    5
+    \begin{minipage}[t]{.5\textwidth}
+        % \raggedright
+        输入样例：\\
+        6 3 \\
+        1 2 2 3 3 4 \\
+        3 \\
+        4 \\
+        5
     \end{minipage}% <---------------- Note the use of "%"
     \begin{minipage}[t]{.5\textwidth}
-    % \raggedcenter
-    输出样例：\\
-    3 4 \\
-    5 5 \\
-    -1 -1
-\end{minipage}
+        % \raggedcenter
+        输出样例：\\
+        3 4 \\
+        5 5 \\
+        -1 -1
+    \end{minipage}
 \end{titledbox}
 
 
 \begin{mycpptwocol}[binary search]
-#include <stdio.h>
-#include <stdlib.h>
+    #include <stdio.h>
+    #include <stdlib.h>
 
-int b_search_l(int *q, int l,
-               int r, int t) {
-    while (l < r) {
-        int mid = (l + r) >> 1;
-        if (q[mid] >= t) {
-            r = mid;
-        } else {
-            l = mid + 1;
+    int b_search_l(int *q, int l,
+    int r, int t) {
+        while (l < r) {
+            int mid = (l + r) >> 1;
+            if (q[mid] >= t) {
+                r = mid;
+            } else {
+                l = mid + 1;
+            }
         }
-    }
-    if (q[l] != t) {
-        return -1;
-    }
-    return l;
-}
-
-int b_search_r(int *q, int l,
-               int r, int t) {
-    while (l < r) {
-        int mid = (l + r) / 2 + 1;
-        if (q[mid] <= t) {
-            l = mid;
-        } else {
-            r = mid - 1;
+        if (q[l] != t) {
+            return -1;
         }
+        return l;
     }
-    if (q[l] != t) {
-        return -1;
-    }
-    return l;
-}
 
-int main()
-{
-    int n;
-    int q;
-    scanf("%d %d", &n, &q);
-    int *q = (int *)calloc(sizeof(int), n);
-    if (q == NULL) {
-        return -1;
+    int b_search_r(int *q, int l,
+    int r, int t) {
+        while (l < r) {
+            int mid = (l + r) / 2 + 1;
+            if (q[mid] <= t) {
+                l = mid;
+            } else {
+                r = mid - 1;
+            }
+        }
+        if (q[l] != t) {
+            return -1;
+        }
+        return l;
     }
-    for (int i = 0; i < n; i++) {
-        scanf("%d", q + i);
+
+    int main()
+        {
+        int n;
+        int q;
+        scanf("%d %d", &n, &q);
+        int *q = (int *)calloc(sizeof(int), n);
+        if (q == NULL) {
+            return -1;
+        }
+        for (int i = 0; i < n; i++) {
+            scanf("%d", q + i);
+        }
+        while(q--) {
+            int t;
+            scanf("%d", &t);
+            printf("%d %d\n",
+            b_search_l(q, 0, n - 1, t),
+            b_search_r(q, 0, n - 1, t));
+        }
+        return 0;
     }
-    while(q--) {
-        int t;
-        scanf("%d", &t);
-        printf("%d %d\n",
-        b_search_l(q, 0, n - 1, t),
-        b_search_r(q, 0, n - 1, t));
-    }
-    return 0;
-}
 \end{mycpptwocol}
 
 \begin{exclamation}
@@ -539,9 +544,9 @@ int main()
     输出格式：
 
     共一行，包含一个浮点数，表示问题的解。
-    
+
     注意，结果保留 $6$ 位小数。
-    
+
     数据范围：
 
     $-10000 \le n \le 10000$
@@ -550,8 +555,8 @@ int main()
         % \raggedright
         输入样例：\\
         1000.00
-        \end{minipage}% <---------------- Note the use of "%"
-        \begin{minipage}[t]{.5\textwidth}
+    \end{minipage}% <---------------- Note the use of "%"
+    \begin{minipage}[t]{.5\textwidth}
         % \raggedcenter
         输出样例：\\
         10.000000
@@ -559,31 +564,33 @@ int main()
 \end{titledbox}
 
 \begin{mycpptwocol}[数的三次方根]
-#include <stdio.h>
+    #include <stdio.h>
 
-#define N 10000
+    #define N 10000
 
-int main()
-{
-    double n;
-    scanf("%lf", &n);
-    double l = 0 - N;
-    double r = N;
+    int main()
+        {
+        double n;
+        scanf("%lf", &n);
+        double l = 0 - N;
+        double r = N;
 
-    while (r - l > 1e-8) {
-        double mid = (l + r) / 2;
-        if (mid * mid * mid < n) {
-            l = mid;
-        } else {
-            r = mid;
+        while (r - l > 1e-8) {
+            double mid = (l + r) / 2;
+            if (mid * mid * mid < n) {
+                l = mid;
+            } else {
+                r = mid;
+            }
         }
+        printf("%.6f", l);
+        return 0;
     }
-    printf("%.6f", l);
-    return 0;
-}
 \end{mycpptwocol}
 
+
 \section{高精度}
+
 
 \section{前缀和与差分}
 \begin{enumerate}
@@ -594,12 +601,12 @@ int main()
 \subsection{AcWing 795. 前缀和}
 \begin{titledbox}{AcWing 795. 前缀和}
     输入一个长度为 $n$ 的整数序列。接下来再输入 $m$ 个询问，每个询问输入一对 $l, r$。对于每个询问，输出原序列中从第 $l$ 个数到第 $r$ 个数的和。
-    
+
     输入格式：
 
     第一行包含两个整数 $n$ 和 $m$。第二行包含 $n$ 个整数，表示整数数列。
     接下来 $m$ 行，每行包含两个整数 $l$ 和 $r$，表示一个询问的区间范围。
-    
+
     输出格式：
 
     共 $m$ 行，每行输出一个询问的结果。
@@ -607,7 +614,7 @@ int main()
     数据范围：
 
     $1 \le l \le r \le n$, $1 \le n,m \le 100000$, $-1000 \le \text{数列中元素的值} \le 1000$
-    
+
     \begin{minipage}[t]{.5\textwidth}
         % \raggedright
         输入样例：\\
@@ -616,8 +623,8 @@ int main()
         1 2 \\
         1 3 \\
         2 4
-        \end{minipage}% <---------------- Note the use of "%"
-        \begin{minipage}[t]{.5\textwidth}
+    \end{minipage}% <---------------- Note the use of "%"
+    \begin{minipage}[t]{.5\textwidth}
         % \raggedcenter
         输出样例：\\
         3 \\
@@ -627,28 +634,28 @@ int main()
 \end{titledbox}
 
 \begin{mycpponecol}[前缀和]
-#include <stdio.h>
-#include <stdlib.h>
+    #include <stdio.h>
+    #include <stdlib.h>
 
-int main()
-{
-    int n;
-    int m;
-    scanf("%d %d", &n, &m);
-    int *q = (int *)calloc(n + 1, sizeof(int));
-    int *preSum = (int *)calloc(n + 1, sizeof(int));
-    for (int i = 1; i <= n; i++) {
-        scanf("%d", q + i);
-        preSum[i] = preSum[i - 1] + q[i];
+    int main()
+        {
+        int n;
+        int m;
+        scanf("%d %d", &n, &m);
+        int *q = (int *)calloc(n + 1, sizeof(int));
+        int *preSum = (int *)calloc(n + 1, sizeof(int));
+        for (int i = 1; i <= n; i++) {
+            scanf("%d", q + i);
+            preSum[i] = preSum[i - 1] + q[i];
+        }
+        while (m--) {
+            int l;
+            int r;
+            scanf("%d %d", &l, &r);
+            printf("%d\n", preSum[r] - preSum[l - 1]);
+        }
+        return 0;
     }
-    while (m--) {
-        int l;
-        int r;
-        scanf("%d %d", &l, &r);
-        printf("%d\n", preSum[r] - preSum[l - 1]);
-    }
-    return 0;
-}
 \end{mycpponecol}
 
 \subsection{AcWing 796. 子矩阵的和}
@@ -660,17 +667,17 @@ int main()
     输入格式：
 
     第一行包含三个整数 $n$，$m$，$q$。接下来 $n$ 行，每行包含 $m$ 个整数，表示整数矩阵。接下来 $q$ 行，每行包含四个整数 $x_1, y_1, x_2, y_2$，表示一组询问。
-    
+
     输出格式：
 
     共 $q$ 行，每行输出一个询问的结果。
-    
+
     数据范围：
 
-    $1 \le n,m \le 1000$, 
-    $1 \le q \le 200000$, 
-    $1 \le x_1 \le x_2 \le n$, 
-    $1 \le y_1 \le y_2 \le m$, 
+    $1 \le n,m \le 1000$,
+    $1 \le q \le 200000$,
+    $1 \le x_1 \le x_2 \le n$,
+    $1 \le y_1 \le y_2 \le m$,
     $-1000 \le 矩阵内元素的值 \le 1000$
 
     \begin{inputblock}
@@ -681,8 +688,8 @@ int main()
         1 1 2 2 \\
         2 1 3 4\\
         1 3 3 4
-        \end{inputblock}% <---------------- Note the use of "%"
-        \begin{minipage}[t]{.5\textwidth}
+    \end{inputblock}% <---------------- Note the use of "%"
+    \begin{minipage}[t]{.5\textwidth}
         % \raggedcenter
         输出样例：\\
         17 \\
@@ -692,30 +699,30 @@ int main()
 \end{problembox}
 
 \begin{mycpponecol}[子矩阵的和]
-#include<stdio.h>
+    #include<stdio.h>
 
-#define N 1010
+    #define N 1010
 
-int mat[N][N];
-int preMat[N][N];
+    int mat[N][N];
+    int preMat[N][N];
 
-int main()
-{
-    int n, m, q;
-    scanf("%d %d %d", &n, &m, &q);
-    for (int i = 1; i <= n; i++) {
-        for (int j = 1; j <= m; j++) {
-            scanf("%d", &mat[i][j]);
-            preMat[i][j] = preMat[i - 1][j] + preMat[i][j - 1] - preMat[i - 1][j - 1] + mat[i][j];
+    int main()
+        {
+        int n, m, q;
+        scanf("%d %d %d", &n, &m, &q);
+        for (int i = 1; i <= n; i++) {
+            for (int j = 1; j <= m; j++) {
+                scanf("%d", &mat[i][j]);
+                preMat[i][j] = preMat[i - 1][j] + preMat[i][j - 1] - preMat[i - 1][j - 1] + mat[i][j];
+            }
         }
+        while (q--) {
+            int x1, y1, x2, y2;
+            scanf("%d %d %d %d", &x1, &y1, &x2, &y2);
+            printf("%d\n", preMat[x2][y2] - preMat[x2][y1 - 1] - preMat[x1 - 1][y2] + preMat[x1 - 1][y1 - 1]);
+        }
+        return 0;
     }
-    while (q--) {
-        int x1, y1, x2, y2;
-        scanf("%d %d %d %d", &x1, &y1, &x2, &y2);
-        printf("%d\n", preMat[x2][y2] - preMat[x2][y1 - 1] - preMat[x1 - 1][y2] + preMat[x1 - 1][y1 - 1]);
-    }
-    return 0;
-}
 \end{mycpponecol}
 
 \subsection{AcWing 797. 差分}
@@ -728,16 +735,16 @@ int main()
     第一行包含两个整数 $n$ 和 $m$。
     第二行包含 $n$ 个整数，表示整数序列。
     接下来 $m$ 行，每行包含三个整数 $l，r，c$，表示一个操作。
-    
+
     输出格式：\\
     共一行，包含 $n$ 个整数，表示最终序列。
-    
+
     数据范围：\\
     $1 \le n,m \le 100000$,
     $1 \le l \le r \le n$,
     $-1000 \le c \le 1000$,
     $-1000 \le \text{整数序列中元素的值} \le 1000$
-    
+
     \begin{inputblock}
         6 3 \\
         1 2 2 1 2 1 \\
@@ -751,41 +758,41 @@ int main()
 \end{titledbox}
 
 \begin{mycpptwocol}[差分]
-#include <stdio.h>
-#include <stdlib.h>
+    #include <stdio.h>
+    #include <stdlib.h>
 
-void Insert(int *diff, int l, int r, int c)
-{
-    diff[l] += c;
-    diff[r + 1] -= c;
-}
+    void Insert(int *diff, int l, int r, int c)
+        {
+        diff[l] += c;
+        diff[r + 1] -= c;
+    }
 
-int main()
-{
-    int n;
-    int m;
-    scanf("%d %d", &n, &m);
-    int *q = (int *)calloc(n + 1, sizeof(int));
-    int *diff = (int *)calloc(n + 1, sizeof(int));
-    for (int i = 1; i <= n; i++) {
-        scanf("%d", q + i);
-        Insert(diff, i, i, q[i]);
+    int main()
+        {
+        int n;
+        int m;
+        scanf("%d %d", &n, &m);
+        int *q = (int *)calloc(n + 1, sizeof(int));
+        int *diff = (int *)calloc(n + 1, sizeof(int));
+        for (int i = 1; i <= n; i++) {
+            scanf("%d", q + i);
+            Insert(diff, i, i, q[i]);
+        }
+        while (m--) {
+            int l;
+            int r;
+            int c;
+            scanf("%d %d %d", &l, &r, &c);
+            Insert(diff, l, r, c);
+        }
+        for (int i = 1; i <= n; i++) {
+            diff[i] += diff[i - 1];
+            printf("%d ", diff[i]);
+        }
+        free(diff);
+        free(q);
+        return 0;
     }
-    while (m--) {
-        int l;
-        int r;
-        int c;
-        scanf("%d %d %d", &l, &r, &c);
-        Insert(diff, l, r, c);
-    }
-    for (int i = 1; i <= n; i++) {
-        diff[i] += diff[i - 1];
-        printf("%d ", diff[i]);
-    }
-    free(diff);
-    free(q);
-    return 0;
-}
 \end{mycpptwocol}
 
 \subsection{AcWing 798. 差分矩阵}
@@ -799,7 +806,7 @@ int main()
     输出格式：
 
     共 $n$ 行，每行 $m$ 个整数，表示所有操作进行完毕后的最终矩阵。
-    
+
     数据范围：
 
     $1 \le n,m \le 1000$, $1 \le q \le 100000$, $1 \le x_1 \le x_2 \le n$, $1 \le y_1 \le y_2 \le m$, $-1000 \le c \le 1000$, $-1000 \le 矩阵内元素的值 \le 1000$
@@ -820,52 +827,51 @@ int main()
 \end{titledbox}
 
 \begin{mycpptwocol}[差分矩阵]
-#include <stdio.h>
-#include <stdlib.h>
+    #include <stdio.h>
+    #include <stdlib.h>
 
-#define N 1010
+    #define N 1010
 
-int arr[N][N];
-int diff[N][N];
+    int arr[N][N];
+    int diff[N][N];
 
-void Insert(int x1, int y1, int x2, int y2, int c)
-{
-    diff[x1][y1] += c;
-    diff[x1][y2 + 1] -= c;
-    diff[x2 + 1][y1] -= c;
-    diff[x2 + 1][y2 + 1] += c;
-}
+    void Insert(int x1, int y1, int x2, int y2, int c)
+        {
+        diff[x1][y1] += c;
+        diff[x1][y2 + 1] -= c;
+        diff[x2 + 1][y1] -= c;
+        diff[x2 + 1][y2 + 1] += c;
+    }
 
-int main()
-{
-    int n;
-    int m;
-    int q;
-    scanf("%d %d %d", &n, &m, &q);
-    for (int i = 1; i <= n; i++) {
-        for (int j = 1; j <= m; j++) {
-            scanf("%d", &arr[i][j]);
-            Insert(i, j, i, j, arr[i][j]);
+    int main()
+        {
+        int n;
+        int m;
+        int q;
+        scanf("%d %d %d", &n, &m, &q);
+        for (int i = 1; i <= n; i++) {
+            for (int j = 1; j <= m; j++) {
+                scanf("%d", &arr[i][j]);
+                Insert(i, j, i, j, arr[i][j]);
+            }
         }
-    }
-    while (q--) {
-        int x1, y1, x2, y2, c;
-        scanf("%d %d %d %d %d", &x1, &y1, &x2, &y2, &c);
-        Insert(x1, y1, x2, y2, c);
-    }
-    
-    // construct origin matrix
-    for (int i = 1; i <= n; i++) {
-        for (int j = 1; j <= m; j++) {
-            diff[i][j] += diff[i - 1][j] + diff[i][j - 1] - diff[i - 1][j - 1];
-            printf("%d ", diff[i][j]);
+        while (q--) {
+            int x1, y1, x2, y2, c;
+            scanf("%d %d %d %d %d", &x1, &y1, &x2, &y2, &c);
+            Insert(x1, y1, x2, y2, c);
         }
-        printf("\n");
+
+        // construct origin matrix
+        for (int i = 1; i <= n; i++) {
+            for (int j = 1; j <= m; j++) {
+                diff[i][j] += diff[i - 1][j] + diff[i][j - 1] - diff[i - 1][j - 1];
+                printf("%d ", diff[i][j]);
+            }
+            printf("\n");
+        }
+        return 0;
     }
-    return 0;
-}
 \end{mycpptwocol}
-
 
 
 \section{双指针算法}
@@ -873,360 +879,366 @@ int main()
 
 \subsection{AcWing 799. 最长连续不重复子序列}
 \begin{titledbox}{AcWing 799. 最长连续不重复子序列}
-给定一个长度为 $n$ 的整数序列，请找出最长的不包含重复的数的连续区间，输出它的长度。
+    给定一个长度为 $n$ 的整数序列，请找出最长的不包含重复的数的连续区间，输出它的长度。
 
-输入格式：
+    输入格式：
 
-第一行包含整数 $n$。第二行包含 $n$ 个整数（均在 $0 \sim 10^5$ 范围内），表示整数序列。
+    第一行包含整数 $n$。第二行包含 $n$ 个整数（均在 $0 \sim 10^5$ 范围内），表示整数序列。
 
-输出格式：
+    输出格式：
 
-共一行，包含一个整数，表示最长的不包含重复的数的连续区间的长度。
+    共一行，包含一个整数，表示最长的不包含重复的数的连续区间的长度。
 
-数据范围：
+    数据范围：
 
-$1 \le n \le 10^5$
+    $1 \le n \le 10^5$
 
-\begin{inputblock}
-    5 \\
-    1 2 2 3 5
-\end{inputblock}
-\begin{outputblock}
-    3
-\end{outputblock}
+    \begin{inputblock}
+        5 \\
+        1 2 2 3 5
+    \end{inputblock}
+    \begin{outputblock}
+        3
+    \end{outputblock}
 \end{titledbox}
 滑动窗口，需要有个visited数组来统计每个元素的出现数量
 
 \begin{mycpptwocol}[最长连续不重复子序列]
-#include <stdio.h>
-#include <stdlib.h>
+    #include <stdio.h>
+    #include <stdlib.h>
 
-#define N 100010
-int visited[N];
+    #define N 100010
+    int visited[N];
 
-int main()
-{
-    int n;
-    scanf("%d", &n);
-    int *q = (int *)calloc(n, sizeof(int));
-    if (q == NULL) {
-        return -1;
-    }
-    for (int i = 0; i < n; i++) {
-        scanf("%d", &q[i]);
-    }
-    int start = 0;
-    int end = 0;
-    int max = 0;
-    for (end = 0; end < n; end++) {
-        // 标记当前元素
-        visited[q[end]] += 1;
-        while (visited[q[end]] > 1) {
-            // 如果当前元素重复出现，缩小窗口
-            visited[q[start]]--;
-            start++;
+    int main()
+        {
+        int n;
+        scanf("%d", &n);
+        int *q = (int *)calloc(n, sizeof(int));
+        if (q == NULL) {
+            return -1;
         }
-        max = max > (end - start + 1) ? max : (end - start + 1);
+        for (int i = 0; i < n; i++) {
+            scanf("%d", &q[i]);
+        }
+        int start = 0;
+        int end = 0;
+        int max = 0;
+        for (end = 0; end < n; end++) {
+            // 标记当前元素
+            visited[q[end]] += 1;
+            while (visited[q[end]] > 1) {
+                // 如果当前元素重复出现，缩小窗口
+                visited[q[start]]--;
+                start++;
+            }
+            max = max > (end - start + 1) ? max : (end - start + 1);
+        }
+        printf("%d", max);
+        free(arr);
+        return 0;
     }
-    printf("%d", max);
-    free(arr);
-    return 0;
-}
 \end{mycpptwocol}
 
 \subsection{AcWing 800. 数组元素的目标和}
 \begin{titledbox}{AcWing 800. 数组元素的目标和}
-给定两个升序排序的有序数组 $A$ 和 $B$，以及一个目标值 $x$。数组下标从 $0$ 开始。
-请你求出满足 $A[i] + B[j] = x$ 的数对 $(i, j)$。数据保证有唯一解。
+    给定两个升序排序的有序数组 $A$ 和 $B$，以及一个目标值 $x$。数组下标从 $0$ 开始。
+    请你求出满足 $A[i] + B[j] = x$ 的数对 $(i, j)$。数据保证有唯一解。
 
-输入格式：
+    输入格式：
 
-第一行包含三个整数 $n,m,x$，分别表示 $A$ 的长度，$B$ 的长度以及目标值 $x$。第二行包含 $n$ 个整数，表示数组 $A$。第三行包含 $m$ 个整数，表示数组 $B$。
+    第一行包含三个整数 $n,m,x$，分别表示 $A$ 的长度，$B$ 的长度以及目标值 $x$。第二行包含 $n$ 个整数，表示数组 $A$。第三行包含 $m$ 个整数，表示数组 $B$。
 
-输出格式：
+    输出格式：
 
-共一行，包含两个整数 $i$ 和 $j$。
+    共一行，包含两个整数 $i$ 和 $j$。
 
-数据范围：
+    数据范围：
 
-数组长度不超过 $10^5$。同一数组内元素各不相同。$1 \le \text{数组元素} \le 10^9$
+    数组长度不超过 $10^5$。同一数组内元素各不相同。$1 \le \text{数组元素} \le 10^9$
 
-\begin{inputblock}
-    4 5 6 \\
-    1 2 4 7 \\
-    3 4 6 8 9
-\end{inputblock}
-\begin{outputblock}
-    1 1
-\end{outputblock}
+    \begin{inputblock}
+        4 5 6 \\
+        1 2 4 7 \\
+        3 4 6 8 9
+    \end{inputblock}
+    \begin{outputblock}
+        1 1
+    \end{outputblock}
 \end{titledbox}
 
 \begin{mycpptwocol}[数组元素的目标和]
-#include <stdio.h>
-#include <stdlib.h>
+    #include <stdio.h>
+    #include <stdlib.h>
 
-int main()
-{
-    int n;
-    int m;
-    int x;
-    scanf("%d %d %d", &n, &m, &x);
-    int *a = (int *)calloc(n, sizeof(int));
-    int *b = (int *)calloc(m, sizeof(int));
-    for (int i = 0; i < n; i++) {
-        scanf("%d", a + i);
-    }
-    for (int i = 0; i < m; i++) {
-        scanf("%d", b + i);
-    }
-    
-    int i = 0;
-    int j = m - 1;
-    while (i < n && j >= 0) {
-        int sum = a[i] + b[j];
-        if (sum == x) {
-            printf("%d %d", i, j);
-            return 0;
-        } else if (sum > x) {
-            j--;
-        } else {
-            i++;
+    int main()
+        {
+        int n;
+        int m;
+        int x;
+        scanf("%d %d %d", &n, &m, &x);
+        int *a = (int *)calloc(n, sizeof(int));
+        int *b = (int *)calloc(m, sizeof(int));
+        for (int i = 0; i < n; i++) {
+            scanf("%d", a + i);
         }
+        for (int i = 0; i < m; i++) {
+            scanf("%d", b + i);
+        }
+
+        int i = 0;
+        int j = m - 1;
+        while (i < n && j >= 0) {
+            int sum = a[i] + b[j];
+            if (sum == x) {
+                printf("%d %d", i, j);
+                return 0;
+            } else if (sum > x) {
+                j--;
+            } else {
+                i++;
+            }
+        }
+        free(a);
+        free(b);
+        return 0;
     }
-    free(a);
-    free(b);
-    return 0;
-}
 \end{mycpptwocol}
 
 \subsection{AcWing 2816. 判断子序列}
 \begin{titledbox}{AcWing 2816. 判断子序列}
-给定一个长度为 $n$ 的整数序列 $a_1,a_2,\dots;,a_n$ 以及一个长度为 $m$ 的整数序列 $b_1,b_2,\dots;,b_m$。</p>
-请你判断 $a$ 序列是否为 $b$ 序列的子序列。子序列指序列的一部分项按\textbf{原有次序排列}而得的序列，例如序列 $\{a_1,a_3,a_5\}$ 是序列 $\{a_1,a_2,a_3,a_4,a_5\}$ 的一个子序列。
+    给定一个长度为 $n$ 的整数序列 $a_1,a_2,\dots;,a_n$ 以及一个长度为 $m$ 的整数序列 $b_1,b_2,\dots;,b_m$。</p>
+    请你判断 $a$ 序列是否为 $b$ 序列的子序列。子序列指序列的一部分项按\textbf{原有次序排列}而得的序列，例如序列 $\{a_1,a_3,a_5\}$ 是序列 $\{a_1,a_2,a_3,a_4,a_5\}$ 的一个子序列。
 
-输入格式：
+    输入格式：
 
-第一行包含两个整数 $n,m$。第二行包含 $n$ 个整数，表示 $a_1,a_2,\dots;,a_n$。第三行包含 $m$ 个整数，表示 $b_1,b_2,\dots;,b_m$。
+    第一行包含两个整数 $n,m$。第二行包含 $n$ 个整数，表示 $a_1,a_2,\dots;,a_n$。第三行包含 $m$ 个整数，表示 $b_1,b_2,\dots;,b_m$。
 
-输出格式：
+    输出格式：
 
-如果 $a$ 序列是 $b$ 序列的子序列，输出一行 Yes。否则，输出 No。
+    如果 $a$ 序列是 $b$ 序列的子序列，输出一行 Yes。否则，输出 No。
 
-数据范围：
+    数据范围：
 
-$1 \le n \le m \le 10^5$, $-10^9 \le a_i,b_i \le 10^9$
+    $1 \le n \le m \le 10^5$, $-10^9 \le a_i,b_i \le 10^9$
 
-\begin{inputblock}
-    3 5 \\
-    1 3 5 \\
-    1 2 3 4 5
-\end{inputblock}
-\begin{outputblock}
-    Yes
-\end{outputblock}
+    \begin{inputblock}
+        3 5 \\
+        1 3 5 \\
+        1 2 3 4 5
+    \end{inputblock}
+    \begin{outputblock}
+        Yes
+    \end{outputblock}
 \end{titledbox}
 
 \begin{mycpptwocol}[判断子序列]
-#include <stdio.h>
-#include <stdlib.h>
-#include <stdbool.h>
+    #include <stdio.h>
+    #include <stdlib.h>
+    #include <stdbool.h>
 
-bool IsSubSeq(int *a, int n, int *b, int m)
-{
-    int i = 0;
-    int j = 0;
-    while (i < n && j < m) {
-        if (a[i] == b[j]) {
-            i++;
-            j++;
-        } else {
-            j++;
+    bool IsSubSeq(int *a, int n, int *b, int m)
+        {
+        int i = 0;
+        int j = 0;
+        while (i < n && j < m) {
+            if (a[i] == b[j]) {
+                i++;
+                j++;
+            } else {
+                j++;
+            }
         }
+        return i == n;
     }
-    return i == n;
-}
 
-int main()
-{
-    int n;
-    int m;
-    scanf("%d %d", &n, &m);
-    int *a = (int *)calloc(n, sizeof(int));
-    int *b = (int *)calloc(m, sizeof(int));
-    for (int i = 0; i < n; i++) {
-        scanf("%d", a + i);
+    int main()
+        {
+        int n;
+        int m;
+        scanf("%d %d", &n, &m);
+        int *a = (int *)calloc(n, sizeof(int));
+        int *b = (int *)calloc(m, sizeof(int));
+        for (int i = 0; i < n; i++) {
+            scanf("%d", a + i);
+        }
+        for (int i = 0; i < m; i++) {
+            scanf("%d", b + i);
+        }
+        printf("%s",
+        IsSubSeq(a, n, b, m) ? "Yes" : "No");
+        free(a);
+        free(b);
+        return 0;
     }
-    for (int i = 0; i < m; i++) {
-        scanf("%d", b + i);
-    }
-    printf("%s",
-      IsSubSeq(a, n, b, m) ? "Yes" : "No");
-    free(a);
-    free(b);
-    return 0;
-}
 \end{mycpptwocol}
+
+
 \section{位运算}
+
 \subsection{AcWing 801. 二进制中1的个数}
 \begin{titledbox}{AcWing 801. 二进制中1的个数}
-给定一个长度为 $n$ 的数列，请你求出数列中每个数的二进制表示中 $1$ 的个数。
+    给定一个长度为 $n$ 的数列，请你求出数列中每个数的二进制表示中 $1$ 的个数。
 
-输入格式：
+    输入格式：
 
-第一行包含整数 $n$。第二行包含 $n$ 个整数，表示整个数列。
+    第一行包含整数 $n$。第二行包含 $n$ 个整数，表示整个数列。
 
-输出格式：
-共一行，包含 $n$ 个整数，其中的第 $i$ 个数表示数列中的第 $i$ 个数的二进制表示中 $1$ 的个数。
+    输出格式：
+    共一行，包含 $n$ 个整数，其中的第 $i$ 个数表示数列中的第 $i$ 个数的二进制表示中 $1$ 的个数。
 
-数据范围：
+    数据范围：
 
-$1 \le n \le 100000$, $0 \le \text{数列中元素的值} \le 10^9$
+    $1 \le n \le 100000$, $0 \le \text{数列中元素的值} \le 10^9$
 
-\begin{inputblock}
-    5 \\
-    1 2 3 4 5
-\end{inputblock}
-\begin{outputblock}
-    1 1 2 1 2
-\end{outputblock}
+    \begin{inputblock}
+        5 \\
+        1 2 3 4 5
+    \end{inputblock}
+    \begin{outputblock}
+        1 1 2 1 2
+    \end{outputblock}
 \end{titledbox}
 
 \begin{mycpptwocol}[LowBit 运算]
-#include <stdio.h>
-#include <stdlib.h>
+    #include <stdio.h>
+    #include <stdlib.h>
 
-int LowBit(int x)
-{
-    return x & (-x);
-}
-
-int Count(int x)
-{
-    int cnt = 0;
-    while (x != 0) {
-        cnt++;
-        x -= LowBit(x);
+    int LowBit(int x)
+        {
+        return x & (-x);
     }
-    return cnt;
-}
 
-int main()
-{
-    int n;
-    scanf("%d", &n);
-    while (n--) {
-        int x;
-        scanf("%d", &x);
-        printf("%d ", Count(x));
+    int Count(int x)
+        {
+        int cnt = 0;
+        while (x != 0) {
+            cnt++;
+            x -= LowBit(x);
+        }
+        return cnt;
     }
-    return 0;
-}
+
+    int main()
+        {
+        int n;
+        scanf("%d", &n);
+        while (n--) {
+            int x;
+            scanf("%d", &x);
+            printf("%d ", Count(x));
+        }
+        return 0;
+    }
 \end{mycpptwocol}
 
+
 \section{离散化}
+
 \subsection{AcWing 802. 区间和}
 \begin{titledbox}{AcWing 802. 区间和}
-假定有一个无限长的数轴，数轴上每个坐标上的数都是 $0$。现在，我们首先进行 $n$ 次操作，每次操作将某一位置 $x$ 上的数加 $c$。接下来，进行 $m$ 次询问，每个询问包含两个整数 $l$ 和 $r$，你需要求出在区间 $[l, r]$ 之间的所有数的和。
+    假定有一个无限长的数轴，数轴上每个坐标上的数都是 $0$。现在，我们首先进行 $n$ 次操作，每次操作将某一位置 $x$ 上的数加 $c$。接下来，进行 $m$ 次询问，每个询问包含两个整数 $l$ 和 $r$，你需要求出在区间 $[l, r]$ 之间的所有数的和。
 
-输入格式：
+    输入格式：
 
-第一行包含两个整数 $n$ 和 $m$。接下来 $n$ 行，每行包含两个整数 $x$ 和 $c$。再接下来 $m$ 行，每行包含两个整数 $l$ 和 $r$。
+    第一行包含两个整数 $n$ 和 $m$。接下来 $n$ 行，每行包含两个整数 $x$ 和 $c$。再接下来 $m$ 行，每行包含两个整数 $l$ 和 $r$。
 
-输出格式：
+    输出格式：
 
-共 $m$ 行，每行输出一个询问中所求的区间内数字和。
+    共 $m$ 行，每行输出一个询问中所求的区间内数字和。
 
-数据范围：
+    数据范围：
 
-$-10^9 \le x \le 10^9$, $1 \le n,m \le 10^5$, $-10^9 \le l \le r \le 10^9$,$-10000 \le c \le 10000$
+    $-10^9 \le x \le 10^9$, $1 \le n,m \le 10^5$, $-10^9 \le l \le r \le 10^9$,$-10000 \le c \le 10000$
 
-\begin{inputblock}
-    3 3 \\
-    1 2 \\
-    3 6 \\
-    7 5 \\
-    1 3 \\
-    4 6 \\
-    7 8
-\end{inputblock}
-\begin{outputblock}
-    8 \\
-    0 \\
-    5
-\end{outputblock}
+    \begin{inputblock}
+        3 3 \\
+        1 2 \\
+        3 6 \\
+        7 5 \\
+        1 3 \\
+        4 6 \\
+        7 8
+    \end{inputblock}
+    \begin{outputblock}
+        8 \\
+        0 \\
+        5
+    \end{outputblock}
 \end{titledbox}
 
 
 \section{区间合并}
+
 \subsection{AcWing 803. 区间合并}
 \begin{titledbox}{AcWing 803. 区间合并}
-给定 $n$ 个区间 $[l_i, r_i]$，要求合并所有有交集的区间。注意如果在端点处相交，也算有交集。
-输出合并完成后的区间个数。例如：$[1,3]$ 和 $[2,6]$ 可以合并为一个区间 $[1,6]$。
+    给定 $n$ 个区间 $[l_i, r_i]$，要求合并所有有交集的区间。注意如果在端点处相交，也算有交集。
+    输出合并完成后的区间个数。例如：$[1,3]$ 和 $[2,6]$ 可以合并为一个区间 $[1,6]$。
 
-输入格式：
+    输入格式：
 
-第一行包含整数 $n$。接下来 $n$ 行，每行包含两个整数 $l$ 和 $r$。
+    第一行包含整数 $n$。接下来 $n$ 行，每行包含两个整数 $l$ 和 $r$。
 
-输出格式：
+    输出格式：
 
-共一行，包含一个整数，表示合并区间完成后的区间个数。
+    共一行，包含一个整数，表示合并区间完成后的区间个数。
 
-数据范围：
+    数据范围：
 
-$1 \le n \le 100000$, $-10^9 \le l_i \le r_i \le 10^9$
+    $1 \le n \le 100000$, $-10^9 \le l_i \le r_i \le 10^9$
 
-\begin{inputblock}
-    5 \\
-    1 2 \\
-    2 4 \\
-    5 6 \\
-    7 8 \\
-    7 9
-\end{inputblock}
-\begin{outputblock}
-    3
-\end{outputblock}
+    \begin{inputblock}
+        5 \\
+        1 2 \\
+        2 4 \\
+        5 6 \\
+        7 8 \\
+        7 9
+    \end{inputblock}
+    \begin{outputblock}
+        3
+    \end{outputblock}
 \end{titledbox}
 
 \begin{mycpptwocol}[区间合并]
-#include <stdio.h>
-#include <stdlib.h>
+    #include <stdio.h>
+    #include <stdlib.h>
 
-typedef struct {
-    int l;
-    int r;
-} Seg;
+    typedef struct {
+        int l;
+        int r;
+    } Seg;
 
-int Max(int a, int b)
-{
-    return a > b ? a : b;
-}
-
-int CmpFunc(const void *a, const void *b)
-{
-    return ((Seg *)a)->l - ((Seg *)b)->l;
-}
-
-int main()
-{
-    int n;
-    scanf("%d", &n);
-    Seg *segs = (Seg *)calloc(n, sizeof(Seg));
-    for (int i = 0; i < n; i++) {
-        scanf("%d %d", &(segs[i].l), &(segs[i].r));
+    int Max(int a, int b)
+        {
+        return a > b ? a : b;
     }
-    qsort(segs, n, sizeof(Seg), CmpFunc);
-    Seg init = segs[0];
-    int ans = 1;
-    for (int i = 1; i < n; i++) {
-        if (segs[i].l > init.r) {
-            ans++;
-            init = segs[i];
-        } else {
-            init.r = Max(segs[i].r, init.r);
+
+    int CmpFunc(const void *a, const void *b)
+        {
+        return ((Seg *)a)->l - ((Seg *)b)->l;
+    }
+
+    int main()
+        {
+        int n;
+        scanf("%d", &n);
+        Seg *segs = (Seg *)calloc(n, sizeof(Seg));
+        for (int i = 0; i < n; i++) {
+            scanf("%d %d", &(segs[i].l), &(segs[i].r));
         }
+        qsort(segs, n, sizeof(Seg), CmpFunc);
+        Seg init = segs[0];
+        int ans = 1;
+        for (int i = 1; i < n; i++) {
+            if (segs[i].l > init.r) {
+                ans++;
+                init = segs[i];
+            } else {
+                init.r = Max(segs[i].r, init.r);
+            }
+        }
+        printf("%d", ans);
+        return 0;
     }
-    printf("%d", ans);
-    return 0;
-}
 \end{mycpptwocol}
