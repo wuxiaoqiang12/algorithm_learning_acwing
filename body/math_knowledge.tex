@@ -168,94 +168,100 @@
         252
     \end{outputblock}
 \end{titledbox}
+
 \subsection{AcWing 872. 最大公约数}
 \begin{titledbox}
-给定 $n$ 对正整数 $a_i, b_i$，请你求出每对数的最大公约数。
+    给定 $n$ 对正整数 $a_i, b_i$，请你求出每对数的最大公约数。
 
-输入格式：
+    输入格式：
 
-第一行包含整数 $n$。 接下来 $n$ 行，每行包含一个整数对 $a_i,b_i$。
+    第一行包含整数 $n$。 接下来 $n$ 行，每行包含一个整数对 $a_i,b_i$。
 
-输出格式：
+    输出格式：
 
-输出共 $n$ 行，每行输出一个整数对的最大公约数。
+    输出共 $n$ 行，每行输出一个整数对的最大公约数。
 
-数据范围：
+    数据范围：
 
-$1 \le n \le 10^5$, $1 \le a_i, b_i \le 2 \times 10^9$
+    $1 \le n \le 10^5$, $1 \le a_i, b_i \le 2 \times 10^9$
 
-\begin{inputblock}
-    2 \\
-    3 6 \\
-    4 6
-\end{inputblock}
-\begin{outputblock}
-    3 \\
-    2
-\end{outputblock}
+    \begin{inputblock}
+        2 \\
+        3 6 \\
+        4 6
+    \end{inputblock}
+    \begin{outputblock}
+        3 \\
+        2
+    \end{outputblock}
 \end{titledbox}
+
 
 \section{欧拉函数}
 
 \subsection{AcWing 873. 欧拉函数}
 \begin{titledbox}{AcWing 873. 欧拉函数}
-给定 $n$ 个正整数 $a_i$，请你求出每个数的欧拉函数。
+    给定 $n$ 个正整数 $a_i$，请你求出每个数的欧拉函数。
 
-欧拉函数的定义：
+    欧拉函数的定义：
 
-\begin{quote}
-    $1 \sim N$ 中与 $N$ 互质的数的个数被称为欧拉函数，记为 $ϕ(N)$。<br />
-    若在算数基本定理中，$N = p_1^{a_1}p_2^{a_2}&hellip;p_m^{a_m}$，则：<br />
-    $\varphi (N)$ = $N \times \frac{p_1-1}{p_1} \times \frac{p_2-1}{p_2} \times &hellip; \times \frac{p_m-1}{p_m}$
-\end{quote}
+    \begin{quote}
+        $1 \sim N$ 中与 $N$ 互质的数的个数被称为欧拉函数，记为 $\varphi(N)$。
 
-输入格式：
+        若在算数基本定理中，$N = p_1^{a_1}p_2^{a_2}\dots p_m^{a_m}$，则：
 
-第一行包含整数 $n$。 接下来 $n$ 行，每行包含一个正整数 $a_i$。
+        $\varphi (N)$ = $N \times \frac{p_1-1}{p_1} \times \frac{p_2-1}{p_2} \times \dots \times \frac{p_m-1}{p_m}$
+    \end{quote}
 
-输出格式：
+    输入格式：
 
-输出共 $n$ 行，每行输出一个正整数 $a_i$ 的欧拉函数。
+    第一行包含整数 $n$。 接下来 $n$ 行，每行包含一个正整数 $a_i$。
 
-数据范围：
+    输出格式：
 
-$1 \le n \le 100$, $1 \le a_i \le 2 \times 10^9$
+    输出共 $n$ 行，每行输出一个正整数 $a_i$ 的欧拉函数。
 
-\begin{inputblock}
-    3 \\
-    3 \\
-    6 \\
-    8
-\end{inputblock}
-\begin{outputblock}
-    2 \\
-    2 \\
-    4
-\end{outputblock}
+    数据范围：
+
+    $1 \le n \le 100$, $1 \le a_i \le 2 \times 10^9$
+
+    \begin{inputblock}
+        3 \\
+        3 \\
+        6 \\
+        8
+    \end{inputblock}
+    \begin{outputblock}
+        2 \\
+        2 \\
+        4
+    \end{outputblock}
 \end{titledbox}
+
 \subsection{AcWing 874. 筛法求欧拉函数}
 \begin{titledbox}{AcWing 874. 筛法求欧拉函数}
-给定一个正整数 $n$，求 $1 \sim n$ 中每个数的欧拉函数之和。
+    给定一个正整数 $n$，求 $1 \sim n$ 中每个数的欧拉函数之和。
 
-输入格式：
+    输入格式：
 
-共一行，包含一个整数 $n$。
+    共一行，包含一个整数 $n$。
 
-输出格式：
+    输出格式：
 
-共一行，包含一个整数，表示 $1 \sim n$ 中每个数的欧拉函数之和。
+    共一行，包含一个整数，表示 $1 \sim n$ 中每个数的欧拉函数之和。
 
-数据范围：
+    数据范围：
 
-$1 \le n \le 10^6$
+    $1 \le n \le 10^6$
 
-\begin{inputblock}
-    6
-\end{inputblock}
-\begin{outputblock}
-    12
-\end{outputblock}
+    \begin{inputblock}
+        6
+    \end{inputblock}
+    \begin{outputblock}
+        12
+    \end{outputblock}
 \end{titledbox}
+
 
 \section{快速幂}
 
