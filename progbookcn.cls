@@ -196,6 +196,49 @@
     morestring=[b]"
 }
 
+\lstdefinestyle{mycppstyle} {
+% Basic design
+    basicstyle=\ttfamily\linespread{1}\small,
+    frame=tb,
+%framesep=5pt,
+    framerule=.5pt,
+    rulecolor=\color{violet},
+    abovecaptionskip=0pt,
+    belowcaptionskip=5pt,
+% Code design
+    keywordstyle=\color{codecolorkeywords},
+    commentstyle=\color{codecolorcomments},
+    stringstyle=\color{codecolorstrings},
+    numberstyle=\small\color{gray},
+    breakatwhitespace=false,
+    breaklines=true,
+    captionpos=t,
+    keepspaces=true,
+% Line numbers
+    numbers=left,
+    numbersep=2pt,
+    xleftmargin=.5em,
+    stepnumber=1,
+    firstnumber=1,
+    numberfirstline=true,
+% Code
+    tabsize=4,
+    showspaces=false,
+    showstringspaces=false,
+    showtabs=false,
+    breaklines=true,
+}
+
+%% 代码列表标题
+\RequirePackage{caption}
+\DeclareCaptionFormat{codecaptionformat}{%
+%%\colorbox{black!20}{
+%%  \parbox{\textwidth}{#1#2\ttfamily#3}
+%%}
+    \parbox{\textwidth}{\faCode #1#2\hspace{.5em}#3}
+}
+\captionsetup[lstlisting]{format=codecaptionformat}
+
 \tcbuselibrary{skins,listings}
 \newtcblisting{mycpptwocol}[1][]{%
     enhanced,
@@ -215,16 +258,17 @@
         basicstyle = \ttfamily\linespread{1}\small,
         columns=fullflexible,
         multicols = 2,
+        mathescape = true,
         % Line numbers
         numbers = left,
-        numbersep = -1em,
-        xleftmargin = -1em,
+        numbersep = -1.5em,
+        xleftmargin = -1.5em,
         showstringspaces = false,
         % Code design
         keywordstyle=\color{codecolorkeywords},
         commentstyle=\color{codecolorcomments},
         stringstyle=\color{codecolorstrings},
-        numberstyle=\small\color{gray},
+        numberstyle=\ttfamily\footnotesize\color{gray},
         breakatwhitespace=false,
         breaklines=true,
         captionpos=t,
@@ -274,6 +318,7 @@
         language = Cpp,
         basicstyle = \ttfamily\linespread{1}\small,
         columns=fullflexible,
+        mathescape = true,
         % multicols = 1,
         % Line numbers
         numbers = left,

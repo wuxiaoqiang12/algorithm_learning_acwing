@@ -838,6 +838,17 @@
 
 2. 循环所有边 \lstinline{a, b, w: dist[b] = min(dist[b], dist[a] + w)} 更新所有距离
 
+\begin{algorithm}[H] %or another one check
+    \caption{Bellman-Ford}
+    \SetAlgoLined
+    \KwData{graph $G$ and start point $s$}
+    \KwResult{Shortest path from $s$ to the end}
+    \For{each vertex $v \neq s$ in $V(G)$}{
+        $d(v) \leftarrow \infty$
+    }
+    $d(s) \leftarrow 0$\\
+\end{algorithm}
+
 因为算法特点存储图时不必使用邻接矩阵或者邻接表，开一个结构体数组：
 
 \begin{mycpponecol}[边集]
@@ -934,6 +945,38 @@
 spfa算法是对bellman-ford算法的优化，在松弛操作中，不一定每一次都会对该点的距离减小有所贡献，只有与之相连的前驱节点距离减小了，此时才有可能有所贡献。
 
 用一个bfs来做优化，队列中存储所有变小了距离的节点，其中的状态数组标识某个节点是否在队列中，出队时要清空标识位。
+
+%\begin{lstlisting}[%
+%    style=mycppstyle,
+%    caption={src/app/app.module.ts}
+%]
+%#include <stdio.h>
+%
+%\end{lstlisting}
+
+\begin{algorithm}[H] %or another one check
+    \caption{SPFA(Shortest Path Faster Algorithm)}
+    \SetAlgoLined
+    \KwData{graph $G$ and start point $s$}
+    \KwResult{Shortest path from $s$ to the end}
+    init a FIFO queue $Q$\;
+    \For{each vertex $v \neq s$ in $V(G)$}{
+        $d(v) \leftarrow \infty$
+    }
+    $d(s) \leftarrow 0$\\
+    push $s$ into $Q$\\
+    \While{$Q$ is not empty}{
+        $u \leftarrow \text{poll } Q$\\
+        \For{each edge ($u, v$) in $E(G)$} {
+            \If{$d(u) + w(u, v) < d(v)$}{
+                $d(v) \leftarrow d(u) + w(u, v)$\\
+                \If{$v$ is not in $Q$}{
+                    push $v$ into $Q$
+                }
+            }
+        }
+    }
+\end{algorithm}
 
 \subsubsection{AcWing 851. spfa求最短路}
 
