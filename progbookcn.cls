@@ -9,14 +9,14 @@
 %% hyperref settings
 %% 超链接设定
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-% \RequirePackage{hyperref}
-% \hypersetup{
-%   bookmarksnumbered,
-%   colorlinks,
-%   linkcolor={black},
-%   citecolor={black},
-%   urlcolor={black}
-% }
+\RequirePackage{hyperref}
+\hypersetup{
+    bookmarksnumbered,
+    colorlinks,
+    linkcolor={black},
+    citecolor={black},
+    urlcolor={black}
+}
 
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
@@ -35,19 +35,19 @@
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \RequirePackage{geometry}
 \geometry{
-  textwidth=138mm,
-  textheight=215mm,
-  %% left=27mm,
-  %% or
-  inner=23mm,
-  %% right=27mm,
-  %% or
-  outer=18mm,
-  top=25.4mm, bottom=25.4mm,
-  headheight=2.17cm,
-  headsep=4mm,
-  footskip=12mm,
-  heightrounded,
+    textwidth=138mm,
+    textheight=215mm,
+%% left=27mm,
+%% or
+    inner=23mm,
+%% right=27mm,
+%% or
+    outer=18mm,
+    top=25.4mm, bottom=25.4mm,
+    headheight=2.17cm,
+    headsep=4mm,
+    footskip=12mm,
+    heightrounded,
 }
 
 
@@ -105,10 +105,10 @@
 [display] % shape
 {\bfseries} % format
 {
-  \parbox[t]{7em}{\textcolor{gray}{\HUGE \textit{PART~\thepart}}} \hfill \zihao{4}第{\zhnum{part}}部分
-  %\rule[3ex]{\textwidth}{.5pt}
-  \vspace{1ex}
-  \hrule width \hsize height .5pt
+    \parbox[t]{7em}{\textcolor{gray}{\HUGE \textit{PART~\thepart}}} \hfill \zihao{4}第{\zhnum{part}}部分
+%\rule[3ex]{\textwidth}{.5pt}
+\vspace{1ex}
+\hrule width \hsize height .5pt
 } % label
 {1pt} % sep
 {\vspace{-7ex}\flushright\zihao{2}} % before-code
@@ -119,15 +119,15 @@
 [display] % shape
 {\bfseries} % format
 {
-  \flushright\zihao{4}第\zhnum{chapter}章
+    \flushright\zihao{4}第\zhnum{chapter}章
 } % label
 {1ex} % sep
 {
-  \hrule width \hsize height .5pt
-  \vspace{-2ex}\flushright\zihao{2}
+    \hrule width \hsize height .5pt
+    \vspace{-2ex}\flushright\zihao{2}
 } % before-code
 [
-\vspace{5ex}
+    \vspace{5ex}
 ] % after-code
 
 
@@ -184,59 +184,59 @@
 
 \RequirePackage{listings}
 \lstdefinelanguage{Cpp}{
-  keywords={auto, double, int, struct, break, else, long,
-  switch, case, enum, register, typedef, char, extern, 
-  return, union, continue, for, signed, void, do, if, static,
-  while, default, goto, sizeof, volatile, const, float, short, unsigned, NULL, \#include, \#define},
-  sensitive=true,
-  alsoletter = {\#},
-  comment=[l]{//},
-  morecomment=[s]{/*}{*/},
-  morestring=[b]',
-  morestring=[b]"
+    keywords={auto, double, int, struct, break, else, long,
+    switch, case, enum, register, typedef, char, extern,
+    return, union, continue, for, signed, void, do, if, static,
+    while, default, goto, sizeof, volatile, const, float, short, unsigned, NULL, \#include, \#define},
+    sensitive=true,
+    alsoletter = {\#},
+    comment=[l]{//},
+    morecomment=[s]{/*}{*/},
+    morestring=[b]',
+    morestring=[b]"
 }
 
 \tcbuselibrary{skins,listings}
 \newtcblisting{mycpptwocol}[1][]{%
-  enhanced,
-  arc = 3pt,
-  outer arc = 3pt,
-  colbacktitle = white,
-  coltitle = black,
-  colback = white,
-  colframe = violet,
-  boxrule=.5pt,
-  attach boxed title to top center = {yshift=-\tcboxedtitleheight/2},
-  boxed title style={size=normal,colframe=white,boxrule=0pt},
-  listing only,
-  fonttitle = \normalfont,
-  listing options = {%
-    language = Cpp,
-    basicstyle = \ttfamily\linespread{1}\small,
-    columns=fullflexible,
-    multicols = 2,
-    % Line numbers
-    numbers = left,
-    numbersep = -1em,
-    xleftmargin = -1em,
-    showstringspaces = false,
-    % Code design
-    keywordstyle=\color{codecolorkeywords},
-    commentstyle=\color{codecolorcomments},
-    stringstyle=\color{codecolorstrings},
-    numberstyle=\small\color{gray},
-    breakatwhitespace=false,
-    breaklines=true,
-    captionpos=t,
-    keepspaces=true,
-    % Code
-    tabsize=4,
-    showspaces=false,
-    showstringspaces=false,
-    showtabs=false,
-    breaklines=true,
-  },
-  overlay = {%
+    enhanced,
+    arc = 3pt,
+    outer arc = 3pt,
+    colbacktitle = white,
+    coltitle = black,
+    colback = white,
+    colframe = violet,
+    boxrule=.5pt,
+    attach boxed title to top center = {yshift=-\tcboxedtitleheight/2},
+    boxed title style={size=normal,colframe=white,boxrule=0pt},
+    listing only,
+    fonttitle = \normalfont,
+    listing options = {%
+        language = Cpp,
+        basicstyle = \ttfamily\linespread{1}\small,
+        columns=fullflexible,
+        multicols = 2,
+        % Line numbers
+        numbers = left,
+        numbersep = -1em,
+        xleftmargin = -1em,
+        showstringspaces = false,
+        % Code design
+        keywordstyle=\color{codecolorkeywords},
+        commentstyle=\color{codecolorcomments},
+        stringstyle=\color{codecolorstrings},
+        numberstyle=\small\color{gray},
+        breakatwhitespace=false,
+        breaklines=true,
+        captionpos=t,
+        keepspaces=true,
+        % Code
+        tabsize=4,
+        showspaces=false,
+        showstringspaces=false,
+        showtabs=false,
+        breaklines=true,
+    },
+    overlay = {%
 %     \fill[gray!30] 
 %       (interior.north west)
 %       rectangle 
@@ -245,174 +245,178 @@
 %       ([xshift = -1em]interior.north)
 %       rectangle 
 %       ([xshift = 1em]interior.south);
-    \draw[violet]
-      ([xshift = -1em, yshift = -1em]interior.north) -- 
-      ([xshift = -1em]interior.south); 
-  },
-  /utils/exec = {%
-    \def\thelstnumber{%
-      \texttt{\csname two@digits\endcsname{\the\value{lstnumber}}}}},
-  title = {\ttfamily #1}
+        \draw[violet]
+        ([xshift = -1em, yshift = -1em]interior.north) --
+        ([xshift = -1em]interior.south);
+    },
+%    /utils/exec = {%
+%        \def\thelstnumber{%
+%            \texttt{\csname two@digits\endcsname{\the\value{lstnumber}}}}},
+    title = {\ttfamily #1}
 }
 
+%\renewcommand*\thelstnumber{\texttt{\csname two@digits\endcsname{\the\value{lstnumber}}}}
+
 \newtcblisting{mycpponecol}[1][]{%
-  enhanced,
-  arc = 3pt,
-  outer arc = 3pt,
-  colbacktitle = white,
-  coltitle = black,
-  colback = white,
-  colframe = violet,
-  boxrule=.5pt,
-  attach boxed title to top center = {yshift=-\tcboxedtitleheight/2},
-  boxed title style={size=normal,colframe=white,boxrule=0pt},
-  listing only,
-  fonttitle = \normalfont,
-  listing options = {%
-    language = Cpp,
-    basicstyle = \ttfamily\linespread{1}\small,
-    columns=fullflexible,
-    % multicols = 1,
-    % Line numbers
-    numbers = left,
-    numbersep = 1em,
-    xleftmargin = 1em,
-    showstringspaces = false,
-    % Code design
-    keywordstyle=\color{codecolorkeywords},
-    commentstyle=\color{codecolorcomments},
-    stringstyle=\color{codecolorstrings},
-    numberstyle=\small\color{gray},
-    breakatwhitespace=false,
-    breaklines=true,
-    captionpos=t,
-    keepspaces=true,
-    % Code
-    tabsize=4,
-    showspaces=false,
-    showstringspaces=false,
-    showtabs=false,
-    breaklines=true,
-  },
-  /utils/exec = {%
-    \def\thelstnumber{%
-      \texttt{\csname two@digits\endcsname{\the\value{lstnumber}}}}},
-  title = {\ttfamily #1}
+    enhanced,
+    arc = 3pt,
+    outer arc = 3pt,
+    colbacktitle = white,
+    coltitle = black,
+    colback = white,
+    colframe = violet,
+    boxrule=.5pt,
+    attach boxed title to top center = {yshift=-\tcboxedtitleheight/2},
+    boxed title style={size=normal,colframe=white,boxrule=0pt},
+    listing only,
+    fonttitle = \normalfont,
+    listing options = {%
+        language = Cpp,
+        basicstyle = \ttfamily\linespread{1}\small,
+        columns=fullflexible,
+        % multicols = 1,
+        % Line numbers
+        numbers = left,
+        numbersep = 1em,
+        xleftmargin = 1em,
+        showstringspaces = false,
+        % Code design
+        keywordstyle=\color{codecolorkeywords},
+        commentstyle=\color{codecolorcomments},
+        stringstyle=\color{codecolorstrings},
+        numberstyle=\small\color{gray},
+        breakatwhitespace=false,
+        breaklines=true,
+        captionpos=t,
+        keepspaces=true,
+        % Code
+        tabsize=4,
+        showspaces=false,
+        showstringspaces=false,
+        showtabs=false,
+        breaklines=true,
+    },
+%    /utils/exec = {%
+%        \def\thelstnumber{%
+%            \texttt{\csname two@digits\endcsname{\the\value{lstnumber}}}}},
+    title = {\ttfamily #1}
 }
 
 %% 带标题的文本框
 \newtcolorbox{problembox}[1]{%
-  tikznode boxed title,
-  enhanced,
-  arc=3pt,
-  interior style={white},
-  attach boxed title to top center = {yshift=-\tcboxedtitleheight/2},
-  fonttitle=\normalfont,
-  colbacktitle=white,coltitle=black,
-  boxed title style={size=normal,colframe=white,boxrule=0pt},
-  boxrule=.5pt,
-  left=0pt, right=0pt, top=2pt, bottom=0pt,
-  boxsep=10pt,
-  colframe=violet,
-  title={#1}
+    tikznode boxed title,
+    enhanced,
+    arc=3pt,
+    interior style={white},
+    attach boxed title to top center = {yshift=-\tcboxedtitleheight/2},
+    fonttitle=\normalfont,
+    colbacktitle=white,coltitle=black,
+    boxed title style={size=normal,colframe=white,boxrule=0pt},
+    boxrule=.5pt,
+    left=0pt, right=0pt, top=2pt, bottom=0pt,
+    boxsep=10pt,
+    colframe=violet,
+    title={#1}
 }
 
 %% 带标题的文本框
 \newtcolorbox{titledbox}[1]{%
-  tikznode boxed title,
-  enhanced,
-  arc=3pt,
-  interior style={white},
-  attach boxed title to top center = {yshift=-\tcboxedtitleheight/2},
-  fonttitle=\normalfont,
-  colbacktitle=white,coltitle=black,
-  boxed title style={size=normal,colframe=white,boxrule=0pt},
-  boxrule=.5pt,
-  left=0pt, right=0pt, top=2pt, bottom=0pt,
-  boxsep=10pt,
-  colframe=violet,
-  title={#1}
+    tikznode boxed title,
+    enhanced,
+    arc=3pt,
+    interior style={white},
+    attach boxed title to top center = {yshift=-\tcboxedtitleheight/2},
+    fonttitle=\normalfont,
+    colbacktitle=white,coltitle=black,
+    boxed title style={size=normal,colframe=white,boxrule=0pt},
+    boxrule=.5pt,
+    left=0pt, right=0pt, top=2pt, bottom=0pt,
+    boxsep=10pt,
+    colframe=violet,
+    title={#1}
 }
 
 %% 信息
 \newtcolorbox{information}{%
-  enhanced,
-  arc=3pt,
-  interior style={white},
-  boxrule=.5pt,
-  left=40pt, right=0pt, top=2pt, bottom=0pt,
-  boxsep=10pt,
-  colframe=violet,
-  overlay={
-    \node[anchor=north west,outer sep=10pt] at (frame.north west)
-    {
-      \zihao{2}\faInfoCircle
-    };
-  }
+    enhanced,
+    arc=3pt,
+    interior style={white},
+    boxrule=.5pt,
+    left=40pt, right=0pt, top=2pt, bottom=0pt,
+    boxsep=10pt,
+    colframe=violet,
+    overlay={
+        \node[anchor=north west,outer sep=10pt] at (frame.north west)
+            {
+            \zihao{2}\faInfoCircle
+        };
+    }
 }
 
 %% 关键点
 \newtcolorbox{keypoint}{%
-  enhanced,
-  arc=3pt,
-  interior style={white},
-  boxrule=.5pt,
-  left=40pt, right=0pt, top=2pt, bottom=0pt,
-  boxsep=10pt,
-  colframe=violet,
-  overlay={
-    \node[anchor=north west,outer sep=10pt] at (frame.north west)
-    {
-      \zihao{2}\faKey
-    };
-  }
+    enhanced,
+    arc=3pt,
+    interior style={white},
+    boxrule=.5pt,
+    left=40pt, right=0pt, top=2pt, bottom=0pt,
+    boxsep=10pt,
+    colframe=violet,
+    overlay={
+        \node[anchor=north west,outer sep=10pt] at (frame.north west)
+            {
+            \zihao{2}\faKey
+        };
+    }
 }
 
 %% 警告信息
 \newtcolorbox{exclamation}{%
-  enhanced,
-  arc=3pt,
-  interior style={white},
-  boxrule=.5pt,
-  left=40pt, right=0pt, top=2pt, bottom=0pt,
-  boxsep=10pt,
-  colframe=violet,
-  overlay={
-    \node[anchor=north west,outer sep=10pt] at (frame.north west)
-    {
-      \zihao{2}\faExclamationTriangle
-    };
-  }
+    enhanced,
+    arc=3pt,
+    interior style={white},
+    boxrule=.5pt,
+    left=40pt, right=0pt, top=2pt, bottom=0pt,
+    boxsep=10pt,
+    colframe=violet,
+    overlay={
+        \node[anchor=north west,outer sep=10pt] at (frame.north west)
+            {
+            \zihao{2}\faExclamationTriangle
+        };
+    }
 }
 
 %% 问题信息
 \newtcolorbox{question}{%
-  enhanced,
-  arc=3pt,
-  interior style={white},
-  boxrule=.5pt,
-  left=40pt, right=0pt, top=2pt, bottom=0pt,
-  boxsep=10pt,
-  colframe=violet,
-  overlay={
-    \node[anchor=north west,outer sep=10pt] at (frame.north west)
-    {
-      \zihao{2}\faQuestionCircle
-    };
-  }
+    enhanced,
+    arc=3pt,
+    interior style={white},
+    boxrule=.5pt,
+    left=40pt, right=0pt, top=2pt, bottom=0pt,
+    boxsep=10pt,
+    colframe=violet,
+    overlay={
+        \node[anchor=north west,outer sep=10pt] at (frame.north west)
+            {
+            \zihao{2}\faQuestionCircle
+        };
+    }
 }
 
 \newenvironment{inputblock}{
     \begin{minipage}[t]{.5\textwidth}
         输入样例：\\
         \linespread{1.0}\selectfont
-}{\end{minipage}}
+        }{
+    \end{minipage}}
 
 \newenvironment{outputblock}{
     \begin{minipage}[t]{.5\textwidth}
         输出样例：\\
         \linespread{1.0}\selectfont
-}{\end{minipage}}
+        }{
+    \end{minipage}}
 
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%

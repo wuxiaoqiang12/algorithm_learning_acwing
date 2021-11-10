@@ -66,8 +66,7 @@
     int ne[N]; // 存储节点的next指针
 
     // 初始化
-    void Init()
-        {
+    void Init() {
         idx = -1;
         head = -1;
     }
@@ -80,8 +79,7 @@
     }
 
     // 在k节点之后插入元素
-    void Add(int k, int x)
-        {
+    void Add(int k, int x) {
         e[++idx] = x;
         ne[idx] = ne[k];
         ne[k] = idx;
@@ -92,8 +90,7 @@
         ne[k] = ne[ne[k]];
     }
 
-    int main()
-        {
+    int main() {
         Init();
         int n;
         scanf("%d", &n);
@@ -195,15 +192,13 @@
     int r[N];
     int idx = 1;
 
-    void Init()
-        {
+    void Init() {
         r[0] = 1;
         l[1] = 0;
         idx = 1;
     }
 
-    void AddRight(int k, int x)
-        {
+    void AddRight(int k, int x) {
         e[++idx] = x;
         r[idx] = r[k];
         l[r[k]] = idx;
@@ -211,14 +206,12 @@
         r[k] = idx;
     }
 
-    void Remove(int k)
-        {
+    void Remove(int k) {
         r[l[k]] = r[k];
         l[r[k]] = l[k];
     }
 
-    int main()
-        {
+    int main() {
         Init();
         int n;
         scanf("%d", &n);
@@ -310,8 +303,7 @@
     #include <stdio.h>
     #include <stdlib.h>
 
-    int main()
-        {
+    int main() {
         int n;
         scanf("%d", &n);
         int *stack = (int *)calloc(n, sizeof(int));
@@ -401,28 +393,23 @@
     int tail;
     int head;
 
-    void push(int x)
-        {
+    void push(int x) {
         queue[++tail] = x;
     }
 
-    bool isEmpty()
-        {
+    bool isEmpty() {
         return head == tail;
     }
 
-    void pop()
-        {
+    void pop() {
         head++;
     }
 
-    int query()
-        {
+    int query() {
         return queue[head + 1];
     }
 
-    int main()
-        {
+    int main() {
         int n;
         scanf("%d", &n);
         char op[10];
@@ -482,8 +469,7 @@
     #include <stdio.h>
     #include <stdlib.h>
 
-    int main()
-        {
+    int main() {
         int n;
         scanf("%d", &n);
         int *stack = (int *)calloc(sizeof(int), n);
@@ -552,8 +538,7 @@
     #include <stdio.h>
     #include <stdlib.h>
 
-    int main()
-        {
+    int main() {
         int n;
         int k;
         scanf("%d %d", &n, &k);
@@ -692,8 +677,7 @@
         bool isEnd;
     } Node;
 
-    void Insert(Node *head, char *str)
-        {
+    void Insert(Node *head, char *str) {
         int len = strlen(str);
         Node *tmp = head;
         for (int i = 0; i < len; i++) {
@@ -707,8 +691,7 @@
         tmp->isEnd = true;
     }
 
-    int Query(Node *head, char *str)
-        {
+    int Query(Node *head, char *str) {
         int len = strlen(str);
         Node *tmp = head;
         for (int i = 0; i < len; i++) {
@@ -732,8 +715,7 @@
         free(tmp);
     }
 
-    int main()
-        {
+    int main() {
         int n;
         scanf("%d", &n);
         char op[2];
@@ -797,8 +779,7 @@
         return cnt[cur];
     }
 
-    int main()
-        {
+    int main() {
         int n;
         scanf("%d", &n);
         char op[2];
@@ -900,8 +881,7 @@
         free(trie);
     }
 
-    int main()
-        {
+    int main() {
         int n;
         scanf("%d", &n);
         int *arr = (int *) calloc(n, sizeof(int));
@@ -983,23 +963,20 @@
     #include <stdlib.h>
     #include <stdio.h>
 
-    int Find(int *parent, int a)
-        {
+    int Find(int *parent, int a) {
         if (parent[a] != a) {
             parent[a] = Find(parent, parent[a]);
         }
         return parent[a];
     }
 
-    void Union(int *parent, int a, int b)
-        {
+    void Union(int *parent, int a, int b) {
         int aP = Find(parent, a);
         int bP = Find(parent, b);
         parent[aP] = bP;
     }
 
-    int main()
-        {
+    int main() {
         int m, n;
         scanf("%d %d", &m, &n);
         int *parent = (int *) calloc(n + 1, sizeof(int));
@@ -1066,16 +1043,14 @@
 \begin{mycpptwocol}[]
     #include <stdio.h>
 
-    int Find(int *p, int a)
-        {
+    int Find(int *p, int a) {
         if (p[a] != a) {
             p[a] = Find(p, p[a]);
         }
         return p[a];
     }
 
-    void Union(int *p, int *cnt, int a, int b)
-        {
+    void Union(int *p, int *cnt, int a, int b) {
         int ap = Find(p, a);
         int bp = Find(p, b);
         if (ap != bp) {
@@ -1084,8 +1059,7 @@
         }
     }
 
-    int main()
-        {
+    int main() {
         int n;
         int m;
         scanf("%d %d", &n, &m);
@@ -1174,8 +1148,7 @@
     int h[N];
     int size;
 
-    void down(int k)
-        {
+    void down(int k) {
         int t = k;
         if (2 * k <= size && h[2 * k] < h[t]) {
             t = 2 * k;
@@ -1191,8 +1164,7 @@
         }
     }
 
-    int main()
-        {
+    int main() {
         int n;
         int m;
         scanf("%d %d", &n, &m);
@@ -1280,22 +1252,19 @@
     int ph[N];
     int size;
 
-    void Swap(int *a, int *b)
-        {
+    void Swap(int *a, int *b) {
         int tmp = *a;
         *a = *b;
         *b = tmp;
     }
 
-    void HeapSwap(int k, int t)
-        {
+    void HeapSwap(int k, int t) {
         Swap(&ph[hp[k]], &ph[hp[t]]);
         Swap(&hp[k], &hp[t]);
         Swap(&heap[k], &heap[t]);
     }
 
-    void Up(int k)
-        {
+    void Up(int k) {
         while (k / 2 > 0 &&
         heap[k / 2] > heap[k]) {
             HeapSwap(k, k / 2);
@@ -1303,8 +1272,7 @@
         }
     }
 
-    void Down(int k)
-        {
+    void Down(int k) {
         int t = k;
         if (2 * k <= size &&
         heap[2 * k] < heap[t]) {
@@ -1320,8 +1288,7 @@
         }
     }
 
-    int main()
-        {
+    int main() {
         int n;
         scanf("%d", &n);
         int idx = 0;
@@ -1428,8 +1395,7 @@ Hash函数难免产生碰撞（冲突：$h(t_1) = h(t_2), \text{当} t_1 \neq t_
     int h[N];
     const int null = 0x3f3f3f3f;
 
-    int Find(int x)
-        {
+    int Find(int x) {
         int k = (x % N + N) % N;
         while (h[k] != null && h[k] != x) {
             k++;
@@ -1440,8 +1406,7 @@ Hash函数难免产生碰撞（冲突：$h(t_1) = h(t_2), \text{当} t_1 \neq t_
         return k;
     }
 
-    int main()
-        {
+    int main() {
         int n;
         scanf("%d", &n);
         memset(h, 0x3f, sizeof(h));
@@ -1484,8 +1449,7 @@ Hash函数难免产生碰撞（冲突：$h(t_1) = h(t_2), \text{当} t_1 \neq t_
     int ne[N];
     int idx;
 
-    void Insert(int x)
-        {
+    void Insert(int x) {
         int t = (x % N + N) % N; // 找到对应的槽
         // 链表的头插法
         e[++idx] = x;
@@ -1493,8 +1457,7 @@ Hash函数难免产生碰撞（冲突：$h(t_1) = h(t_2), \text{当} t_1 \neq t_
         h[t] = idx;
     }
 
-    bool Find(int x)
-        {
+    bool Find(int x) {
         int k = (x % N + N) % N;
         for (int i = h[k]; i != -1; i = ne[i]) {
             if (e[i] == x) {
@@ -1504,8 +1467,7 @@ Hash函数难免产生碰撞（冲突：$h(t_1) = h(t_2), \text{当} t_1 \neq t_
         return false;
     }
 
-    int main()
-        {
+    int main() {
         int n;
         scanf("%d", &n);
         memset(h, -1, sizeof(h));
@@ -1583,13 +1545,11 @@ Hash函数难免产生碰撞（冲突：$h(t_1) = h(t_2), \text{当} t_1 \neq t_
     unsigned long long p[N];
     const int P = 131;
 
-    int Hash(int l, int r)
-        {
+    int Hash(int l, int r) {
         return h[r] - h[l - 1] * p[r - l + 1];
     }
 
-    int main()
-        {
+    int main() {
         int n;
         int m;
         scanf("%d %d", &n, &m);

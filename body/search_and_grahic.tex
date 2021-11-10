@@ -62,8 +62,7 @@
     int path[N];
     bool st[N];
 
-    void dfs(int u, int n)
-        {
+    void dfs(int u, int n) {
         if (u == n) {
             for (int i = 0; i < n; i++) {
                 printf("%d ", path[i]);
@@ -81,8 +80,7 @@
         }
     }
 
-    int main()
-        {
+    int main() {
         int n;
         scanf("%d", &n);
         dfs(0, n);
@@ -142,8 +140,7 @@
     bool dg[N];
     bool udg[N];
 
-    void dfs(int u, int n)
-        {
+    void dfs(int u, int n) {
         if (u == n) {
             for (int i = 0; i < n; i++) {
                 puts(g[i]);
@@ -163,8 +160,7 @@
         }
     }
 
-    int main()
-        {
+    int main() {
         int n;
         scanf("%d", &n);
         for (int i = 0; i < n; i++) {
@@ -193,8 +189,7 @@
     bool dg[N];
     bool udg[N];
 
-    void dfs(int x, int y, int s, int n)
-        {
+    void dfs(int x, int y, int s, int n) {
         if (y == n) {
             y = 0;
             x++;
@@ -221,8 +216,7 @@
         }
     }
 
-    int main()
-        {
+    int main() {
         int n;
         scanf("%d", &n);
         for (int i = 0; i < n; i++) {
@@ -285,8 +279,7 @@
 
     Pair queue[N * N];
 
-    int bfs(int n, int m)
-        {
+    int bfs(int n, int m) {
         int head = 0;
         int tail = 0;
         Pair init = {0, 0};
@@ -311,8 +304,7 @@
         return d[n - 1][m - 1];
     }
 
-    int main()
-        {
+    int main() {
         int n;
         int m;
         scanf("%d %d", &n, &m);
@@ -666,8 +658,7 @@
         return tt == n;
     }
 
-    int main()
-        {
+    int main() {
         memset(h, -1, sizeof(h));
         int n;
         int m;

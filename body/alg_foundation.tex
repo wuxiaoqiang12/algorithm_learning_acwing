@@ -52,8 +52,7 @@
         q[b] = tmp;
     }
 
-    void quick_sort(int *q, int l, int r)
-        {
+    void quick_sort(int *q, int l, int r) {
         if (l >= r) {
             return;
         }
@@ -150,8 +149,7 @@
     #include <stdio.h>
     #include <stdlib.h>
 
-    int q_select(int *q, int l,
-    int r, int k) {
+    int q_select(int *q, int l, int r, int k) {
         if (r <= l) {
             return q[l];
         }
@@ -180,8 +178,7 @@
         }
     }
 
-    int main()
-        {
+    int main() {
         int n;
         int k;
         scanf("%d %d", &n, &k);
@@ -244,8 +241,7 @@
 
     int backup[N];
 
-    void merge_sort(int *q, int l, int r)
-        {
+    void merge_sort(int *q, int l, int r) {
         if (r <= l) {
             return;
         }
@@ -275,8 +271,7 @@
         }
     }
 
-    int main()
-        {
+    int main() {
         int n;
         scanf("%d", &n);
         int *q = (int *)calloc(sizeof(int), n);
@@ -371,8 +366,7 @@
         return res;
     }
 
-    int main()
-        {
+    int main() {
         int n;
         scanf("%d", &n);
         int *q = (int *)calloc(n, sizeof(int));
@@ -402,8 +396,7 @@
 \begin{mycpptwocol}[二分模版]
     // 区间[l, r]被划分为[l, mid] 和
     // [mid + 1, r]时使用, 往左找
-    int bsearch_1(int l, int r)
-        {
+    int bsearch_1(int l, int r) {
         while (l < r) {
             mid = (l + r) / 2;
             if (Check(mid)) {
@@ -415,8 +408,7 @@
     }
     // 区间[l, r]被划分为[l, mid - 1] 和
     // [mid, r]时使用，往右找
-    int bsearch_2(int l, int r)
-        {
+    int bsearch_2(int l, int r) {
         while (l < r) {
             mid = (l + r + 1) / 2;
             if (Check(mid)) {
@@ -506,8 +498,7 @@
         return l;
     }
 
-    int main()
-        {
+    int main() {
         int n;
         int q;
         scanf("%d %d", &n, &q);
@@ -568,8 +559,7 @@
 
     #define N 10000
 
-    int main()
-        {
+    int main() {
         double n;
         scanf("%lf", &n);
         double l = 0 - N;
@@ -637,8 +627,7 @@
     #include <stdio.h>
     #include <stdlib.h>
 
-    int main()
-        {
+    int main() {
         int n;
         int m;
         scanf("%d %d", &n, &m);
@@ -706,8 +695,7 @@
     int mat[N][N];
     int preMat[N][N];
 
-    int main()
-        {
+    int main() {
         int n, m, q;
         scanf("%d %d %d", &n, &m, &q);
         for (int i = 1; i <= n; i++) {
@@ -761,14 +749,12 @@
     #include <stdio.h>
     #include <stdlib.h>
 
-    void Insert(int *diff, int l, int r, int c)
-        {
+    void Insert(int *diff, int l, int r, int c) {
         diff[l] += c;
         diff[r + 1] -= c;
     }
 
-    int main()
-        {
+    int main() {
         int n;
         int m;
         scanf("%d %d", &n, &m);
@@ -835,16 +821,14 @@
     int arr[N][N];
     int diff[N][N];
 
-    void Insert(int x1, int y1, int x2, int y2, int c)
-        {
+    void Insert(int x1, int y1, int x2, int y2, int c) {
         diff[x1][y1] += c;
         diff[x1][y2 + 1] -= c;
         diff[x2 + 1][y1] -= c;
         diff[x2 + 1][y2 + 1] += c;
     }
 
-    int main()
-        {
+    int main() {
         int n;
         int m;
         int q;
@@ -910,8 +894,7 @@
     #define N 100010
     int visited[N];
 
-    int main()
-        {
+    int main() {
         int n;
         scanf("%d", &n);
         int *q = (int *)calloc(n, sizeof(int));
@@ -971,8 +954,7 @@
     #include <stdio.h>
     #include <stdlib.h>
 
-    int main()
-        {
+    int main() {
         int n;
         int m;
         int x;
@@ -1037,8 +1019,7 @@
     #include <stdlib.h>
     #include <stdbool.h>
 
-    bool IsSubSeq(int *a, int n, int *b, int m)
-        {
+    bool IsSubSeq(int *a, int n, int *b, int m) {
         int i = 0;
         int j = 0;
         while (i < n && j < m) {
@@ -1052,8 +1033,7 @@
         return i == n;
     }
 
-    int main()
-        {
+    int main() {
         int n;
         int m;
         scanf("%d %d", &n, &m);
@@ -1104,13 +1084,11 @@
     #include <stdio.h>
     #include <stdlib.h>
 
-    int LowBit(int x)
-        {
+    int LowBit(int x) {
         return x & (-x);
     }
 
-    int Count(int x)
-        {
+    int Count(int x) {
         int cnt = 0;
         while (x != 0) {
             cnt++;
@@ -1119,8 +1097,7 @@
         return cnt;
     }
 
-    int main()
-        {
+    int main() {
         int n;
         scanf("%d", &n);
         while (n--) {
@@ -1209,18 +1186,15 @@
         int r;
     } Seg;
 
-    int Max(int a, int b)
-        {
+    int Max(int a, int b) {
         return a > b ? a : b;
     }
 
-    int CmpFunc(const void *a, const void *b)
-        {
+    int CmpFunc(const void *a, const void *b) {
         return ((Seg *)a)->l - ((Seg *)b)->l;
     }
 
-    int main()
-        {
+    int main() {
         int n;
         scanf("%d", &n);
         Seg *segs = (Seg *)calloc(n, sizeof(Seg));

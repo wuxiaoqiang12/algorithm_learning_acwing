@@ -1,9 +1,6 @@
 \documentclass[landscape]{progbookcn}
-% \usepackage[margin = 2cm, includeheadfoot]{geometry}
 \usepackage{lmodern}
 \usepackage{multicol}
-\graphicspath{ {./images/} }
-% \usepackage{hyperref}
 
 \newcommand{\bigo}[1]{$\mathcal{O}$(#1)}
 
@@ -13,48 +10,48 @@
 \begin{document}
 
 %% title page
-  \include{body/title_page}
-  \thispagestyle{empty}
+    \include{body/title_page}
+    \thispagestyle{empty}
 
-  \frontmatter
+    \frontmatter
 
-  \include{body/preface}
+    \include{body/preface}
 
 %% 目录
-  \clearpage
-  {
-  % \hypersetup{hidelinks}
-    \tableofcontents
-  }
+    \clearpage
+    {
+        \hypersetup{hidelinks}
+        \tableofcontents
+    }
 
-  \mainmatter
-
-
-  \part{算法基础}
-  \label{alg_foundation_part}
-  \include{body/alg_foundation}
-  \include{body/data_structure}
-  \include{body/search_and_grahic}
-  \include{body/math_knowledge}
-  \include{body/dynamic_program}
-  \include{body/greedy}
+    \mainmatter
 
 
-  \part{算法提高}
-  \label{alg_improve}
+    \part{算法基础}
+    \label{alg_foundation_part}
+    \include{body/alg_foundation}
+    \include{body/data_structure}
+    \include{body/search_and_grahic}
+    \include{body/math_knowledge}
+    \include{body/dynamic_program}
+    \include{body/greedy}
 
 
-  \part{算法进阶}
-  \label{alg_advance}
+    \part{算法提高}
+    \label{alg_improve}
 
 
-  \part{LeetCode究极班}
-  \label{leetcode_ultimate}
+    \part{算法进阶}
+    \label{alg_advance}
 
 
-  \appendix
-  \cleardoublepage
+    \part{LeetCode究极班}
+    \label{leetcode_ultimate}
 
-  \include{body/appendice_c_func}
+
+    \appendix
+    \cleardoublepage
+
+    \include{body/appendice_c_func}
 
 \end{document}
