@@ -229,6 +229,8 @@
     breaklines=true,
 }
 
+\def\inlinecode{\lstinline[basicstyle=\ttfamily,mathescape=true]}
+
 %% 代码列表标题
 \RequirePackage{caption}
 \DeclareCaptionFormat{codecaptionformat}{%
@@ -463,6 +465,18 @@
         }{
     \end{minipage}}
 
+
+\newcommand\begindot{\begin{itemize}
+[itemsep=2pt plus 2pt minus 2pt,%
+    topsep=3pt plus 2pt minus 2pt,%
+    parsep=0pt plus 2pt minus 2pt]}
+\newcommand\myenddot{\end{itemize}}
+
+\newcommand\beginnum{\begin{enumerate}
+[itemsep=2pt plus 2pt minus 2pt,%
+topsep=3pt plus 2pt minus 2pt,%
+parsep=0pt plus 2pt minus 2pt]}
+\newcommand\myendnum{\end{enumerate}}
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %% Chinese names

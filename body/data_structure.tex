@@ -502,7 +502,7 @@
 
     以下是一个例子：
 
-    该数组为 \lstinline{[1 3 -1 -3 5 3 6 7]}，$k$ 为 $3$。
+    该数组为 \inlinecode{[1 3 -1 -3 5 3 6 7]}，$k$ 为 $3$。
 
     \begin{tabular}{|c|c|c|}
         \hline
@@ -626,19 +626,19 @@
 \begin{titledbox}{AcWing 835. Trie字符串统计}
     维护一个字符串集合，支持两种操作：
 
-    \lstinline{I x} 向集合中插入一个字符串 $x$；
+    \inlinecode{I x} 向集合中插入一个字符串 $x$；
 
-    \lstinline{Q x} 询问一个字符串在集合中出现了多少次。
+    \inlinecode{Q x} 询问一个字符串在集合中出现了多少次。
 
     共有 $N$ 个操作，输入的字符串总长度不超过 $10^5$，字符串仅包含小写英文字母。
 
     输入格式：
 
-    第一行包含整数 $N$，表示操作数。接下来 $N$ 行，每行包含一个操作指令，指令为 \lstinline{I x} 或 \lstinline{Q x} 中的一种。
+    第一行包含整数 $N$，表示操作数。接下来 $N$ 行，每行包含一个操作指令，指令为 \inlinecode{I x} 或 \inlinecode{Q x} 中的一种。
 
     输出格式：
 
-    对于每个询问指令 \lstinline{Q x}，都要输出一个整数作为结果，表示 $x$ 在集合中出现的次数。
+    对于每个询问指令 \inlinecode{Q x}，都要输出一个整数作为结果，表示 $x$ 在集合中出现的次数。
     每个结果占一行。
 
     数据范围：
@@ -646,17 +646,17 @@
     $1 \le N \le 2*10^4$
 
     \begin{inputblock}
-        5 \\
-        I abc \\
-        Q abc \\
-        Q ab \\
-        I ab \\
-        Q ab
+        \inlinecode{5} \\
+        \inlinecode{I abc} \\
+        \inlinecode{Q abc} \\
+        \inlinecode{Q ab} \\
+        \inlinecode{I ab} \\
+        \inlinecode{Q ab}
     \end{inputblock}
     \begin{outputblock}
-        1 \\
-        0 \\
-        1
+        \inlinecode{1} \\
+        \inlinecode{0} \\
+        \inlinecode{1}
     \end{outputblock}
 \end{titledbox}
 
@@ -913,14 +913,14 @@
     \item 询问两个元素是否在一个集合中
 \end{enumerate}
 
-基本原理：每个集合用一棵树来表示。树根的编号就是整个集合的编号，每个节点存储它的父节点， \lstinline{p[x]}标识 \lstinline{x}的父节点
+基本原理：每个集合用一棵树来表示。树根的编号就是整个集合的编号，每个节点存储它的父节点， \inlinecode{p[x]}标识 \inlinecode{x}的父节点
 
 问题：
 
 \begin{enumerate}
-    \item 如何判断树根： \lstinline{if(p[x] == x)}
-    \item 如何求x的集合编号： \lstinline{while(p[x] != x) x = p[x]}
-    \item 如何合并两个集合： \lstinline{p[p[x]] = p[y]}
+    \item 如何判断树根： \inlinecode{if(p[x] == x)}
+    \item 如何求x的集合编号： \inlinecode{while(p[x] != x) x = p[x]}
+    \item 如何合并两个集合： \inlinecode{p[p[x]] = p[y]}
 \end{enumerate}
 
 \subsection{AcWing 836. 合并集合}
@@ -934,11 +934,11 @@
 
     输入格式：
 
-    第一行输入整数 $n$ 和 $m$。接下来 $m$ 行，每行包含一个操作指令，指令为 \lstinline{M a b} 或 \lstinline{Q a b} 中的一种。
+    第一行输入整数 $n$ 和 $m$。接下来 $m$ 行，每行包含一个操作指令，指令为 \inlinecode{M a b} 或 \inlinecode{Q a b} 中的一种。
 
     输出格式：
 
-    对于每个询问指令 \lstinline{Q a b}，都要输出一个结果，如果 $a$ 和 $b$ 在同一集合内，则输出 Yes，否则输出 No。每个结果占一行。
+    对于每个询问指令 \inlinecode{Q a b}，都要输出一个结果，如果 $a$ 和 $b$ 在同一集合内，则输出 Yes，否则输出 No。每个结果占一行。
 
     数据范围：
 
@@ -1007,19 +1007,19 @@
 \begin{titledbox}{AcWing 837. 连通块中点的数量}
     给定一个包含 $n$ 个点（编号为 $1 \sim n$）的无向图，初始时图中没有边。现在要进行 $m$ 个操作，操作共有三种：
 
-    \lstinline{C a b}，在点 $a$ 和点 $b$ 之间连一条边，$a$ 和 $b$ 可能相等；
+    \inlinecode{C a b}，在点 $a$ 和点 $b$ 之间连一条边，$a$ 和 $b$ 可能相等；
 
-    \lstinline{Q1 a b}，询问点 $a$ 和点 $b$ 是否在同一个连通块中，$a$ 和 $b$ 可能相等；
+    \inlinecode{Q1 a b}，询问点 $a$ 和点 $b$ 是否在同一个连通块中，$a$ 和 $b$ 可能相等；
 
-    \lstinline{Q2 a}，询问点 $a$ 所在连通块中点的数量；
+    \inlinecode{Q2 a}，询问点 $a$ 所在连通块中点的数量；
 
     输入格式：
 
-    第一行输入整数 $n$ 和 $m$。接下来 $m$ 行，每行包含一个操作指令，指令为 \lstinline{C a b}，\lstinline{Q1 a b} 或 \lstinline{Q2 a} 中的一种。
+    第一行输入整数 $n$ 和 $m$。接下来 $m$ 行，每行包含一个操作指令，指令为 \inlinecode{C a b}，\inlinecode{Q1 a b} 或 \inlinecode{Q2 a} 中的一种。
 
     输出格式：
 
-    对于每个询问指令 \lstinline{Q1 a b}，如果 $a$ 和 $b$ 在同一个连通块中，则输出 \lstinline{Yes} ，否则输出 \lstinline{No} 。对于每个询问指令 \lstinline{Q2 a} ，输出一个整数表示点 $a$ 所在连通块中点的数量，每个结果占一行。
+    对于每个询问指令 \inlinecode{Q1 a b}，如果 $a$ 和 $b$ 在同一个连通块中，则输出 \inlinecode{Yes} ，否则输出 \inlinecode{No} 。对于每个询问指令 \inlinecode{Q2 a} ，输出一个整数表示点 $a$ 所在连通块中点的数量，每个结果占一行。
 
     数据范围：
 
@@ -1095,7 +1095,7 @@
 \end{mycpptwocol}
 
 \begin{information}
-    此处维护了一个 \lstinline{cnt} 数组来标记集合中的元素个数，仅保证根节点的 \lstinline{cnt} 是有意义的。
+    此处维护了一个 \inlinecode{cnt} 数组来标记集合中的元素个数，仅保证根节点的 \inlinecode{cnt} 是有意义的。
 \end{information}
 
 \subsection{AcWing 240. 食物链}
@@ -1103,18 +1103,18 @@
 
 \section{堆}
 
-用一维数组来模拟一个堆，起始坐标从 \lstinline{1} 开始，因为 \lstinline{x} 节点的左儿子是 \lstinline{2x} 右儿子是 \lstinline{2x + 1} ，不能用0开始。几种操作的实现如下：
+用一维数组来模拟一个堆，起始坐标从 \inlinecode{1} 开始，因为 \inlinecode{x} 节点的左儿子是 \inlinecode{2x} 右儿子是 \inlinecode{2x + 1} ，不能用0开始。几种操作的实现如下：
 
 \begin{enumerate}
-    \item 插入一个数： \lstinline{heap[++size] = x; up(size);}
-    \item 求集合中的最小值： \lstinline{heap[1];}
-    \item 删除最小值： \lstinline{heap[1] = heap[size]; size--; down(1);}
-    \item 删除任意一个元素： \lstinline{heap[k] = heap[size]; size--; down(k); up(k);}
-    \item 修改任意一个元素： \lstinline{heap[k] = x; down(k); up(k);}
+    \item 插入一个数： \inlinecode{heap[++size] = x; up(size);}
+    \item 求集合中的最小值： \inlinecode{heap[1];}
+    \item 删除最小值： \inlinecode{heap[1] = heap[size]; size--; down(1);}
+    \item 删除任意一个元素： \inlinecode{heap[k] = heap[size]; size--; down(k); up(k);}
+    \item 修改任意一个元素： \inlinecode{heap[k] = x; down(k); up(k);}
 \end{enumerate}
 
 \subsection{AcWing 838. 堆排序}
-此时只涉及到2和3两个操作即可，故仅需使用 \lstinline{down} 操作，无需 \lstinline{up} 操作。
+此时只涉及到2和3两个操作即可，故仅需使用 \inlinecode{down} 操作，无需 \inlinecode{up} 操作。
 
 \begin{titledbox}{AcWing 838. 堆排序}
     输入一个长度为 $n$ 的整数数列，从小到大输出前 $m$ 小的数。
@@ -1188,7 +1188,7 @@
 
 \subsection{AcWing 839. 模拟堆}
 
-此处为了支持删除和修改任意一个元素，用了两个数组 \lstinline{hp} 和 \lstinline{ph} 来保存从堆( \lstinline{h} , heap)到插入的操作数( \lstinline{p} , pointer)之间的映射关系。
+此处为了支持删除和修改任意一个元素，用了两个数组 \inlinecode{hp} 和 \inlinecode{ph} 来保存从堆( \inlinecode{h} , heap)到插入的操作数( \inlinecode{p} , pointer)之间的映射关系。
 
 \begin{titledbox}{AcWing 839. 模拟堆}
 
@@ -1196,11 +1196,11 @@
 
     \begin{enumerate}
         \itemsep=-5pt
-        \item I x，插入一个数 $x$；
-        \item PM，输出当前集合中的最小值；
-        \item DM，删除当前集合中的最小值（数据保证此时的最小值唯一）；
-        \item D k，删除第 $k$ 个插入的数；
-        \item C k x，修改第 $k$ 个插入的数，将其变为 $x$；
+        \item \inlinecode{I x}，插入一个数 $x$；
+        \item \inlinecode{PM}，输出当前集合中的最小值；
+        \item \inlinecode{DM}，删除当前集合中的最小值（数据保证此时的最小值唯一）；
+        \item \inlinecode{D k}，删除第 $k$ 个插入的数；
+        \item \inlinecode{C k x}，修改第 $k$ 个插入的数，将其变为 $x$；
     \end{enumerate}
 
     现在要进行 N 次操作，对于所有第 2 个操作，输出当前集合的最小值。
@@ -1220,19 +1220,19 @@
     数据保证合法。
 
     \begin{inputblock}
-        8 \\
-        I -10 \\
-        PM \\
-        I -10 \\
-        D 1 \\
-        C 2 8 \\
-        I 6 \\
-        PM \\
-        DM
+        \inlinecode{8} \\
+        \inlinecode{I -10} \\
+        \inlinecode{PM} \\
+        \inlinecode{I -10} \\
+        \inlinecode{D 1} \\
+        \inlinecode{C 2 8} \\
+        \inlinecode{I 6} \\
+        \inlinecode{PM} \\
+        \inlinecode{DM}
     \end{inputblock}
     \begin{outputblock}
-        -10 \\
-        6
+        \inlinecode{-10} \\
+        \inlinecode{6}
     \end{outputblock}
 \end{titledbox}
 
@@ -1341,35 +1341,35 @@
 \begin{titledbox}{AcWing 840. 模拟散列表}
     维护一个集合，支持如下几种操作：
 
-    \lstinline{I x} ，插入一个数 $x$；
+    \inlinecode{I x} ，插入一个数 $x$；
 
-    \lstinline{Q x} ，询问数 $x$ 是否在集合中出现过；
+    \inlinecode{Q x} ，询问数 $x$ 是否在集合中出现过；
 
     现在要进行 $N$ 次操作，对于每个询问操作输出对应的结果。
 
     输入格式：
 
-    第一行包含整数 $N$，表示操作数量。接下来 $N$ 行，每行包含一个操作指令，操作指令为 \lstinline{I x} ，\lstinline{Q x}  中的一种。
+    第一行包含整数 $N$，表示操作数量。接下来 $N$ 行，每行包含一个操作指令，操作指令为 \inlinecode{I x} ，\inlinecode{Q x}  中的一种。
 
     输出格式：
 
-    对于每个询问指令 \lstinline{Q x} ，输出一个询问结果，如果 $x$ 在集合中出现过，则输出 \lstinline{Yes} ，否则输出 \lstinline{No} 。每个结果占一行。
+    对于每个询问指令 \inlinecode{Q x} ，输出一个询问结果，如果 $x$ 在集合中出现过，则输出 \inlinecode{Yes} ，否则输出 \inlinecode{No} 。每个结果占一行。
 
     数据范围：
 
     $1 \le N \le 10^5$，$-10^9 \le x \le 10^9$
 
     \begin{inputblock}
-        5 \\
-        I 1 \\
-        I 2 \\
-        I 3 \\
-        Q 2 \\
-        Q 5
+        \inlinecode{5} \\
+        \inlinecode{I 1} \\
+        \inlinecode{I 2} \\
+        \inlinecode{I 3} \\
+        \inlinecode{Q 2} \\
+        \inlinecode{Q 5}
     \end{inputblock}
     \begin{outputblock}
-        Yes \\
-        No
+        \inlinecode{Yes} \\
+        \inlinecode{No}
     \end{outputblock}
 \end{titledbox}
 
@@ -1383,7 +1383,7 @@ Hash函数难免产生碰撞（冲突：$h(t_1) = h(t_2), \text{当} t_1 \neq t_
 
 1. 开放寻址法
 
-此法将从哈希后的那个位置开始查找，如果已经有了不是自己的人占用该位置则继续向后寻找，直到找到一个空位置，返回该位置。此法中Find函数将返回 \lstinline{x}应该存放的位置。此法仅需开一个数组即可，通常来讲要开数据规模的两倍到三倍，以防buffer overflow。
+此法将从哈希后的那个位置开始查找，如果已经有了不是自己的人占用该位置则继续向后寻找，直到找到一个空位置，返回该位置。此法中Find函数将返回 \inlinecode{x}应该存放的位置。此法仅需开一个数组即可，通常来讲要开数据规模的两倍到三倍，以防buffer overflow。
 
 \begin{mycpptwocol}[开放寻址法]
     #include <stdio.h>
@@ -1432,7 +1432,7 @@ Hash函数难免产生碰撞（冲突：$h(t_1) = h(t_2), \text{当} t_1 \neq t_
 
 2. 拉链法
 
-此法将在哈希数组的每一个位置 \lstinline{h[t]} 处放置一个单链表，来存储所有哈希值为 \lstinline{t} 的数字。该单链表可以仅有一个数组表示，每个 \lstinline{h[t]} 中存储这一个数组中的不同下标表示单链表的头节点位置。
+此法将在哈希数组的每一个位置 \inlinecode{h[t]} 处放置一个单链表，来存储所有哈希值为 \inlinecode{t} 的数字。该单链表可以仅有一个数组表示，每个 \inlinecode{h[t]} 中存储这一个数组中的不同下标表示单链表的头节点位置。
 
 \begin{mycpptwocol}[拉链法]
     #include <stdio.h>
@@ -1492,15 +1492,15 @@ Hash函数难免产生碰撞（冲突：$h(t_1) = h(t_2), \text{当} t_1 \neq t_
 
 \subsection{AcWing 841. 字符串哈希}
 
-字符串哈希使用的方法叫做：字符串前缀哈希法。若有一字符串 \lstinline{str = "abcedacbd"}，则哈希表中的元素表示从左边起到第i个位置上的子字符串的哈希值。即， \lstinline{h[1] -> "a"; h[2] -> "ab"; h[3] -> "abc"}，以此类推。
+字符串哈希使用的方法叫做：字符串前缀哈希法。若有一字符串 \inlinecode{str = "abcedacbd"}，则哈希表中的元素表示从左边起到第i个位置上的子字符串的哈希值。即， \inlinecode{h[1] -> "a"; h[2] -> "ab"; h[3] -> "abc"}，以此类推。
 
 \begin{enumerate}
-    \item 将字符串存储在下标为1的 \lstinline{char} 数组中；
-    \item 计算字符串的前缀数字，将他们哈希化，将字符串看作是一个 \lstinline{P} 进制数，这里 \lstinline{P = 131} 或者 \lstinline{P = 13331}。按照经验，这两个值对字符串哈希会产生非常小的冲突可能。
-    \item 将这个 \lstinline{P} 进制数转换为10进制，通常转换出来的数字会很大，则将其对 \lstinline{Q} 取模。这样任意一个字符串都可以转换成 $0 \cdots Q - 1$ 之间的数字：$(1234)_P => (1 * P^3 + 2 * P^2 + 3 * P^1 + 4 * P^0) \mod Q$
-    \item 对于 \lstinline{Hash} 函数，将计算字符串中从 $l$ 到 $r$ 的哈希值，通过前缀哈希表以及下公式计算，注意左侧为低位，右侧为高位。
+    \item 将字符串存储在下标为1的 \inlinecode{char} 数组中；
+    \item 计算字符串的前缀数字，将他们哈希化，将字符串看作是一个 \inlinecode{P} 进制数，这里 \inlinecode{P = 131} 或者 \inlinecode{P = 13331}。按照经验，这两个值对字符串哈希会产生非常小的冲突可能。
+    \item 将这个 \inlinecode{P} 进制数转换为10进制，通常转换出来的数字会很大，则将其对 \inlinecode{Q} 取模。这样任意一个字符串都可以转换成 $0 \cdots Q - 1$ 之间的数字：$(1234)_P => (1 * P^3 + 2 * P^2 + 3 * P^1 + 4 * P^0) \mod Q$
+    \item 对于 \inlinecode{Hash} 函数，将计算字符串中从 $l$ 到 $r$ 的哈希值，通过前缀哈希表以及下公式计算，注意左侧为低位，右侧为高位。
 
-    \lstinline{h[r] - h[l - 1] * p[r - l + 1]} ，其中 \lstinline{p} 数组存放了从 $P^0 - P^N$ 的所有数字，方便查询。
+    \inlinecode{h[r] - h[l - 1] * p[r - l + 1]} ，其中 \inlinecode{p} 数组存放了从 $P^0 \sim P^N$ 的所有数字，方便查询。
 \end{enumerate}
 
 注意：一般来讲不能将字符串映射成 $0$ ，因为任意进制的 $0$ 都将映射成十进制的 $0$ 。此时有：$\mlq A \mrq \mapsto 0; \mlq AA \mrq \mapsto 0$，这样不同的字符串映射成了相同的值。另外，这种方法假定了冲突不存在，不需要解决冲突。按照经验一般取 $P = 131 or 13331, Q = 2^{64}$ 时冲突的概率几乎为 $0$ 。
@@ -1515,7 +1515,7 @@ Hash函数难免产生碰撞（冲突：$h(t_1) = h(t_2), \text{当} t_1 \neq t_
 
     输出格式：
 
-    对于每个询问输出一个结果，如果两个字符串子串完全相同则输出 \lstinline{Yes} ，否则输出 \lstinline{No}。每个结果占一行。
+    对于每个询问输出一个结果，如果两个字符串子串完全相同则输出 \inlinecode{Yes} ，否则输出 \inlinecode{No}。每个结果占一行。
 
     数据范围：
 
@@ -1576,8 +1576,8 @@ Hash函数难免产生碰撞（冲突：$h(t_1) = h(t_2), \text{当} t_1 \neq t_
 \end{mycpptwocol}
 
 \begin{information}
-    注意：此处将字符串存储在下标为1的地方开始。是因为这里将字符串看作是 \lstinline{P} 进制数，如果从0开始会将同一个字符构成的字符串都算做相同的值，会有问题。
+    注意：此处将字符串存储在下标为1的地方开始。是因为这里将字符串看作是 \inlinecode{P} 进制数，如果从0开始会将同一个字符构成的字符串都算做相同的值，会有问题。
 
-    另外，这里没有显式的对 \lstinline{Q = $2^64$} 取模，是因为用了 \lstinline{unsinged long long} 溢出后就相当于对 \lstinline{Q} 取模。
+    另外，这里没有显式的对 \inlinecode{Q = $2^64$} 取模，是因为用了 \inlinecode{unsinged long long} 溢出后就相当于对 \inlinecode{Q} 取模。
 \end{information}
 

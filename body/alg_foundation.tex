@@ -18,17 +18,13 @@
 
     数据范围：$1 \le n \le 100000$
 
-    \begin{minipage}[t]{.5\textwidth}
-        % \raggedright
-        输入样例：\\
-        5 \\
-        3 1 2 4 5
-    \end{minipage}% <---------------- Note the use of "%"
-    \begin{minipage}[t]{.5\textwidth}
-        % \raggedcenter
-        输出样例：\\
-        1 2 3 4 5
-    \end{minipage}
+    \begin{inputblock}
+        \inlinecode{5} \\
+        \inlinecode{3 1 2 4 5}
+    \end{inputblock}
+    \begin{outputblock}
+        \inlinecode{1 2 3 4 5}
+    \end{outputblock}
 \end{titledbox}
 
 快速排序算法基于\textbf{分治}算法，以一个数来作为分治的节点。
@@ -37,7 +33,7 @@
 
 主要步骤如下：
 \begin{enumerate}
-    \item 确定分界点$x$，可取值：\lstinline{q[l]}, \lstinline{q[r]}, \lstinline{q[(l + r) >> 1]}, random value
+    \item 确定分界点$x$，可取值： \inlinecode{q[l]},  \inlinecode{q[r]},  \inlinecode{q[(l + r) >> 1]}, \inlinecode{random value}
     \item 调整数组，使得左边小于等于$x$，右边大于等于$x$
     \item 递归处理左右两段
 \end{enumerate}
@@ -96,15 +92,15 @@
 \begin{keypoint}
     这里有两个问题：
     \begin{enumerate}
-        \item 在选择x时选择\lstinline{q[l]}则在递归是不能选用\lstinline{i}，会出现边界问题 | \lstinline{i - 1, i}
-        \item 在选择x时选择\lstinline{q[r]}则在递归是不能选用\lstinline{j}，会出现边界问题 | \lstinline{j, j + 1}
+        \item 在选择 $x$ 时选择 \inlinecode{q[l]} 则在递归是不能选用 \inlinecode{i}，会出现边界问题 |  \inlinecode{i - 1, i}
+        \item 在选择 $x$ 时选择 \inlinecode{q[r]} 则在递归是不能选用 \inlinecode{j}，会出现边界问题 |  \inlinecode{j, j + 1}
     \end{enumerate}
 
-    边界用例可使用\lstinline{1, 2}这个例子，会有递归不结束的问题
+    边界用例可使用 \inlinecode{1, 2} 这个例子，会有递归不结束的问题
 \end{keypoint}
 
 \begin{information}
-    该算法\textbf{不稳定}，因为\lstinline{q[i]}和\lstinline{q[j]}相等的时候会发生交换。
+    该算法\textbf{不稳定}，因为 \inlinecode{q[i]} 和 \inlinecode{q[j]} 相等的时候会发生交换。
 
     这里调整数组的部分是难点，怎么优雅的调整数组？暴力做法可以开辟两个辅助数组来存储。双指针做法优雅简洁。
 \end{information}
@@ -203,7 +199,7 @@
 
 主要步骤如下：
 \begin{enumerate}
-    \item 确定分界点，\lstinline{mid = (l + r) >> 1}
+    \item 确定分界点， \inlinecode{mid = (l + r) >> 1}
     \item 递归排序左右两边
     \item 归并，将两个有序的子数组合二为一
 \end{enumerate}
@@ -292,7 +288,7 @@
 双指针算法做归并
 
 \begin{keypoint}
-    这里归并两个子数组之后要写回去，\lstinline{backup}数组只是临时存储使用。
+    这里归并两个子数组之后要写回去， \inlinecode{backup} 数组只是临时存储使用。
 \end{keypoint}
 
 \subsection{AcWing 788. 逆序对的数量}
@@ -423,12 +419,12 @@
 \begin{keypoint}
     每次要保证答案在区间中。
 
-    第二个模版加一的原因在于，如果某次循环结束后，\lstinline{l = r - 1}，如果不加1，此时因为向下取整的缘故\lstinline{mid = l}，check成功后\lstinline{l}被再次赋值为\lstinline{mid}即\lstinline{l}，则此时进入死循环。
+    第二个模版加一的原因在于，如果某次循环结束后， \inlinecode{l = r - 1}，如果不加1，此时因为向下取整的缘故 \inlinecode{mid = l}，check成功后 \inlinecode{l}被再次赋值为 \inlinecode{mid}即 \inlinecode{l}，则此时进入死循环。
 \end{keypoint}
 
 \subsection{AcWing 789. 数的范围}
 \begin{titledbox}{AcWing 789. 数的范围}
-    给定一个按照升序排列的长度为 $n$ 的整数数组，以及 $q$ 个查询。对于每个查询，返回一个元素 $k$ 的起始位置和终止位置（位置从 $0$ 开始计数）。如果数组中不存在该元素，则返回\lstinline{-1 -1}。
+    给定一个按照升序排列的长度为 $n$ 的整数数组，以及 $q$ 个查询。对于每个查询，返回一个元素 $k$ 的起始位置和终止位置（位置从 $0$ 开始计数）。如果数组中不存在该元素，则返回 \inlinecode{-1 -1}。
 
     输入格式：
 
@@ -521,7 +517,7 @@
 \end{mycpptwocol}
 
 \begin{exclamation}
-    这里不能使用\lstinline{bsearch}函数来完成左端点的搜索，因为该函数在面对重复值时返回值不确定，是未定义行为。
+    这里不能使用 \inlinecode{bsearch}函数来完成左端点的搜索，因为该函数在面对重复值时返回值不确定，是未定义行为。
 \end{exclamation}
 
 \subsection{AcWing 790. 数的三次方根}

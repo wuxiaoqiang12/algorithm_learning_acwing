@@ -12,9 +12,9 @@
 \end{table}
 可见，因为BFS的最短路性质，当需要解决最小操作数、最短距离、最短路等问题时，可以尝试使用BFS。而当题目难以思考时，可尝试DFS。
 
-稠密图：邻接矩阵 \lstinline{g[N][N]}, a和b之间是否有边，且边的权重是多少
+稠密图：邻接矩阵 \inlinecode{g[N][N]}, a和b之间是否有边，且边的权重是多少
 
-稀疏图：邻接表 \lstinline{h[N], e[N], ne[N], idx}, 和拉链法的哈希是一样的数据结构
+稀疏图：邻接表 \inlinecode{h[N], e[N], ne[N], idx}, 和拉链法的哈希是一样的数据结构
 
 
 \section{DFS}
@@ -103,7 +103,7 @@
     输出格式：
 
     每个解决方案占 $n$ 行，每行输出一个长度为 $n$ 的字符串，用来表示完整的棋盘状态。
-    其中 \lstinline{.} 表示某一个位置的方格状态为空，\lstinline{Q} 表示某一个位置的方格上摆着皇后。每个方案输出完成后，输出一个空行。\textbf{注意：行末不能有多余空格。}输出方案的顺序任意，只要不重复且没有遗漏即可。
+    其中 \inlinecode{.} 表示某一个位置的方格状态为空，\inlinecode{Q} 表示某一个位置的方格上摆着皇后。每个方案输出完成后，输出一个空行。\textbf{注意：行末不能有多余空格。}输出方案的顺序任意，只要不重复且没有遗漏即可。
 
     数据范围：
 
@@ -319,12 +319,12 @@
 \end{mycpptwocol}
 
 \begin{information}
-    若想要输出最短路径，则可以开一个数组 \lstinline{Pair prev[N][N];} 来存储每一个点的前一个节点（在扩展 $t$ 时可以操作），最后从后往前循环输出即可。
+    若想要输出最短路径，则可以开一个数组 \inlinecode{Pair prev[N][N];} 来存储每一个点的前一个节点（在扩展 $t$ 时可以操作），最后从后往前循环输出即可。
 \end{information}
 
 \subsection{AcWing 845. 八数码}
 \begin{titledbox}{AcWing 845. 八数码}
-    在一个 $3 \times 3$ 的网格中，$1 \sim 8$ 这 $8$ 个数字和一个 \lstinline{x} 恰好不重不漏地分布在这 $3 \times 3$ 的网格中。
+    在一个 $3 \times 3$ 的网格中，$1 \sim 8$ 这 $8$ 个数字和一个 \inlinecode{x} 恰好不重不漏地分布在这 $3 \times 3$ 的网格中。
 
     例如：
 
@@ -332,14 +332,14 @@
     x 4 6 \\
     7 5 8
 
-    在游戏过程中，可以把 \lstinline{x} 与其上、下、左、右四个方向之一的数字交换（如果存在）。
+    在游戏过程中，可以把 \inlinecode{x} 与其上、下、左、右四个方向之一的数字交换（如果存在）。
     我们的目的是通过交换，使得网格变为如下排列（称为正确排列）：
 
     1 2 3 \\
     4 5 6 \\
     7 8 x
 
-    例如，示例中图形就可以通过让 \lstinline{x} 先后与右、下、右三个方向的数字交换成功得到正确排列。
+    例如，示例中图形就可以通过让 \inlinecode{x} 先后与右、下、右三个方向的数字交换成功得到正确排列。
     交换过程如下：
 
     1 2 3 \hspace{1em} 1 2 3 \hspace{1em} 1 2 3 \hspace{1em} 1 2 3 \\
@@ -356,7 +356,7 @@
     x 4 6 \\
     7 5 8
 
-    则输入为：\lstinline{1 2 3 x 4 6 7 5 8}
+    则输入为：\inlinecode{1 2 3 x 4 6 7 5 8}
 
     输出格式：
 
@@ -377,7 +377,7 @@
 有向图的存储有两种方式：
 \begin{description}
     \item[邻接矩阵]
-    使用二维数组存储图 \lstinline{g[a][b]} 表示边 $a \rightarrow b$ 上的权重，若无权图则表示边的存在性。空间复杂度为 \bigo{$n^2$} ，比较浪费空间，常用来存储稠密图。
+    使用二维数组存储图 \inlinecode{g[a][b]} 表示边 $a \rightarrow b$ 上的权重，若无权图则表示边的存在性。空间复杂度为 \bigo{$n^2$} ，比较浪费空间，常用来存储稠密图。
     \item[邻接表]
     使用链表的形式，每一个节点对应一个单链表来存储由该点出发可以走到的所有点。
 \end{description}
@@ -407,7 +407,7 @@
         }
     }
 \end{mycpptwocol}
-其中，14行的 \lstinline{check(j)} 的作用是剪枝。
+其中，14行的 \inlinecode{check(j)} 的作用是剪枝。
 
 \subsection{AcWing 846. 树的重心}
 \begin{titledbox}{AcWing 846. 树的重心}
@@ -701,17 +701,17 @@
 
 朴素版的Dijkstra算法：
 
-1. 用邻接矩阵存储图；\lstinline{g[N][N]}
+1. 用邻接矩阵存储图；\inlinecode{g[N][N]}
 
-2. 用一个数组存储每一个点到起始点的距离\lstinline{d[N]}；
+2. 用一个数组存储每一个点到起始点的距离\inlinecode{d[N]}；
 
-3. \lstinline{st[N]}，存储每一个点是否已经找到了最短路
+3. \inlinecode{st[N]}，存储每一个点是否已经找到了最短路
 
 算法逻辑：
 
-1. 将距离数组初始化为\lstinline{d[i] = +∞; d[k] = 0;} $k$ 表示起始点
+1. 将距离数组初始化为\inlinecode{d[i] = +∞; d[k] = 0;} $k$ 表示起始点
 
-2. 从第$0$个点到第$n - 1$个点，找到距离当前点最近的下一个点(遍历$1 - n$) \lstinline{}{t; st[t] = true;}
+2. 从第$0$个点到第$n - 1$个点，找到距离当前点最近的下一个点(遍历$1 - n$) \inlinecode{}{t; st[t] = true;}
 
 3. 用$t$更新其他点的距离(遍历$1 - n$)
 
@@ -836,7 +836,7 @@
 
 1. 循环n个点
 
-2. 循环所有边 \lstinline{a, b, w: dist[b] = min(dist[b], dist[a] + w)} 更新所有距离
+2. 循环所有边 \inlinecode{a, b, w: dist[b] = min(dist[b], dist[a] + w)} 更新所有距离
 
 \begin{algorithm}[H] %or another one check
     \caption{Bellman-Ford}
@@ -859,10 +859,10 @@
     } Edges[N]
 \end{mycpponecol}
 
-只要能够遍历到所有边即可。可以证明，该算法完成后一定有\textbf{三角不等式}：\lstinline{dist[b] <= dist[a] + w}成立
+只要能够遍历到所有边即可。可以证明，该算法完成后一定有\textbf{三角不等式}：\inlinecode{dist[b] <= dist[a] + w}成立
 更新距离数组的过程叫做\textbf{松弛操作}。
 
-第一个循环中，如果当前迭代了 $k$ 次，此时的 \lstinline{dist} 数组表示的是从$1$号点经过不超过$k$条边走到每个点的距离，所以可以用这个原理来找负环，迭代到第 $n$ 次仍能更新则表示有 $n+1$ 个点，但实际只有 $n$ 个点，所以一定存在负环。但一般不用该算法找负环。
+第一个循环中，如果当前迭代了 $k$ 次，此时的 \inlinecode{dist} 数组表示的是从$1$号点经过不超过$k$条边走到每个点的距离，所以可以用这个原理来找负环，迭代到第 $n$ 次仍能更新则表示有 $n+1$ 个点，但实际只有 $n$ 个点，所以一定存在负环。但一般不用该算法找负环。
 
 \subsubsection{AcWing 853. 有边数限制的最短路}
 \begin{titledbox}{AcWing 853. 有边数限制的最短路}
@@ -1088,7 +1088,7 @@ spfa算法是对bellman-ford算法的优化，在松弛操作中，不一定每�
 
     输出格式：
 
-    如果图中 \textbf{存在} 负权回路，则输出 \lstinline{Yes}，否则输出 \lstinline{No}。
+    如果图中 \textbf{存在} 负权回路，则输出 \inlinecode{Yes}，否则输出 \inlinecode{No}。
 
     数据范围：
 
@@ -1106,7 +1106,7 @@ spfa算法是对bellman-ford算法的优化，在松弛操作中，不一定每�
 \end{titledbox}
 
 \subsection{Floyd}
-求多源汇最短路，用邻接矩阵来存储 \lstinline{d[i, j]}
+求多源汇最短路，用邻接矩阵来存储 \inlinecode{d[i, j]}
 
 \begin{mycpponecol}[Floyd算法]
     for (int k = 1; k <= n; ++k) {
@@ -1118,7 +1118,7 @@ spfa算法是对bellman-ford算法的优化，在松弛操作中，不一定每�
     }
 \end{mycpponecol}
 
-初始时， \lstinline{d[i, j]} 就是邻接矩阵，结束之后 \lstinline{d[i, j]} 是最短路长度
+初始时， \inlinecode{d[i, j]} 就是邻接矩阵，结束之后 \inlinecode{d[i, j]} 是最短路长度
 
 \subsection{AcWing 854. Floyd求最短路}
 
@@ -1219,17 +1219,17 @@ Prim算法，与dijkstra算法类似：
 
 Prim算法：
 
-1. 用邻接矩阵存储图：\lstinline{g[N][N]}
+1. 用邻接矩阵存储图：\inlinecode{g[N][N]}
 
-2. 用一个数组存储每一个点到集合的距离 \lstinline{d[N]}, 即存储该点所连接边的最小权重；
+2. 用一个数组存储每一个点到集合的距离 \inlinecode{d[N]}, 即存储该点所连接边的最小权重；
 
-3. 集合 \lstinline{st[N]}，存储当前已经在连通块中的点
+3. 集合 \inlinecode{st[N]}，存储当前已经在连通块中的点
 
 算法逻辑：
 
-1. 将距离数组初始化为 \lstinline{d[i] = +∞; d[0] = 1;}
+1. 将距离数组初始化为 \inlinecode{d[i] = $+\infty$; d[0] = 1;}
 
-2. 从第 $0$ 个点到第 $n - 1$ 个点，找到集合外距离最近的点 \lstinline{t; st[t] = true;}
+2. 从第 $0$ 个点到第 $n - 1$ 个点，找到集合外距离最近的点 \inlinecode{t; st[t] = true;}
 
 3. 用 $t$ 更新其他点到集合的距离
 
@@ -1317,7 +1317,7 @@ Prim算法：
 
     输出格式：
 
-    如果给定图是二分图，则输出 \lstinline{Yes}，否则输出 \lstinline{No}。
+    如果给定图是二分图，则输出 \inlinecode{Yes}，否则输出 \inlinecode{No}。
 
     数据范围：
 
