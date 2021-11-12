@@ -324,8 +324,8 @@
         % multicols = 1,
         % Line numbers
         numbers = left,
-        numbersep = 1em,
-        xleftmargin = 1em,
+        numbersep = -1.5em,
+        xleftmargin = -1.5em,
         showstringspaces = false,
         % Code design
         keywordstyle=\color{codecolorkeywords},
@@ -466,17 +466,19 @@
     \end{minipage}}
 
 
-\newcommand\begindot{\begin{itemize}
-[itemsep=2pt plus 2pt minus 2pt,%
+\RequirePackage{enumitem}
+
+\newenvironment{myenum}
+{\begin{enumerate}[itemsep=2pt plus 2pt minus 2pt,%
     topsep=3pt plus 2pt minus 2pt,%
     parsep=0pt plus 2pt minus 2pt]}
-\newcommand\myenddot{\end{itemize}}
+{\end{enumerate}}
 
-\newcommand\beginnum{\begin{enumerate}
-[itemsep=2pt plus 2pt minus 2pt,%
-topsep=3pt plus 2pt minus 2pt,%
-parsep=0pt plus 2pt minus 2pt]}
-\newcommand\myendnum{\end{enumerate}}
+\newenvironment{mylist}
+{\begin{itemize}[itemsep=2pt plus 2pt minus 2pt,%
+    topsep=3pt plus 2pt minus 2pt,%
+    parsep=0pt plus 2pt minus 2pt]}
+{\end{itemize}}
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %% Chinese names
