@@ -4,58 +4,585 @@
 \section{背包问题}
 
 \subsection{AcWing 2. 01背包问题}
+\begin{titledbox}{AcWing 2. 01背包问题}
+    有 $N$ 件物品和一个容量是 $V$ 的背包。每件物品只能使用一次。 第 $i$ 件物品的体积是 $v_i$，价值是 $w_i$。 求解将哪些物品装入背包，可使这些物品的总体积不超过背包容量，且总价值最大。输出最大价值。
+
+    输入格：
+
+    第一行两个整数，$N, V$，用空格隔开，分别表示物品数量和背包容积。 接下来有 $N$ 行，每行两个整数 $v_i, w_i$，用空格隔开，分别表示第 $i$ 件物品的体积和价值。
+
+    输出格式：：
+
+    输出一个整数，表示最大价值。
+
+    数据范围：
+
+    $0  < N, V \le 1000$，$0 < v_i, w_i \le 1000$
+
+    \begin{inputblock}
+        \inlinecode{4 5} \\
+        \inlinecode{1 2} \\
+        \inlinecode{2 4} \\
+        \inlinecode{3 4} \\
+        \inlinecode{4 5}
+    \end{inputblock}
+    \begin{outputblock}
+        \inlinecode{8}
+    \end{outputblock}
+\end{titledbox}
 
 \subsection{AcWing 3. 完全背包问题}
+\begin{titledbox}{AcWing 3. 完全背包问题}
+    有 $N$ 种物品和一个容量是 $V$ 的背包，每种物品都有无限件可用。 第 $i$ 种物品的体积是 $v_i$，价值是 $w_i$。 求解将哪些物品装入背包，可使这些物品的总体积不超过背包容量，且总价值最大。输出最大价值。
+
+    输入格式：：
+
+    第一行两个整数，$N, V$，用空格隔开，分别表示物品种数和背包容积。接下来有 $N$ 行，每行两个整数 $v_i, w_i$，用空格隔开，分别表示第 $i$ 种物品的体积和价值。
+
+    输出格式：：
+
+    输出一个整数，表示最大价值。
+
+    数据范围：：
+
+    $0  < N, V \le 1000$，$0  < v_i, w_i \le 1000$
+
+    \begin{inputblock}
+        \inlinecode{4 5} \\
+        \inlinecode{1 2} \\
+        \inlinecode{2 4} \\
+        \inlinecode{3 4} \\
+        \inlinecode{4 5}
+    \end{inputblock}
+    \begin{outputblock}
+        \inlinecode{10}
+    \end{outputblock}
+\end{titledbox}
 
 \subsection{AcWing 4. 多重背包问题}
+\begin{titledbox}{AcWing 4. 多重背包问题}
+    有 $N$ 种物品和一个容量是 $V$ 的背包。 第 $i$ 种物品最多有 $s_i$ 件，每件体积是 $v_i$，价值是 $w_i$。 求解将哪些物品装入背包，可使物品体积总和不超过背包容量，且价值总和最大。输出最大价值。
+
+    输入格式：：
+
+    第一行两个整数，$N, V$，用空格隔开，分别表示物品种数和背包容积。接下来有 $N$ 行，每行三个整数 $v_i, w_i, s_i$，用空格隔开，分别表示第 $i$ 种物品的体积、价值和数量。
+
+    输出格式：：
+
+    输出一个整数，表示最大价值。
+
+    数据范围：：
+
+    $0  < N, V \le 100$，$0  < v_i, w_i, s_i \le 100$
+
+    \begin{inputblock}
+        \inlinecode{4 5} \\
+        \inlinecode{1 2 3} \\
+        \inlinecode{2 4 1} \\
+        \inlinecode{3 4 3} \\
+        \inlinecode{4 5 2}
+    \end{inputblock}
+    \begin{outputblock}
+        \inlinecode{10}
+    \end{outputblock}
+\end{titledbox}
 
 \subsection{AcWing 5. 多重背包问题 II}
+\begin{titledbox}{AcWing 5. 多重背包问题 II}
+    有 $N$ 种物品和一个容量是 $V$ 的背包。 第 $i$ 种物品最多有 $s_i$ 件，每件体积是 $v_i$，价值是 $w_i$。 求解将哪些物品装入背包，可使物品体积总和不超过背包容量，且价值总和最大。输出最大价值。
+
+    输入格式：：
+
+    第一行两个整数，$N, V$，用空格隔开，分别表示物品种数和背包容积。接下来有 $N$ 行，每行三个整数 $v_i, w_i, s_i$，用空格隔开，分别表示第 $i$ 种物品的体积、价值和数量。
+
+    输出格式：：
+
+    输出一个整数，表示最大价值。
+
+    数据范围：：
+
+    $0  < N \le 1000$, $0  < V \le 2000$, $0  < v_i, w_i, s_i \le 2000$
+
+    提示：
+
+    本题考查多重背包的二进制优化方法。
+
+    \begin{inputblock}
+        \inlinecode{4 5} \\
+        \inlinecode{1 2 3} \\
+        \inlinecode{2 4 1} \\
+        \inlinecode{3 4 3} \\
+        \inlinecode{4 5 2}
+    \end{inputblock}
+    \begin{outputblock}
+        \inlinecode{10}
+    \end{outputblock}
+\end{titledbox}
 
 \subsection{AcWing 9. 分组背包问题}
+\begin{titledbox}{AcWing 9. 分组背包问题}
+    有 $N$ 组物品和一个容量是 $V$ 的背包。 每组物品有若干个，同一组内的物品最多只能选一个。每件物品的体积是 $v_{ij}$，价值是 $w_{ij}$，其中 $i$ 是组号，$j$ 是组内编号。求解将哪些物品装入背包，可使物品总体积不超过背包容量，且总价值最大。输出最大价值。
+
+    输入格式：：
+
+    第一行有两个整数 $N, V$，用空格隔开，分别表示物品组数和背包容量。 接下来有 $N$ 组数据：
+    \begin{mylist}
+        \item 每组数据第一行有一个整数 $S_i$，表示第 $i$ 个物品组的物品数量；
+        \item 每组数据接下来有 $S_i$ 行，每行有两个整数 $v_{ij}, w_{ij}$，用空格隔开，分别表示第 $i$ 个物品组的第 $j$ 个物品的体积和价值；
+    \end{mylist}
+
+    输出格式：：
+
+    输出一个整数，表示最大价值。
+
+    数据范围：
+
+    $0  < N, V \le 100$，$0  < S_i \le 100$，$0  < v_{ij}, w_{ij} \le 100$
+
+    \begin{inputblock}
+        \inlinecode{3 5} \\
+        \inlinecode{2} \\
+        \inlinecode{1 2} \\
+        \inlinecode{2 4} \\
+        \inlinecode{1} \\
+        \inlinecode{3 4} \\
+        \inlinecode{1} \\
+        \inlinecode{4 5}
+    \end{inputblock}
+    \begin{outputblock}
+        \inlinecode{8}
+    \end{outputblock}
+\end{titledbox}
 
 
 \section{线性DP}
 
 \subsection{AcWing 898. 数字三角形}
+\begin{titledbox}{AcWing 898. 数字三角形}
+    给定一个如下图所示的数字三角形，从顶部出发，在每一结点可以选择移动至其左下方的结点或移动至其右下方的结点，一直走到底层，要求找出一条路径，使路径上的数字的和最大。
+
+    \inlinecode{        7} \\
+    \inlinecode{      3 8} \\
+    \inlinecode{    8 1 0} \\
+    \inlinecode{  2 7 4 4} \\
+    \inlinecode{4 5 2 6 5}
+
+    输入格式：：
+
+    第一行包含整数 $n$，表示数字三角形的层数。 接下来 $n$ 行，每行包含若干整数，其中第 $i$ 行表示数字三角形第 $i$ 层包含的整数。
+
+    输出格式：：
+
+    输出一个整数，表示最大的路径数字和。
+
+    数据范围：
+
+    $1 \le n \le 500$, $-10000 \le \text{三角形中的整数} \le 10000$
+
+    \begin{inputblock}
+        \inlinecode{5 } \\
+        \inlinecode{7 } \\
+        \inlinecode{3 8 } \\
+        \inlinecode{8 1 0 } \\
+        \inlinecode{2 7 4 4 } \\
+        \inlinecode{4 5 2 6 5 }
+    \end{inputblock}
+    \begin{outputblock}
+        \inlinecode{30}
+    \end{outputblock}
+\end{titledbox}
 
 \subsection{AcWing 895. 最长上升子序列}
+\begin{titledbox}{AcWing 895. 最长上升子序列}
+    给定一个长度为 $N$ 的数列，求数值严格单调递增的子序列的长度最长是多少。
+
+    输入格式：：
+
+    第一行包含整数 $N$。第二行包含 $N$ 个整数，表示完整序列。
+
+    输出格式：：
+
+    输出一个整数，表示最大长度。
+
+    数据范围：
+
+    $1 \le N \le 1000$，$-10^9 \le \text{数列中的数} \le 10^9$
+
+    \begin{inputblock}
+        \inlinecode{7}
+        \inlinecode{3 1 2 1 8 5 6}
+    \end{inputblock}
+    \begin{outputblock}
+        \inlinecode{4}
+    \end{outputblock}
+\end{titledbox}
 
 \subsection{AcWing 896. 最长上升子序列 II}
+\begin{titledbox}{AcWing 896. 最长上升子序列 II}
+    给定一个长度为 $N$ 的数列，求数值严格单调递增的子序列的长度最长是多少。
+
+    输入格式：：
+
+    第一行包含整数 $N$。第二行包含 $N$ 个整数，表示完整序列。
+
+    输出格式：：
+
+    输出一个整数，表示最大长度。
+
+    数据范围：
+
+    $1 \le N \le 100000$，$-10^9 \le \text{数列中的数} \le 10^9$
+
+    \begin{inputblock}
+        \inlinecode{7}
+        \inlinecode{3 1 2 1 8 5 6}
+    \end{inputblock}
+    \begin{outputblock}
+        \inlinecode{4}
+    \end{outputblock}
+\end{titledbox}
 
 \subsection{AcWing 897. 最长公共子序列}
+\begin{titledbox}{AcWing 897. 最长公共子序列}
+    给定两个长度分别为 $N$ 和 $M$ 的字符串 $A$ 和 $B$，求既是 $A$ 的子序列又是 $B$ 的子序列的字符串长度最长是多少。
+
+    输入格式：
+
+    第一行包含两个整数 $N$ 和 $M$。 第二行包含一个长度为 $N$ 的字符串，表示字符串 $A$。 第三行包含一个长度为 $M$ 的字符串，表示字符串 $B$。 字符串均由小写字母构成。
+
+    输出格式：
+
+    输出一个整数，表示最大长度。
+
+    数据范围：
+
+    $1 \le N,M \le 1000$
+
+    \begin{inputblock}
+        \inlinecode{4 5} \\
+        \inlinecode{acbd} \\
+        \inlinecode{abedc}
+    \end{inputblock}
+    \begin{outputblock}
+        \inlinecode{3}
+    \end{outputblock}
+\end{titledbox}
 
 \subsection{AcWing 902. 最短编辑距离}
+\begin{titledbox}{AcWing 902. 最短编辑距离}
+    给定两个字符串 $A$ 和 $B$，现在要将 $A$ 经过若干操作变为 $B$，可进行的操作有：
+    \begin{myenum}
+        \item 删除---将字符串 $A$ 中的某个字符删除。
+        \item 插入---在字符串 $A$ 的某个位置插入某个字符。
+        \item 替换---将字符串 $A$ 中的某个字符替换为另一个字符。
+    \end{myenum}
+    现在请你求出，将 $A$ 变为 $B$ 至少需要进行多少次操作。
+
+    输入格式：
+
+    第一行包含整数 $n$，表示字符串 $A$ 的长度。 第二行包含一个长度为 $n$ 的字符串 $A$。 第三行包含整数 $m$，表示字符串 $B$ 的长度。 第四行包含一个长度为 $m$ 的字符串 $B$。 字符串中均只包含大写字母。
+
+    输出格式：
+
+    输出一个整数，表示最少操作次数。
+
+    数据范围：
+
+    $1 \le n, m \le 1000$
+
+    \begin{inputblock}
+        \inlinecode{10} \\
+        \inlinecode{AGTCTGACGC} \\
+        \inlinecode{11} \\
+        \inlinecode{AGTAAGTAGGC}
+    \end{inputblock}
+    \begin{outputblock}
+        \inlinecode{4}
+    \end{outputblock}
+\end{titledbox}
 
 \subsection{AcWing 899. 编辑距离}
+\begin{titledbox}{AcWing 899. 编辑距离}
+    给定 $n$ 个长度不超过 $10$ 的字符串以及 $m$ 次询问，每次询问给出一个字符串和一个操作次数上限。 对于每次询问，请你求出给定的 $n$ 个字符串中有多少个字符串可以在上限操作次数内经过操作变成询问给出的字符串。 每个对字符串进行的单个字符的插入、删除或替换算作一次操作。
+
+    输入格式：
+
+    第一行包含两个整数 $n$ 和 $m$。 接下来 $n$ 行，每行包含一个字符串，表示给定的字符串。 再接下来 $m$ 行，每行包含一个字符串和一个整数，表示一次询问。 字符串中只包含小写字母，且长度均不超过 $10$。
+
+    输出格式：
+
+    输出共 $m$ 行，每行输出一个整数作为结果，表示一次询问中满足条件的字符串个数。
+
+    数据范围：
+
+    $1 \le n, m \le 1000$,
+
+    \begin{inputblock}
+        \inlinecode{3 2} \\
+        \inlinecode{abc} \\
+        \inlinecode{acd} \\
+        \inlinecode{bcd} \\
+        \inlinecode{ab 1} \\
+        \inlinecode{acbd 2}
+    \end{inputblock}
+    \begin{outputblock}
+        \inlinecode{1} \\
+        \inlinecode{3}
+    \end{outputblock}
+\end{titledbox}
 
 
 \section{区间DP}
 
 \subsection{AcWing 282. 石子合并}
+\begin{titledbox}{AcWing 282. 石子合并}
+    设有 $N$ 堆石子排成一排，其编号为 $1，2，3，\dots，N$。 每堆石子有一定的质量，可以用一个整数来描述，现在要将这 $N$ 堆石子合并成为一堆。 每次只能合并相邻的两堆，合并的代价为这两堆石子的质量之和，合并后与这两堆石子相邻的石子将和新堆相邻，合并时由于选择的顺序不同，合并的总代价也不相同。例如有 $4$ 堆石子分别为 \inlinecode{1 3 5 2}， 我们可以先合并 $1、2$ 堆，代价为 $4$，得到 \inlinecode{4 5 2}， 又合并 $1，2$ 堆，代价为 $9$，得到 \inlinecode{9 2} ，再合并得到 $11$，总代价为 $4+9+11=24$； 如果第二步是先合并 $2，3$ 堆，则代价为 $7$，得到 \inlinecode{4 7}，最后一次合并代价为 $11$，总代价为 $4+7+11=22$。 问题是：找出一种合理的方法，使总的代价最小，输出最小代价。
+
+    输入格式：
+
+    第一行一个数 $N$ 表示石子的堆数 $N$。 第二行 $N$ 个数，表示每堆石子的质量(均不超过 $1000$)。
+
+    输出格式：
+
+    输出一个整数，表示最小代价。
+
+    数据范围：
+
+    $1 \le N \le 300$
+
+    \begin{inputblock}
+        \inlinecode{4} \\
+        \inlinecode{1 3 5 2}
+    \end{inputblock}
+    \begin{outputblock}
+        \inlinecode{22}
+    \end{outputblock}
+\end{titledbox}
 
 
 \section{计数类DP}
 
 \subsection{AcWing 900. 整数划分}
+\begin{titledbox}{AcWing 900. 整数划分}
+    一个正整数 $n$ 可以表示成若干个正整数之和，形如：$n = n_1 + n_2 + \dots + n_k$，其中 $n_1 \ge n_2 \ge \dots \ge n_k, k \ge 1$。 我们将这样的一种表示称为正整数 $n$ 的一种划分。 现在给定一个正整数 $n$，请你求出 $n$ 共有多少种不同的划分方法。
+
+    输入格式：
+
+    共一行，包含一个整数 $n$。
+
+    输出格式：
+
+    共一行，包含一个整数，表示总划分数量。 由于答案可能很大，输出结果请对 $10^9 + 7$ 取模。
+
+    数据范围：
+
+    $1 \le n \le 1000$
+
+    \begin{inputblock}
+        \inlinecode{5}
+    \end{inputblock}
+    \begin{outputblock}
+        \inlinecode{7}
+    \end{outputblock}
+\end{titledbox}
 
 
 \section{数位统计DP}
 
 \subsection{AcWing 338. 计数问题}
+\begin{titledbox}{AcWing 338. 计数问题}
+    给定两个整数 $a$ 和 $b$，求 $a$ 和 $b$ 之间的所有数字中 $0 \sim 9$ 的出现次数。 例如，$a=1024，b=1032$，则 $a$ 和 $b$ 之间共有 $9$ 个数如下：\inlinecode{1024 1025 1026 1027 1028 1029 1030 1031 1032}其中 \inlinecode{0} 出现 $10$ 次，\inlinecode{1} 出现 $10$ 次，\inlinecode{2} 出现 $7$ 次，\inlinecode{3} 出现 $3$ 次等等\dots
+
+    输入格式：
+
+    输入包含多组测试数据。每组测试数据占一行，包含两个整数 $a$ 和 $b$。当读入一行为 \inlinecode{0 0} 时，表示输入终止，且该行不作处理。
+
+    输出格式：
+
+    每组数据输出一个结果，每个结果占一行。每个结果包含十个用空格隔开的数字，第一个数字表示 \inlinecode{0} 出现的次数，第二个数字表示 \inlinecode{1} 出现的次数，以此类推。
+
+    数据范围：
+
+    $0 < a,b < 100000000$
+
+    \begin{inputblock}
+        \inlinecode{1 10} \\
+        \inlinecode{44 497} \\
+        \inlinecode{346 542} \\
+        \inlinecode{1199 1748} \\
+        \inlinecode{1496 1403} \\
+        \inlinecode{1004 503} \\
+        \inlinecode{1714 190} \\
+        \inlinecode{1317 854} \\
+        \inlinecode{1976 494} \\
+        \inlinecode{1001 1960} \\
+        \inlinecode{0 0}
+    \end{inputblock}
+    \begin{outputblock}
+        \inlinecode{1 2 1 1 1 1 1 1 1 1} \\
+        \inlinecode{85 185 185 185 190 96 96 96 95 93} \\
+        \inlinecode{40 40 40 93 136 82 40 40 40 40} \\
+        \inlinecode{115 666 215 215 214 205 205 154 105 106} \\
+        \inlinecode{16 113 19 20 114 20 20 19 19 16} \\
+        \inlinecode{107 105 100 101 101 197 200 200 200 200} \\
+        \inlinecode{413 1133 503 503 503 502 502 417 402 412} \\
+        \inlinecode{196 512 186 104 87 93 97 97 142 196} \\
+        \inlinecode{398 1375 398 398 405 499 499 495 488 471} \\
+        \inlinecode{294 1256 296 296 296 296 287 286 286 247}
+    \end{outputblock}
+\end{titledbox}
 
 
 \section{状态压缩DP}
 
 \subsection{AcWing 291. 蒙德里安的梦想}
+\begin{titledbox}{AcWing 291. 蒙德里安的梦想}
+    求把 $N \times M$ 的棋盘分割成若干个 $1 \times 2$ 的的长方形，有多少种方案。 例如当 $N=2，M=4$ 时，共有 $5$ 种方案。当 $N=2，M=3$ 时，共有 $3$ 种方案。 如下图所示：
+
+    \inlinecode{<img alt="2411_1.jpg" src="/media/article/image/2019/01/26/19_4dd1644c20-2411_1.jpg" /> }
+
+    输入格式：
+
+    输入包含多组测试用例。 每组测试用例占一行，包含两个整数 $N$ 和 $M$。 当输入用例 $N=0, M=0$ 时，表示输入终止，且该用例无需处理。
+
+    输出格式：
+
+    每个测试用例输出一个结果，每个结果占一行。
+
+    数据范围：
+
+    $1 \le N,M \le 11$
+
+    \begin{inputblock}
+        \inlinecode{1 2} \\
+        \inlinecode{1 3} \\
+        \inlinecode{1 4} \\
+        \inlinecode{2 2} \\
+        \inlinecode{2 3} \\
+        \inlinecode{2 4} \\
+        \inlinecode{2 11} \\
+        \inlinecode{4 11} \\
+        \inlinecode{0 0}
+    \end{inputblock}
+    \begin{outputblock}
+        \inlinecode{1}
+        \inlinecode{0}
+        \inlinecode{1}
+        \inlinecode{2}
+        \inlinecode{3}
+        \inlinecode{5}
+        \inlinecode{144}
+        \inlinecode{51205}
+    \end{outputblock}
+\end{titledbox}
 
 \subsection{AcWing 91. 最短Hamilton路径}
+\begin{titledbox}{AcWing 91. 最短Hamilton路径}
+    给定一张 $n$ 个点的带权无向图，点从 $0 \sim n-1$ 标号，求起点 $0$ 到终点 $n-1$ 的最短 Hamilton 路径。 Hamilton 路径的定义是从 $0$ 到 $n-1$ 不重不漏地经过每个点恰好一次。
+
+    输入格式：
+
+    第一行输入整数 $n$。 接下来 $n$ 行每行 $n$ 个整数，其中第 $i$ 行第 $j$ 个整数表示点 $i$ 到 $j$ 的距离（记为 $a[i,j]$）。 对于任意的 $x,y,z$，数据保证 $a[x,x]=0，a[x,y]=a[y,x]$ 并且 $a[x,y]+a[y,z] \ge a[x,z]$。
+
+    输出格式：
+
+    输出一个整数，表示最短 Hamilton 路径的长度。
+
+    数据范围：
+
+    $1 \le n \le 20$, $0 \le a[i,j] \le 10^7$
+
+    \begin{inputblock}
+        \inlinecode{5} \\
+        \inlinecode{0 2 4 5 1} \\
+        \inlinecode{2 0 6 5 3} \\
+        \inlinecode{4 6 0 8 3} \\
+        \inlinecode{5 5 8 0 5} \\
+        \inlinecode{1 3 3 5 0}
+    \end{inputblock}
+    \begin{outputblock}
+        \inlinecode{18}
+    \end{outputblock}
+\end{titledbox}
 
 
 \section{树形DP}
 
 \subsection{AcWing 285. 没有上司的舞会}
+\begin{titledbox}{AcWing 285. 没有上司的舞会}
+    Ural 大学有 $N$ 名职员，编号为 $1 \sim N$。 他们的关系就像一棵以校长为根的树，父节点就是子节点的直接上司。 每个职员有一个快乐指数，用整数 $H_i$ 给出，其中 $1 \le i \le N$。 现在要召开一场周年庆宴会，不过，没有职员愿意和直接上司一起参会。 在满足这个条件的前提下，主办方希望邀请一部分职员参会，使得所有参会职员的快乐指数总和最大，求这个最大值。
+
+    输入格式：
+
+    第一行一个整数 $N$。 接下来 $N$ 行，第 $i$ 行表示 $i$ 号职员的快乐指数 $H_i$。 接下来 $N-1$ 行，每行输入一对整数 $L, K$，表示 $K$ 是 $L$ 的直接上司。
+
+    输出格式：
+
+    输出最大的快乐指数。
+
+    数据范围：
+
+    $1 \le N \le 6000$, $-128 \le H_i \le 127$
+
+    \begin{inputblock}
+        \inlinecode{7} \\
+        \inlinecode{1} \\
+        \inlinecode{1} \\
+        \inlinecode{1} \\
+        \inlinecode{1} \\
+        \inlinecode{1} \\
+        \inlinecode{1} \\
+        \inlinecode{1} \\
+        \inlinecode{1 3} \\
+        \inlinecode{2 3} \\
+        \inlinecode{6 4} \\
+        \inlinecode{7 4} \\
+        \inlinecode{4 5} \\
+        \inlinecode{3 5}
+    \end{inputblock}
+    \begin{outputblock}
+        \inlinecode{5}
+    \end{outputblock}
+\end{titledbox}
 
 
 \section{记忆化搜索}
 
 \subsection{AcWing 901. 滑雪}
+\begin{titledbox}{AcWing 901. 滑雪}
+    给定一个 $R$ 行 $C$ 列的矩阵，表示一个矩形网格滑雪场。矩阵中第 $i$ 行第 $j$ 列的点表示滑雪场的第 $i$ 行第 $j$ 列区域的高度。 一个人从滑雪场中的某个区域内出发，每次可以向上下左右任意一个方向滑动一个单位距离。当然，一个人能够滑动到某相邻区域的前提是该区域的高度低于自己目前所在区域的高度。下面给出一个矩阵作为例子：
+
+    \begin{bmatrix}
+        1  & 2  & 3  & 4  & 5 \\
+        16 & 17 & 18 & 19 & 6 \\
+        15 & 24 & 25 & 20 & 7 \\
+        14 & 23 & 22 & 21 & 8 \\
+        13 & 12 & 11 & 10 & 9
+    \end{bmatrix}
+
+    在给定矩阵中，一条可行的滑行轨迹为 $24-17-2-1$。在给定矩阵中，最长的滑行轨迹为 $25-24-23-\dots-3-2-1$，沿途共经过 $25$ 个区域。 现在给定你一个二维矩阵表示滑雪场各区域的高度，请你找出在该滑雪场中能够完成的最长滑雪轨迹，并输出其长度(可经过最大区域数)。
+
+    输入格式：
+
+    第一行包含两个整数 $R$ 和 $C$。 接下来 $R$ 行，每行包含 $C$ 个整数，表示完整的二维矩阵。
+
+    输出格式：
+
+    输出一个整数，表示可完成的最长滑雪长度。
+
+    数据范围：
+
+    $1 \le R,C \le 300$, $0 \le \text{矩阵中整数} \le 10000$
+
+    \begin{inputblock}
+        \inlinecode{5 5} \\
+        \inlinecode{1 2 3 4 5} \\
+        \inlinecode{16 17 18 19 6} \\
+        \inlinecode{15 24 25 20 7} \\
+        \inlinecode{14 23 22 21 8} \\
+        \inlinecode{13 12 11 10 9}
+    \end{inputblock}
+    \begin{outputblock}
+        \inlinecode{25}
+    \end{outputblock}
+\end{titledbox}
