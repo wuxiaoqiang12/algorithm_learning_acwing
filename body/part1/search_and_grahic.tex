@@ -898,7 +898,7 @@
     typedef struct {
         int a;
         int b;
-        int c;
+        int w;
     } Edge;
 
     int d[N];
@@ -914,7 +914,7 @@
         for (int i = 0; i < k; i++) {
             memcpy(backup, d, sizeof(d));
             for (int j = 0; j < m; j++) {
-                d[edges[j].b] = min(d[edges[j].b], backup[edges[j].a] + edges[j].c);
+                d[edges[j].b] = min(d[edges[j].b], backup[edges[j].a] + edges[j].w);
             }
         }
         return d[n];
@@ -925,7 +925,7 @@
         scanf("%d %d %d", &n, &m, &k);
         Edge *edges = (Edge *)calloc(m, sizeof(Edge));
         for (int i = 0; i < m; i++) {
-            scanf("%d %d %d", &edges[i].a, &edges[i].b, &edges[i].c);
+            scanf("%d %d %d", &edges[i].a, &edges[i].b, &edges[i].w);
         }
         int t = Bellman_ford(edges, k, m, n);
         if (t >= 0x3f3f3f3f / 2) {
@@ -1149,7 +1149,7 @@ SPFA 算法是对 Bellman-Ford 算法的优化，在松弛操作中，不一定�
     #define N 210
     #define INF 0x3f3f3f3f
 
-    int g[N][N];
+    int d[N][N];
 
     int Min(int a, int b) {
         return a < b ? a : b;
@@ -1159,7 +1159,7 @@ SPFA 算法是对 Bellman-Ford 算法的优化，在松弛操作中，不一定�
         for (int k = 1; k <= n; k++) {
             for (int i = 1; i <= n; i++) {
                 for (int j = 1; j <= n; j++) {
-                    g[i][j] = Min(g[i][j], g[i][k] + g[k][j]);
+                    d[i][j] = Min(d[i][j], d[i][k] + d[k][j]);
                 }
             }
         }
@@ -1171,25 +1171,25 @@ SPFA 算法是对 Bellman-Ford 算法的优化，在松弛操作中，不一定�
         for (int i = 1; i <= n; i++) {
             for (int j = 1; j <= n; j++) {
                 if (i == j) {
-                    g[i][j] = 0;
+                    d[i][j] = 0;
                 } else {
-                    g[i][j] = INF;
+                    d[i][j] = INF;
                 }
             }
         }
         while (m--) {
             int a, b, w;
             scanf("%d %d %d", &a, &b, &w);
-            g[a][b] = Min(g[a][b], w);
+            d[a][b] = Min(d[a][b], w);
         }
         Floyd(n);
         while (k--) {
             int a, b;
             scanf("%d %d", &a, &b);
-            if (g[a][b] > INF / 2) {
+            if (d[a][b] > INF / 2) {
                 puts("impossible");
             } else {
-                printf("%d\n", g[a][b]);
+                printf("%d\n", d[a][b]);
             }
         }
         return 0;
@@ -1251,6 +1251,65 @@ Prim 算法：
     \end{outputblock}
 \end{titledbox}
 
+\begin{mycpptwocol}[Prim 算法]
+    #include <stdio.h>
+    #include <stdlib.h>
+    #include <stdbool.h>
+    #include <string.h>
+
+    #define N 510
+    int g[N][N];
+    bool st[N];
+    int d[N];
+
+    int Min(int a, int b) {
+        return a < b ? a : b;
+    }
+
+    int prim(int n, int m) {
+        memset(d, 0x3f, sizeof(d));
+        int res = 0;
+        for (int i = 0; i < n; i++) {
+            int t = -1;
+            for (int j = 1; j <= n; j++) {
+                if (!st[j] && (t == -1 || d[t] > d[j])) {
+                    t = j;
+                }
+            }
+            if (i != 0 && d[t] == 0x3f3f3f3f) {
+                return -1;
+            }
+            if (i != 0) {
+                res += d[t];
+            }
+            st[t] = true;
+            for (int j = 1; j <= n; j++) {
+                d[j] = Min(d[j], g[t][j]);
+            }
+        }
+        return res;
+    }
+
+    int main() {
+        int n;
+        int m;
+        scanf("%d %d", &n, &m);
+        memset(g, 0x3f, sizeof(g));
+        while (m--) {
+            int a, b, c;
+            scanf("%d %d %d", &a, &b, &c);
+            g[a][b] = g[b][a] = Min(g[a][b], c);
+        }
+        int t = prim(n, m);
+        if (t == -1 ) {
+            puts("impossible");
+        } else {
+            printf("%d\n", t);
+        }
+        return 0;
+    }
+\end{mycpptwocol}
+
 \subsection{AcWing 859. Kruskal 算法求最小生成树}
 
 \begin{myenum}
@@ -1258,7 +1317,7 @@ Prim 算法：
     \item 枚举每条边 $a$, $b$, 权重 $c$，如果 $a$ 和 $b$ 不连通，就把这条边加入到集合中。并查集
 \end{myenum}
 
-\begin{titledbox}{AcWing 859. Kruskal算法求最小生成树}
+\begin{titledbox}{AcWing 859. Kruskal 算法求最小生成树}
     给定一个 $n$ 个点 $m$ 条边的无向图，图中可能存在重边和自环，边权可能为负数。 求最小生成树的树边权重之和，如果最小生成树不存在则输出 \inlinecode{impossible}。 给定一张边带权的无向图 $G=(V, E)$，其中 $V$ 表示图中点的集合，$E$ 表示图中边的集合，$n=|V|$，$m=|E|$。 由 $V$ 中的全部 $n$ 个顶点和 $E$ 中 $n-1$ 条边构成的无向连通子图被称为 $G$ 的一棵生成树，其中边的权值之和最小的生成树被称为无向图 $G$ 的最小生成树。
 
     输入格式：
@@ -1286,6 +1345,68 @@ Prim 算法：
     \end{outputblock}
 \end{titledbox}
 
+\begin{mycpptwocol}[Kruskal 算法]
+    #include <stdio.h>
+    #include <stdlib.h>
+
+    #define N 200010
+
+    int p[N];
+
+    int Find(int x) {
+        if (p[x] != x) {
+            p[x] = Find(p[x]);
+        }
+        return p[x];
+    }
+
+    int Union(int a, int b) {
+        int pa = Find(a);
+        int pb = Find(b);
+        p[pa] = pb;
+    }
+
+    typedef struct {
+        int a;
+        int b;
+        int w;
+    } Edge;
+    Edge edges[N];
+
+    int CmpFunc(const void *a, const void *b) {
+        return (*(Edge *)a).w - (*(Edge *)b).w;
+    }
+    int main() {
+        int n, m;
+        scanf("%d %d", &n, &m);
+        for (int i = 0; i < n + 1; i++) {
+            p[i] = i;
+        }
+        for (int i = 0; i < m; i++) {
+            scanf("%d %d %d", &edges[i].a, &edges[i].b, &edges[i].w);
+        }
+        qsort(edges, m, sizeof(Edge), CmpFunc);
+        int ans = 0;
+        int cnt = 0;
+        for (int i = 0; i < m; i++) {
+            int a = edges[i].a;
+            int b = edges[i].b;
+            int w = edges[i].w;
+            if (Find(a) != Find(b)) {
+                ans += w;
+                Union(a, b);
+                cnt++;
+            }
+        }
+        if (cnt < n - 1) {
+            puts("impossible");
+        } else {
+            printf("%d", ans);
+        }
+        return 0;
+    }
+\end{mycpptwocol}
+
 
 \section{二分图}
 
@@ -1297,7 +1418,6 @@ Prim 算法：
     \item 染色法 \bigo{$n + m$}
     \item 匈牙利算法 最坏 \bigo{$mn$}, 实际运行时间一般远小于 \bigo{$mn$}
 \end{myenum}
-
 
 \subsection{AcWing 860. 染色法判定二分图}
 \begin{titledbox}{AcWing 860. 染色法判定二分图}
@@ -1326,6 +1446,66 @@ Prim 算法：
         \inlinecode{Yes}
     \end{outputblock}
 \end{titledbox}
+
+\begin{mycpptwocol}[染色法判定二分图]
+    #include <stdio.h>
+    #include <stdlib.h>
+    #include <stdbool.h>
+    #include <string.h>
+
+    #define N 200010
+
+    int h[N];
+    int e[N];
+    int ne[N];
+    int idx;
+
+    int color[N];
+
+    void Add(int a, int b) {
+        e[++idx] = b;
+        ne[idx] = h[a];
+        h[a] = idx;
+    }
+
+    bool Color(int k, int c) {
+        color[k] = c;
+        for (int i = h[k]; i != -1; i = ne[i]) {
+            int j = e[i];
+            if (color[j] == 0) {
+                if (!Color(j, 3 - c)) {
+                    return false;
+                }
+            } else if (color[j] == c) {
+                return false;
+            }
+        }
+        return true;
+    }
+
+    int main() {
+        int n, m;
+        scanf("%d %d", &n, &m);
+
+        memset(h, -1, sizeof(h));
+        while (m--) {
+            int a, b;
+            scanf("%d %d", &a, &b);
+            Add(a, b);
+            Add(b, a);
+        }
+        for (int i = 1; i<= n; i++) {
+            if (color[i] == 0) {
+                if (!Color(i, 1)) {
+                    puts("No");
+                    return 0;
+                }
+            }
+        }
+        puts("Yes");
+        return 0;
+    }
+\end{mycpptwocol}
 
 \subsection{匈牙利算法}
 
@@ -1364,3 +1544,67 @@ Prim 算法：
         \inlinecode{2}
     \end{outputblock}
 \end{titledbox}
+
+\begin{mycpptwocol}[匈牙利算法]
+    #include <stdlib.h>
+    #include <stdbool.h>
+    #include <stdio.h>
+
+    #define N 510
+    #define M 100010
+
+    int h[N];
+    int e[M];
+    int ne[M];
+    int idx;
+
+    // 存储第二个集合中的每个点当前匹配的第一个集合中的点是哪个
+    int match[N];
+    // 表示第二个集合中的每个点是否已经被遍历过
+    bool st[N];
+
+    void Add(int a, int b) {
+        e[++idx] = b;
+        ne[idx] = h[a];
+        h[a] = idx;
+    }
+
+    bool Find(int x) {
+        for (int i = h[x]; i != -1; i = ne[i]) {
+            int j = e[i];
+            if (!st[j]) {
+                st[j] = true;
+                if (match[j] == 0 || Find(match[j])) {
+                    match[j] = x;
+                    return true;
+                }
+            }
+        }
+        return false;
+    }
+
+    int main() {
+        // $n_1$ 表示第一个集合中的点数
+        // $n_2$ 表示第二个集合中的点数
+        int n1, n2, m;
+        scanf("%d %d %d", &n1, &n2, &m);
+        memset(h, -1, sizeof(h));
+        while (m--) {
+            int a, b;
+            scanf("%d %d", &a, &b);
+            // 匈牙利算法中只会用到从第一个集合指向第二个集合的边，所以这里只用存一个方向的边
+            Add(a, b);
+        }
+
+        // 求最大匹配数，依次枚举第一个集合中的每个点能否匹配第二个集合中的点
+        int ret = 0;
+        for (int i = 1; i <= n1; i++) {
+            memset(st, false, sizeof(st));
+            if (Find(i)) {
+                ret++;
+            }
+        }
+        printf("%d", ret);
+        return 0;
+    }
+\end{mycpptwocol}

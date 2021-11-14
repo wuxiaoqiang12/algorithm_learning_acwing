@@ -59,7 +59,7 @@
 %% \usepackage{ebgaramond}
 
 %% 开明式：句末点号用占一个汉字宽度，标号和句内点号占半个汉字宽度
-\punctstyle{kaiming}
+\punctstyle{quanjiao}
 
 \setmainfont[Ligatures=TeX]{Minion Pro}
 \setsansfont{Myriad Pro}
@@ -292,8 +292,8 @@
 %       rectangle 
 %       ([xshift = 1em]interior.south);
         \draw[violet]
-        ([xshift = -1em, yshift = -1em]interior.north) --
-        ([xshift = -1em]interior.south);
+        ([xshift = -0.7em, yshift = -1em]interior.north) --
+        ([xshift = -0.7em]interior.south);
     },
 %    /utils/exec = {%
 %        \def\thelstnumber{%
