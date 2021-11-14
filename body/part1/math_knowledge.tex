@@ -1,7 +1,17 @@
 \chapter{数学知识}
+本章主要分为四个部分：
+\begin{myenum}
+    \item 数论
+    \item 组合计数
+    \item 高斯消元
+    \item 简单博弈论
+\end{myenum}
 
 
 \section{质数}
+质数（Prime number），又称素数，指在大于1的自然数中，除了1和该数自身外，无法被其他自然数整除的数（也可定义为只有1与该数本身两个正因数的数）。大于1的自然数若不是素数，则称之为合数（也称为合成数）。算术基本定理确立了素数于数论里的核心地位：任何大于1的整数均可被表示成一串唯一素数之乘积。
+
+\textbf{注意：}质数是从2开始定义的。所有$\leq 1$的整数既不是质数也不是合数。
 
 \subsection{AcWing 866. 试除法判定质数}
 \begin{titledbox}{AcWing 866. 试除法判定质数}
@@ -30,58 +40,110 @@
     \end{outputblock}
 \end{titledbox}
 
+从定义出发，可以使用简单的试除法来判定一个数是否为质数。
+
+\begin{mycpptwocol}[朴素试除法]
+    #include <stdio.h>
+    #include <stdbool.h>
+
+    bool IsPrime(int x) {
+        if (x < 2) {
+            return false;
+        }
+        for (int i = 2; i < x; i++) {
+            if (x % i == 0) {
+            return false;
+        }
+    }
+    return true;
+}
+
+int main() {
+int n;
+scanf("%d", &n);
+
+while (n--) {
+int x;
+scanf("%d", &x);
+printf("%s\n", IsPrime(x) ? "Yes" : "No");
+}
+
+return 0;
+}
+\end{mycpptwocol}
+
+显而易见的，该朴素试除法的时间复杂度为 \bigo{$n$}，效率比较低。考虑到数的性质：
+\begin{equation*}
+d \mid n \Rightarrow \frac{n}{d} \mid n
+\end{equation*}
+可见数的约数是成对出现的。所以枚举的过程中可以仅枚举一对中较小的那一个（$d \le n / d \Leftrightarrow d \le \sqrt{n}$）即可。这样时间复杂度从\bigo{$n$}降低到\bigo{$\sqrt{n}$}。
+
+\begin{mycpponecol}[优化试除法]
+for (int i = 2; i <= x / i; i++) {
+if (x % i == 0) {
+return false;
+}
+}
+\end{mycpponecol}
+
+此外，判断条件那里还有两种不推荐的写法：
+\begin{mylist}
+\item \inlinecode{i * i <= n} 这种会导致乘法的溢出
+\item \inlinecode{i <= sqrt(n)} 由于函数 \inlinecode{sqrt(n)} 计算速度很慢而不推荐
+\end{mylist}
+
 \subsection{AcWing 867. 分解质因数}
 \begin{titledbox}{AcWing 867. 分解质因数}
-    给定 $n$ 个正整数 $a_i$，将每个数分解质因数，并按照质因数从小到大的顺序输出每个质因数的底数和指数。
+给定 $n$ 个正整数 $a_i$，将每个数分解质因数，并按照质因数从小到大的顺序输出每个质因数的底数和指数。
 
-    输入格式：
+输入格式：
 
-    第一行包含整数 $n$。 接下来 $n$ 行，每行包含一个正整数 $a_i$。
+第一行包含整数 $n$。 接下来 $n$ 行，每行包含一个正整数 $a_i$。
 
-    输出格式：
+输出格式：
 
-    对于每个正整数 $a_i$，按照从小到大的顺序输出其分解质因数后，每个质因数的底数和指数，每个底数和指数占一行。 每个正整数的质因数全部输出完毕后，输出一个空行。
+对于每个正整数 $a_i$，按照从小到大的顺序输出其分解质因数后，每个质因数的底数和指数，每个底数和指数占一行。 每个正整数的质因数全部输出完毕后，输出一个空行。
 
-    数据范围：
+数据范围：
 
-    $1 \le n \le 100$, $1 \le a_i \le 2 \times 10^9$
+$1 \le n \le 100$, $1 \le a_i \le 2 \times 10^9$
 
-    \begin{inputblock}
-        \inlinecode{2} \\
-        \inlinecode{6} \\
-        \inlinecode{8}
-    \end{inputblock}
-    \begin{outputblock}
-        \inlinecode{2 1} \\
-        \inlinecode{3 1} \\
-        \\
-        \inlinecode{2 3} \\
+\begin{inputblock}
+\inlinecode{2} \\
+\inlinecode{6} \\
+\inlinecode{8}
+\end{inputblock}
+\begin{outputblock}
+\inlinecode{2 1} \\
+\inlinecode{3 1} \\
+\\
+\inlinecode{2 3} \\
 
-    \end{outputblock}
+\end{outputblock}
 \end{titledbox}
 
 \subsection{AcWing 868. 筛质数}
 \begin{titledbox}{AcWing 868. 筛质数}
-    给定一个正整数 $n$，请你求出 $1 \sim n$ 中质数的个数。
+给定一个正整数 $n$，请你求出 $1 \sim n$ 中质数的个数。
 
-    输入格式：
+输入格式：
 
-    共一行，包含整数 $n$。
+共一行，包含整数 $n$。
 
-    输出格式：
+输出格式：
 
-    共一行，包含一个整数，表示 $1 \sim n$ 中质数的个数。
+共一行，包含一个整数，表示 $1 \sim n$ 中质数的个数。
 
-    数据范围：
+数据范围：
 
-    $1 \le n \le 10^6$
+$1 \le n \le 10^6$
 
-    \begin{inputblock}
-        \inlinecode{8}
-    \end{inputblock}
-    \begin{outputblock}
-        \inlinecode{4}
-    \end{outputblock}
+\begin{inputblock}
+\inlinecode{8}
+\end{inputblock}
+\begin{outputblock}
+\inlinecode{4}
+\end{outputblock}
 \end{titledbox}
 
 
@@ -89,111 +151,111 @@
 
 \subsection{AcWing 869. 试除法求约数}
 \begin{titledbox}{AcWing 869. 试除法求约数}
-    给定 $n$ 个正整数 $a_i$，对于每个整数 $a_i$，请你按照从小到大的顺序输出它的所有约数。
+给定 $n$ 个正整数 $a_i$，对于每个整数 $a_i$，请你按照从小到大的顺序输出它的所有约数。
 
-    输入格式：
+输入格式：
 
-    第一行包含整数 $n$。 接下来 $n$ 行，每行包含一个整数 $a_i$。
+第一行包含整数 $n$。 接下来 $n$ 行，每行包含一个整数 $a_i$。
 
-    输出格式：
+输出格式：
 
-    输出共 $n$ 行，其中第 $i$ 行输出第 $i$ 个整数 $a_i$ 的所有约数。
+输出共 $n$ 行，其中第 $i$ 行输出第 $i$ 个整数 $a_i$ 的所有约数。
 
-    数据范围：
+数据范围：
 
-    $1 \le n \le 100$, $2 \le a_i \le 2 \times 10^9$
+$1 \le n \le 100$, $2 \le a_i \le 2 \times 10^9$
 
-    \begin{inputblock}
-        \inlinecode{2} \\
-        \inlinecode{6} \\
-        \inlinecode{8}
-    \end{inputblock}
-    \begin{outputblock}
-        \inlinecode{1 2 3 6} \\
-        \inlinecode{1 2 4 8}
-    \end{outputblock}
+\begin{inputblock}
+\inlinecode{2} \\
+\inlinecode{6} \\
+\inlinecode{8}
+\end{inputblock}
+\begin{outputblock}
+\inlinecode{1 2 3 6} \\
+\inlinecode{1 2 4 8}
+\end{outputblock}
 \end{titledbox}
 
 \subsection{AcWing 870. 约数个数}
 
 \begin{titledbox}{AcWing 870. 约数个数}
-    给定 $n$ 个正整数 $a_i$，请你输出这些数的乘积的约数个数，答案对 $10^9+7$ 取模。
+给定 $n$ 个正整数 $a_i$，请你输出这些数的乘积的约数个数，答案对 $10^9+7$ 取模。
 
-    输入格式：
+输入格式：
 
-    第一行包含整数 $n$。 接下来 $n$ 行，每行包含一个整数 $a_i$。
+第一行包含整数 $n$。 接下来 $n$ 行，每行包含一个整数 $a_i$。
 
-    输出格式：
+输出格式：
 
-    输出一个整数，表示所给正整数的乘积的约数个数，答案需对 $10^9+7$ 取模。
+输出一个整数，表示所给正整数的乘积的约数个数，答案需对 $10^9+7$ 取模。
 
-    数据范围：
+数据范围：
 
-    $1 \le n \le 100$, $1 \le a_i \le 2 \times 10^9$
+$1 \le n \le 100$, $1 \le a_i \le 2 \times 10^9$
 
-    \begin{inputblock}
-        \inlinecode{3} \\
-        \inlinecode{2} \\
-        \inlinecode{6} \\
-        \inlinecode{8}
-    \end{inputblock}
-    \begin{outputblock}
-        \inlinecode{12}
-    \end{outputblock}
+\begin{inputblock}
+\inlinecode{3} \\
+\inlinecode{2} \\
+\inlinecode{6} \\
+\inlinecode{8}
+\end{inputblock}
+\begin{outputblock}
+\inlinecode{12}
+\end{outputblock}
 \end{titledbox}
 
 \subsection{AcWing 871. 约数之和}
 \begin{titledbox}{AcWing 871. 约数之和}
-    给定 $n$ 个正整数 $a_i$，请你输出这些数的乘积的约数之和，答案对 $10^9+7$ 取模。
+给定 $n$ 个正整数 $a_i$，请你输出这些数的乘积的约数之和，答案对 $10^9+7$ 取模。
 
-    输入格式：
+输入格式：
 
-    第一行包含整数 $n$。 接下来 $n$ 行，每行包含一个整数 $a_i$。
+第一行包含整数 $n$。 接下来 $n$ 行，每行包含一个整数 $a_i$。
 
-    输出格式：
+输出格式：
 
-    输出一个整数，表示所给正整数的乘积的约数之和，答案需对 $10^9+7$ 取模。
+输出一个整数，表示所给正整数的乘积的约数之和，答案需对 $10^9+7$ 取模。
 
-    数据范围：
+数据范围：
 
-    $1 \le n \le 100$, $1 \le a_i \le 2 \times 10^9$
+$1 \le n \le 100$, $1 \le a_i \le 2 \times 10^9$
 
-    \begin{inputblock}
-        \inlinecode{3} \\
-        \inlinecode{2} \\
-        \inlinecode{6} \\
-        \inlinecode{8}
-    \end{inputblock}
-    \begin{outputblock}
-        \inlinecode{252}
-    \end{outputblock}
+\begin{inputblock}
+\inlinecode{3} \\
+\inlinecode{2} \\
+\inlinecode{6} \\
+\inlinecode{8}
+\end{inputblock}
+\begin{outputblock}
+\inlinecode{252}
+\end{outputblock}
 \end{titledbox}
 
 \subsection{AcWing 872. 最大公约数}
 \begin{titledbox}{AcWing 872. 最大公约数}
-    给定 $n$ 对正整数 $a_i, b_i$，请你求出每对数的最大公约数。
+给定 $n$ 对正整数 $a_i, b_i$，请你求出每对数的最大公约数。
 
-    输入格式：
+输入格式：
 
-    第一行包含整数 $n$。 接下来 $n$ 行，每行包含一个整数对 $a_i,b_i$。
+第一行包含整数 $n$。 接下来 $n$ 行，每行包含一个整数对 $a_i,b_i$。
 
-    输出格式：
+输出格式：
 
-    输出共 $n$ 行，每行输出一个整数对的最大公约数。
+输出共 $n$ 行，每行输出一个整数对的最大公约数。
 
-    数据范围：
+数据范围：
 
-    $1 \le n \le 10^5$, $1 \le a_i, b_i \le 2 \times 10^9$
+$1 \le n \le 10^5$, $1 \le a_i, b_i \le 2 \times 10^9$
 
-    \begin{inputblock}
-        \inlinecode{2} \\
-        \inlinecode{3 6} \\
-        \inlinecode{4 6}
-    \end{inputblock}
-    \begin{outputblock}
-        \inlinecode{3} \\
-        \inlinecode{2}
-    \end{outputblock}
+\begin{inputblock}
+\inlinecode{2} \\
+\inlinecode{3 6} \\
+\inlinecode{4 6}
+\end{inputblock}
+\begin{outputblock}
+\inlinecode{3} \\
+\inlinecode{2}
+\end{outputblock}
 \end{titledbox}
 
 
@@ -201,34 +263,34 @@
 
 \subsection{AcWing 873. 欧拉函数}
 \begin{titledbox}{AcWing 873. 欧拉函数}
-    给定 $n$ 个正整数 $a_i$，请你求出每个数的欧拉函数。
+给定 $n$ 个正整数 $a_i$，请你求出每个数的欧拉函数。
 
-    欧拉函数的定义：
+欧拉函数的定义：
 
-    \begin{quote}
-        $1 \sim N$ 中与 $N$ 互质的数的个数被称为欧拉函数，记为 $\varphi(N)$。
+\begin{quote}
+$1 \sim N$ 中与 $N$ 互质的数的个数被称为欧拉函数，记为 $\varphi(N)$。
 
-        若在算数基本定理中，$N = p_1^{a_1}p_2^{a_2}\dots p_m^{a_m}$，则：
+若在算数基本定理中，$N = p_1^{a_1}p_2^{a_2}\dots p_m^{a_m}$，则：
 
-        $\varphi (N)$ = $N \times \frac{p_1-1}{p_1} \times \frac{p_2-1}{p_2} \times \dots \times \frac{p_m-1}{p_m}$
-    \end{quote}
+$\varphi (N)$ = $N \times \frac{p_1-1}{p_1} \times \frac{p_2-1}{p_2} \times \dots \times \frac{p_m-1}{p_m}$
+\end{quote}
 
-    输入格式：
+输入格式：
 
-    第一行包含整数 $n$。 接下来 $n$ 行，每行包含一个正整数 $a_i$。
+第一行包含整数 $n$。 接下来 $n$ 行，每行包含一个正整数 $a_i$。
 
-    输出格式：
+输出格式：
 
-    输出共 $n$ 行，每行输出一个正整数 $a_i$ 的欧拉函数。
+输出共 $n$ 行，每行输出一个正整数 $a_i$ 的欧拉函数。
 
-    数据范围：
+数据范围：
 
-    $1 \le n \le 100$, $1 \le a_i \le 2 \times 10^9$
+$1 \le n \le 100$, $1 \le a_i \le 2 \times 10^9$
 
-    \begin{inputblock}
-        \inlinecode{3} \\
-        \inlinecode{3} \\
-        \inlinecode{6} \\
+\begin{inputblock}
+\inlinecode{3} \\
+\inlinecode{3} \\
+\inlinecode{6} \\
         \inlinecode{8}
     \end{inputblock}
     \begin{outputblock}
