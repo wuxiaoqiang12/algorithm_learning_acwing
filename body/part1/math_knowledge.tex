@@ -93,6 +93,31 @@
 \end{mylist}
 
 \subsection{AcWing 867. 分解质因数}
+
+\begin{algorithm}[H] %or another one check
+    \caption{试除法分解质因数}
+    \SetAlgoLined
+    \KwResult{$x$ 的所有素因子}
+    初始化结果数组 result \\
+
+    \For{each vertex $v \neq s$ in $V(G)$}{
+        $d(v) \leftarrow \infty$
+    }
+    $d(s) \leftarrow 0$\\
+    push $s$ into $Q$\\
+    \While{$Q$ is not empty}{
+        $u \leftarrow \text{poll } Q$\\
+        \For{each edge ($u, v$) in $E(G)$} {
+            \If{$d(u) + w(u, v) < d(v)$}{
+                $d(v) \leftarrow d(u) + w(u, v)$\\
+                \If{$v$ is not in $Q$}{
+                    push $v$ into $Q$
+                }
+            }
+        }
+    }
+\end{algorithm}
+
 \begin{titledbox}{AcWing 867. 分解质因数}
     给定 $n$ 个正整数 $a_i$，将每个数分解质因数，并按照质因数从小到大的顺序输出每个质因数的底数和指数。
 
@@ -151,6 +176,12 @@
         return 0;
     }
 \end{mycpptwocol}
+
+\begin{proof}
+    首先证明 $i$ 均为 $x$ 的素因数：因为当且仅当 $x \% i == 0$ 满足时，result 发生变化：储存 $i$，说明此时 $i$ 能整除 $x / A$ ，说明了存在一个数 $p$ 使得 $pi = x / A$，即 $piA = x$（其中，$A$ 为 $x$ 自身发生变化后遇到 $i$ 时所除的数。我们注意到 result 若在 push $i$ 之前就已经有数了，为 $R_1, R_2, \dots, R_n$，那么有 $x = x / (R_1^{q_1}\cdot R_2^{q_2}\cdots R_n^{q_n})$ ，被除的乘积即为 $A$ ）。所以 $i$ 为 $x$ 的因子。
+
+    其次证明 result 中均为素数。我们假设存在一个在 result 中的合数 $K$，并根据整数基本定理，分解为一个素数序列 $K = K_1^{e_1}\cdot K_2^{e_2}\cdots K_n^{e_n}$，而因为 $K_1 < K$，所以它一定会在 $K$ 之前被遍历到，并令 \inlinecode{while(N \% k1 == 0) N /= k1}，即让 $N$ 没有了素因子$K_1$ ，故遍历到 $K$ 时，$N$ 和 $K$ 已经没有了整除关系了。
+\end{proof}
 
 \subsection{AcWing 868. 筛质数}
 \begin{titledbox}{AcWing 868. 筛质数}
