@@ -493,6 +493,9 @@
 \renewcommand{\bibname}{参考文献}
 \renewcommand{\appendixname}{附录}
 \renewcommand{\indexname}{索引}
+% math
+\renewcommand{\proofname}{\indent\bf 证明}
+\renewcommand{\qedsymbol}{$\blacksquare$}    % 证毕符号改成黑色的正方形
 % listings
 \renewcommand{\lstlistingname}{代码}
 \renewcommand{\lstlistlistingname}{\lstlistingname 列表}
