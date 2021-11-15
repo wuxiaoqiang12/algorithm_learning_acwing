@@ -23,7 +23,7 @@ tlmgr install l3build \
     xltxtra realscripts siunitx jknapltx algorithm2e ifoddpage relsize\
     listings glossaries mfirstuc textcase xfor datatool tracklang pdflscape rsfs\
     txfonts xecjk tex-gyre newpx mhchem makecell xstring graphbox wrapfig titlesec \
-    tcolorbox fontawesome algorithms algorithmmicx
+    tcolorbox fontawesome algorithms algorithmmicx algpseudocode
     
 if [ ! -d $HOME/.fonts ]; then
     mkdir $HOME/.fonts;
