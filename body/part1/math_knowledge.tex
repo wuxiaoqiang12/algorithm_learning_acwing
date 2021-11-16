@@ -94,29 +94,32 @@
 
 \subsection{AcWing 867. 分解质因数}
 
+由前一题中提到的性质可知，对于一个正整数 $x \in \mathbb{N}_+$。欲找到它的所有素因子，简单的方法即可遍历区间$[2, \sqrt{x}]$，再根据除法即可找到与之对应的另一个因子。同时另一条值得注意的性质是：$x$ 中至多只包含一个大于 $\sqrt{x}$ 的质因子，所以最后要将这个大于 $\sqrt{x}$ 的质因子也加入到结果中。该法可称之为试除法，算法逻辑和实现如下：
+
 \begin{algorithm}[H] %or another one check
     \caption{试除法分解质因数}
     \SetAlgoLined
     \KwResult{$x$ 的所有素因子}
     初始化结果数组 result \\
 
-    \For{each vertex $v \neq s$ in $V(G)$}{
-        $d(v) \leftarrow \infty$
-    }
-    $d(s) \leftarrow 0$\\
-    push $s$ into $Q$\\
-    \While{$Q$ is not empty}{
-        $u \leftarrow \text{poll } Q$\\
-        \For{each edge ($u, v$) in $E(G)$} {
-            \If{$d(u) + w(u, v) < d(v)$}{
-                $d(v) \leftarrow d(u) + w(u, v)$\\
-                \If{$v$ is not in $Q$}{
-                    push $v$ into $Q$
-                }
+    \For{$i \gets 2, \sqrt{n}$}{
+        \If{$i \mid x$}{
+            \While{$i \mid x$}{
+                $x \gets x / i$\\
+                push $i$ into result
             }
         }
     }
+    \If{$x != 1$}{
+        push $x$ into result
+    }
 \end{algorithm}
+
+\begin{proof}
+    首先证明 $i$ 均为 $x$ 的素因数：因为当且仅当 $x \% i == 0$ 满足时，result 发生变化：储存 $i$，说明此时 $i$ 能整除 $x / A$ ，说明了存在一个数 $p$ 使得 $pi = x / A$，即 $piA = x$（其中，$A$ 为 $x$ 自身发生变化后遇到 $i$ 时所除的数。我们注意到 result 若在 push $i$ 之前就已经有数了，为 $R_1, R_2, \dots, R_n$，那么有 $x = x / (R_1^{q_1}\cdot R_2^{q_2}\cdots R_n^{q_n})$ ，被除的乘积即为 $A$ ）。所以 $i$ 为 $x$ 的因子。
+
+    其次证明 result 中均为素数。我们假设存在一个在 result 中的合数 $K$，并根据整数基本定理，分解为一个素数序列 $K = K_1^{e_1}\cdot K_2^{e_2}\cdots K_n^{e_n}$，而因为 $K_1 < K$，所以它一定会在 $K$ 之前被遍历到，并令 \inlinecode{while(N \% k1 == 0) N /= k1}，即让 $N$ 没有了素因子$K_1$ ，故遍历到 $K$ 时，$N$ 和 $K$ 已经没有了整除关系了。
+\end{proof}
 
 \begin{titledbox}{AcWing 867. 分解质因数}
     给定 $n$ 个正整数 $a_i$，将每个数分解质因数，并按照质因数从小到大的顺序输出每个质因数的底数和指数。
@@ -151,8 +154,8 @@
     #include <stdio.h>
     #include <stdlib.h>
 
-    void split(int x) {
-        for (int i = 2; i <= x; i++) {
+    void division(int x) {
+        for (int i = 2; i <= x / i; i++) {
             if (x \% i == 0) {
                 int cnt = 0;
                 while (x \% i == 0) {
@@ -162,7 +165,10 @@
                 printf("%d %d\n", i, cnt);
             }
         }
-        printf("\n");
+        if (x != 1) {
+            printf("%d 1\n", x);
+        }
+        puts("");
     }
 
     int main() {
@@ -171,19 +177,105 @@
         while (n--) {
             int x;
             scanf("%d", &x);
-            split(x);
+            division(x);
         }
         return 0;
     }
 \end{mycpptwocol}
 
-\begin{proof}
-    首先证明 $i$ 均为 $x$ 的素因数：因为当且仅当 $x \% i == 0$ 满足时，result 发生变化：储存 $i$，说明此时 $i$ 能整除 $x / A$ ，说明了存在一个数 $p$ 使得 $pi = x / A$，即 $piA = x$（其中，$A$ 为 $x$ 自身发生变化后遇到 $i$ 时所除的数。我们注意到 result 若在 push $i$ 之前就已经有数了，为 $R_1, R_2, \dots, R_n$，那么有 $x = x / (R_1^{q_1}\cdot R_2^{q_2}\cdots R_n^{q_n})$ ，被除的乘积即为 $A$ ）。所以 $i$ 为 $x$ 的因子。
+\subsection{AcWing 868. 筛质数}
+如果我们想要知道小于等于 $n$ 有多少个素数呢？ 一个自然的想法是对于小于等于 $n$ 的每个数进行一次质数检验。这种暴力的做法显然不能达到最优复杂度。朴素的筛法是说将2到 $n$ 中的所有数字列出，依次枚举每一个数，从数列中删掉该数的所有倍数，最后留下的就是所有 $n$ 以内的质数。该方法称做朴素筛法，时间复杂度为 \bigo{$n\log n$}。
 
-    其次证明 result 中均为素数。我们假设存在一个在 result 中的合数 $K$，并根据整数基本定理，分解为一个素数序列 $K = K_1^{e_1}\cdot K_2^{e_2}\cdots K_n^{e_n}$，而因为 $K_1 < K$，所以它一定会在 $K$ 之前被遍历到，并令 \inlinecode{while(N \% k1 == 0) N /= k1}，即让 $N$ 没有了素因子$K_1$ ，故遍历到 $K$ 时，$N$ 和 $K$ 已经没有了整除关系了。
+\begin{algorithm}[H] %or another one check
+    \caption{朴素筛法}
+    \SetAlgoLined
+    \KwResult{$n$ 以内的所有素数}
+    初始化结果数组 primes \\
+    状态数组 st 来标示一个数是否被筛去 \\
+
+    \For{$i \gets 2, n$}{
+        \If{$i$ 未被筛去}{
+            push $i$ into primes
+        }\\
+        \While{$j \gets i + i$ && $j <= n$}{
+            st[j] = true; \\
+            $j \gets j + i$;
+        }
+    }
+\end{algorithm}
+
+考虑这样一件事情：如果 $x$ 是合数，那么 $x$ 的倍数也一定是合数。利用这个结论，我们可以避免很多次不必要的检测（仅筛去质数的倍数即可）。
+
+如果我们从小到大考虑每个数，然后同时把当前这个数的所有（比自己大的）倍数记为合数，那么运行结束的时候没有被标记的数就是素数了。该方法被称作埃氏筛法，时间复杂度为 \bigo{$n\log \log n$}。
+
+\begin{algorithm}[H] %or another one check
+    \caption{埃氏筛法}
+    \SetAlgoLined
+    \KwResult{$n$ 以内的所有素数}
+    初始化结果数组 primes \\
+    状态数组 st 来标示一个数是否被筛去 \\
+
+    \For{$i \gets 2, n$}{
+        \If{$i$ 未被筛去}{
+            push $i$ into primes \\
+            \While{$j \gets i + i$ \&\& $j <= n$}{
+                st[j] = true; \\
+                $j \gets j + i$;
+            }
+        }
+    }
+\end{algorithm}
+
+\begin{proof}
+    简略一说，设已找到第 $n$ 个素数，删去此数自身倍数后找到剩下的第一个数字 $L$，知 $L$ 之前有且仅有 $n$ 个素数，且都无法整除 $L$，即 $L$ 无法被小于自身的所有素数整除，推出 $L$ 是素数（$L$ 就是第 $n+1$ 个素数）。照此由第一个素数2往后递推即可。
+
+    另，由\href{https://en.wikipedia.org/wiki/Fundamental_theorem_of_arithmetic}{算数基本定理}一个合数总能分解成比他小的质数的乘积，所以这个合数总能被比他小的素数删去。
 \end{proof}
 
-\subsection{AcWing 868. 筛质数}
+埃氏筛法仍有优化空间，它会将一个合数重复多次标记。有没有什么办法省掉无意义的步骤呢？答案是肯定的。
+如果能让每个合数都只被标记一次，那么时间复杂度就可以降到 \bigo{$n$} 了。即，使每个合数只被它的最小质因数筛去，这样就能保证每个合数只被筛一次。比如埃氏筛法中6在已经被2筛去的情况下又被3筛了一遍，而我们希望6只被2筛去。
+
+\begin{algorithm}[H] %or another one check
+    \caption{线性筛法}
+    \SetAlgoLined
+    \KwResult{$n$ 以内的所有素数}
+    初始化结果数组 $P$ \\
+    状态数组 st 来标示一个数是否被筛去 \\
+
+    \For{$i \gets 2, n$}{
+        \If{$i$ 未被筛去}{
+            push $i$ into $P$
+        }
+        $j \gets 0$\\
+        \While{$P_j \leq n / i$}{
+            st[$P_j * i$] = true; \\
+            $j \gets j + 1$;\\
+            \If{$i \mid P_j$}{
+                break;
+            }
+        }
+    }
+\end{algorithm}
+
+其中，当条件 $i \mid P_j$ 成立时，$P_j$ 一定是 $i$ 的最小质因子。因为从小到大枚举所有的质数，当第一次这个条件成立时，一定有该结论。从而 $P_j$ 一定是 $i * P_j$ 的最小质因子。当该条件不成立时，$P_j$ 一定小于 $i$ 的所有质因子，从而 $P_j$ 也一定是 $i * P_j$ 的最小质因子。
+
+那么为什么以上的步骤能实现目标呢？线性筛的改进就一句“每个合数只被它的最小质因数筛去”，但实现的时候需要以下两个逻辑支撑：
+
+一、每个合数只筛一次
+
+\begin{myenum}
+    \item 算法特性决定了找到的素数只能从自身开始乘。比如找到素数5时，它的2、3、4倍已经删不到了，这样避免了重复删。（虽然单独列出但也可以合并进2）
+    \item \inlinecode{if(i\%p[j]==0)break;}语句实现不重复删。证明很简单，自然数 $i$ 从最小素数2开始乘，$i\times P_j$ 以每个 $P_j$ 为最小质因数，直到 $P_j$ 整除 $i$ 时，$i\times P_j$ 还是以 $P_j$ 为最小质因数，但下一个数 $i\times P_{j+1}=(i/P_j)\times P_j\times p_{j+1}$ 中 $P_{j+1}$ 就不是最小质因数了，所以不必继续乘了。
+\end{myenum}
+
+二、不能干扰到运用埃氏筛核心原理找素数
+
+1与2共同实现不重复筛的同时导致了素数倍数的缺失，比如程序运行到s7时，7是个标记素数（没被当合数删除），那么素数2、3、5要从2倍一直删到倍数大于7才能保证7确实是个素数，但明眼的看表就知道缺失了好多素数倍数啊，怎么能证明这些缺失不影响素数的确定呢？
+
+证明：首先1, 2中不重复筛的合数最终会出现在图表中（延迟删去）。设 $L$ 是标记素数，把小于 $L$ 的所有素数倍数放入集合 $Q$ 中，用 $q$ 表示 $Q$ 中任意素数倍数，则 $q<L<2L$，由于图中素数倍数的大小排列特性，$q<2L$ 意味着小于 $L$ 的素数倍数都会在步骤 $s(L)$ 之前被删去，这样得证 1 和 2 不影响素数的确定。因 $L$ 不被小于它的所有素数整除，所以 $L$ 是素数。
+
+综上就是线性筛的算法逻辑，为证明它需要考虑的出乎意料地多，理解\inlinecode{if(i\%p[j]==0)break;}语句也才仅仅是理解皮毛（值得一提的是，即使删去此语句，余下的部分也是相当优秀的程序）。
+
 \begin{titledbox}{AcWing 868. 筛质数}
     给定一个正整数 $n$，请你求出 $1 \sim n$ 中质数的个数。
 
@@ -206,6 +298,58 @@
         \inlinecode{4}
     \end{outputblock}
 \end{titledbox}
+
+\begin{mycpptwocol}[朴素筛法]
+    #include <stdio.h>
+    #include <stdlib.h>
+    #include <stdbool.h>
+
+    #define N 1000010
+    int primes[N];
+    int cnt;
+    bool st[N];
+
+    void getPrimes(int n) {
+        for (int i = 2; i <= n; i++) {
+            if (!st[i]) {
+                primes[cnt++] = i;
+            }
+            for (int j = i + i; j <= n; j += i) {
+                st[j] = true;
+            }
+        }
+    }
+
+    int main() {
+        int n;
+        scanf("%d", &n);
+        getPrimes(n);
+        printf("%d", cnt);
+        return 0;
+    }
+\end{mycpptwocol}
+
+\begin{mycpptwocol}[埃氏筛法和线性筛法]
+    void getPrimes(int n) {
+        for (int i = 2; i <= n; i++) {
+            if (!st[i]) {
+                primes[cnt++] = i;
+                for (int j = i + i; j <= n; j += i) {
+                    st[j] = true;
+                }
+            }
+        }
+    }
+    void getPrimes(int n) {
+        for (int i = 2; i <= n; i++) {
+            if (!st[i]) primes[cnt++] = i;
+            for (int j = 0; primes[j] <= n / i; j++) {
+                st[primes[j] * i] = true;
+                if (i % primes[j] == 0) break;
+            }
+        }
+    }
+\end{mycpptwocol}
 
 
 \section{约数}
