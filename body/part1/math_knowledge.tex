@@ -381,7 +381,69 @@
     \end{outputblock}
 \end{titledbox}
 
+与试除法求素因子的方法类似，这里只需枚举较小的那个约数，较大的那个可直接计算得到。
+
+\begin{mycpptwocol}[试除法求约数]
+    #include <stdio.h>
+    #include <stdlib.h>
+
+    #define N 100010
+
+    int res[N];
+
+    int CmpFunc(const void *a, const void *b) {
+        return *(int *)a - *(int *)b;
+    }
+
+    int divisor(int n) {
+        int cnt = 0;
+        for (int i = 1; i <= n / i; i++) {
+            if (n \% i == 0) {
+                res[cnt++] = i;
+                if (i != n / i) {
+                    res[cnt++] = n / i;
+                }
+            }
+        }
+        return cnt;
+    }
+
+    int main() {
+        int n;
+        scanf("%d", &n);
+        while (n--) {
+            int x;
+            scanf("%d", &x);
+            int t = divisor(x);
+            qsort(res, t, sizeof(int), CmpFunc);
+            for (int i = 0; i < t; i++) {
+                printf("%d ", res[i]);
+            }
+            puts("");
+        }
+        return 0;
+    }
+\end{mycpptwocol}
+
 \subsection{AcWing 870. 约数个数}
+
+由算数基本定理，一个大于1的整数可以被表示为质数幂的乘积。
+\begin{equation}
+    n = p_1^{\alpha_1}p_2^{\alpha_2} \cdots p_k^{\alpha_k}
+    = \prod_{i=1}^{k} p_i^{\alpha_i}
+\end{equation}
+那么该整数的约数个数由公式 \ref{equ:factorNum} 计算。
+\begin{equation}
+    \label{equ:factorNum}
+    \pi(n) = (\alpha_1 + 1)(\alpha_2 + 1) \cdots (\alpha_k + 1)
+    = \prod_{i=1}^{k} (\alpha_i + 1)
+\end{equation}
+该整数的约数的和由公式 \ref{equ:factorSum} 计算。
+\begin{equation}
+    \label{equ:factorSum}
+    \sigma(n) = \prod_{i=1}^{k} (1 + p_i + \cdots + p_i^{\alpha_i})
+    = \prod_{i = 1}^k \frac{p_i^{\alpha_i + 1} - 1}{p_i - 1}
+\end{equation}
 
 \begin{titledbox}{AcWing 870. 约数个数}
     给定 $n$ 个正整数 $a_i$，请你输出这些数的乘积的约数个数，答案对 $10^9+7$ 取模。
@@ -408,6 +470,77 @@
         \inlinecode{12}
     \end{outputblock}
 \end{titledbox}
+
+\begin{mycpptwocol}[约数个数]
+    #include <stdio.h>
+    #include <stdlib.h>
+
+    const long long N = 1e9 + 7;
+
+    typedef struct Node_ {
+        struct Node_ *next;
+        int factor;
+        int count;
+    } Node;
+
+    Node *hash = NULL;
+    Node *tail = NULL;
+
+    Node *Find(Node *root, int x) {
+        if (root == NULL) {
+            return NULL;
+        }
+        if (root->factor == x) {
+            return root;
+        }
+        Find(root->next, x);
+    }
+
+    void Insert(int x) {
+        Node *node = Find(hash, x);
+        if (node == NULL) {
+            node = (Node *) calloc(1, sizeof(Node));
+            node->factor = x;
+            node->count = 1;
+            tail->next = node;
+            tail = node;
+        } else {
+            node->count++;
+        }
+    }
+
+    void divisor(int x) {
+        for (int i = 2; i <= x / i; i++) {
+            while (x \% i == 0) {
+                x /= i;
+                Insert(i);
+            }
+        }
+        if (x > 1) {
+            Insert(x);
+        }
+    }
+
+    int main() {
+        int n;
+        scanf("%d", &n);
+        hash = (Node *) calloc(1, sizeof(Node));
+        tail = hash;
+        while (n--) {
+            int x;
+            scanf("%d", &x);
+            divisor(x);
+        }
+        Node *tmp = hash;
+        long long sum = 1;
+        while (tmp != NULL) {
+            sum = sum * (tmp->count + 1) % N;
+            tmp = tmp->next;
+        }
+        printf("%lld", sum);
+        return 0;
+    }
+\end{mycpptwocol}
 
 \subsection{AcWing 871. 约数之和}
 \begin{titledbox}{AcWing 871. 约数之和}
@@ -436,7 +569,28 @@
     \end{outputblock}
 \end{titledbox}
 
+此处大部分代码沿用约数个数中的部分，关键部分如下：
+
+\begin{mycpponecol}[约数之和]
+    long long sum = 1;
+    while (tmp != NULL) {
+        long long a = tmp->factor;
+        long long b = tmp->count;
+        long long t = 1;
+        while (b--) {
+            t = (t * a + 1) % N;
+        }
+        sum = sum * t % N;
+        tmp = tmp->next;
+    }
+\end{mycpponecol}
+
 \subsection{AcWing 872. 最大公约数}
+由欧几里得算法（或称辗转相除法），有公式 \ref{equ:euclidean}
+\begin{equation}
+    \text{gcd}(a, b) = \text{gcd}(b, a \mod b)
+\end{equation}
+
 \begin{titledbox}{AcWing 872. 最大公约数}
     给定 $n$ 对正整数 $a_i, b_i$，请你求出每对数的最大公约数。
 
@@ -462,6 +616,24 @@
         \inlinecode{2}
     \end{outputblock}
 \end{titledbox}
+
+\begin{mycpptwocol}[欧几里得算法]
+    #include <stdio.h>
+
+    int gcd(int a, int b) {
+        return b > 0 ? gcd(b, a \% b) : a;
+    }
+
+    int main() {
+        int n;
+        scanf("%d", &n);
+        while (n--) {
+            int a, b;
+            scanf("%d %d", &a, &b);
+            printf("%d\n", gcd(a, b));
+        }
+    }
+\end{mycpptwocol}
 
 
 \section{欧拉函数}
