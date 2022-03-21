@@ -967,6 +967,31 @@ SPFA 算法是对 Bellman-Ford 算法的优化，在松弛操作中，不一定�
     }
 \end{algorithm}
 
+边权为1时，可以使用BFS来完成距离的更新，过程与SPFA雷同。
+
+\begin{algorithm}[H] %or another one check
+    \caption{BFS}
+    \SetAlgoLined
+    \KwData{graph $G$ and start point $s$}
+    \KwResult{Shortest path from $s$ to the end}
+    init a FIFO queue $Q$\;
+    \For{each vertex $v \neq s$ in $V(G)$}{
+        $d(v) \leftarrow \infty$
+    }
+    $d(s) \leftarrow 0$\\
+    push $s$ into $Q$\\
+    \While{$Q$ is not empty}{
+        $u \leftarrow \text{poll } Q$\\
+        \For{each edge ($u, v$) in $E(G)$} {
+            \If{$d(v) == \infty$}{
+                $d(v) = d(u) + 1$
+                push $v$ into $Q$
+            }
+        }
+    }
+\end{algorithm}
+
+
 \subsubsection{AcWing 851. SPFA 求最短路}
 
 \begin{titledbox}{AcWing 851. SPFA 求最短路}
