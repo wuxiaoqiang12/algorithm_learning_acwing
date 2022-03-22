@@ -31,6 +31,71 @@
     \end{outputblock}
 \end{titledbox}
 
+使用二维矩阵，$f(i, j)$ 表示从前$i$个物品中体积不超过$j$的最大价值。此时$f(i, j)$可以通过是否选择第$i$件物品将解空间分为两个部分：
+\\begin{itemize}
+    \item 包含$i$的解：$f(i - 1, j)$
+    \item 不包含$i$的解：$f(i - 1, j - v[i]) + w[i]$
+\end{itemize}
+从而，$f(i, j) = \text{max}(f(i - 1, j), f(i - 1, j - v[i]) + w[i])$。注意，初始状态下$f(0, j) = 0, j \in {0 - m}$。
+
+\begin{mycpptwocol}[01背包问题]
+    #include <stdio.h>
+
+    #define N 1010
+    int f[N][N];
+    int v[N];
+    int w[N];
+
+    int main() {
+        memset(f, 0, sizeof(f));
+        int n, m;
+        scanf("%d %d", &n, &m);
+        for (int i = 1; i <= n; i++) {
+            scanf("%d %d", &v[i], &w[i]);
+        }
+
+        for (int i = 1; i <= n; i++) {
+            for (int j = 0; j <= m; j++) {
+                f[i][j] = f[i - 1][j];
+                if (j >= v[i]) {
+                    f[i][j] = fmax(f[i][j], f[i - 1][j - v[i]] + w[i]);
+                }
+            }
+        }
+        printf("%d", f[n][m]);
+        return 0;
+    }
+\end{mycpptwocol}
+
+在递推公式$f(i, j) = \text{max}(f(i - 1, j), f(i - 1, j - v[i]) + w[i])$中，我们发现更新下一层时仅使用了上一层的数据。所以可以使用一维数组（滚动数组）即可完成更新过程。
+
+\begin{mycpptwocol}[01背包问题]
+    #include <stdio.h>
+
+    #define N 1010
+    int f[N];
+    int v[N];
+    int w[N];
+
+    int main() {
+        memset(f, 0, sizeof(f));
+        int n, m;
+        scanf("%d %d", &n, &m);
+        for (int i = 1; i <= n; i++) {
+            scanf("%d %d", &v[i], &w[i]);
+        }
+
+        for (int i = 1; i <= n; i++) {
+            for (int j = m; j >= v[i]; j++) {
+                f[j] = fmax(f[j], f[j - v[i]] + w[i]);
+            }
+        }
+        printf("%d", f[n][m]);
+        return 0;
+    }
+\end{mycpptwocol}
+
+
 \subsection{AcWing 3. 完全背包问题}
 \begin{titledbox}{AcWing 3. 完全背包问题}
     有 $N$ 种物品和一个容量是 $V$ 的背包，每种物品都有无限件可用。 第 $i$ 种物品的体积是 $v_i$，价值是 $w_i$。 求解将哪些物品装入背包，可使这些物品的总体积不超过背包容量，且总价值最大。输出最大价值。
@@ -58,6 +123,102 @@
         \inlinecode{10}
     \end{outputblock}
 \end{titledbox}
+从01背包问题，可得到灵感：$f(i, j)$集合的一个划分可以是第$i$个物品选择$k$个来划分。从一个集合的解计算出另外一个集合的解的过程即状态转移方程如下：$f(i, j) = \text{max}(f(i, j), f(i - 1, j - k * v[i]) + k * w[i])$。该方程的朴素写法如下，时间复杂度较高，难以接受。
+\begin{mycpptwocol}
+    #include <stdio.h>
+    #include <math.h>
+
+    #define N 1010
+
+    int f[N][N];
+    int v[N];
+    int w[N];
+
+    int main() {
+        int n, m;
+        scanf("%d %d", &n, &m);
+        for (int i = 1; i <= n; i++) {
+            scanf("%d %d", &v[i], &w[i]);
+        }
+        
+        for (int i = 1; i <= n; i++) {
+            for (int j = 0; j <= m; j++) {
+                for (int k = 0; k * v[i] <= j; k++) {
+                    f[i][j] = fmax(f[i][j], f[i - 1][j - k * v[i]] + k * w[i]);
+                }
+            }
+        }
+        printf("%d", f[n][m]);
+        return 0;
+    }
+\end{mycpptwocol}
+
+上述写法时间复杂度高达\bigo{$n^3$}。观察递推式$f(i, j) = \text{max}(f(i, j), f(i - 1, j - k * v[i]) + k * w[i])$可知$f(i, j) = \text{max}(f(i - 1, j), f(i, j - v[i]) + w[i])$。证明如下
+
+\begin{align}
+    f(i, j) & = \text{max}(f(i - 1, j), &f(i - 1, j - v[i]) + w[i], f(i - 1, j - 2 * v[i]) + 2 * w[i]); \\
+    f(i, j - v[i]) & = \text{max}(&f(i - 1, j - v[i]) + w[i], f(i - 1, j - 2 * v[i]) + 2 * w[i]); \\
+    \rightarrow f(i, j) &= \text{max}(f(i - 1, j), f(i, j - v[i]) + w[i])
+\end{align}
+
+\begin{mycpptwocol}
+    #include <stdio.h>
+    #include <math.h>
+
+    #define N 1010
+
+    int f[N][N];
+    int v[N];
+    int w[N];
+
+    int main() {
+        int n, m;
+        scanf("%d %d", &n, &m);
+        for (int i = 1; i <= n; i++) {
+            scanf("%d %d", &v[i], &w[i]);
+        }
+        
+        for (int i = 1; i <= n; i++) {
+            for (int j = 0; j <= m; j++) {
+                f[i][j] = f[i - 1][j];
+                if (j >= v[i]) {
+                    f[i][j] = fmax(f[i][j], f[i][j - v[i]] + w[i]);
+                }
+            }
+        }
+        printf("%d", f[n][m]);
+        return 0;
+    }
+\end{mycpptwocol}
+
+进而，根据01背包的优化思路，这里同样可优化为一维数组：
+
+\begin{mycpptwocol}
+    #include <stdio.h>
+    #include <math.h>
+
+    #define N 1010
+
+    int f[N];
+    int v[N];
+    int w[N];
+
+    int main() {
+        int n, m;
+        scanf("%d %d", &n, &m);
+        for (int i = 1; i <= n; i++) {
+            scanf("%d %d", &v[i], &w[i]);
+        }
+        
+        for (int i = 1; i <= n; i++) {
+            for (int j = v[i]; j <= m; j++) {
+                f[j] = fmax(f[j], f[j - v[i]] + w[i]);
+            }
+        }
+        printf("%d", f[m]);
+        return 0;
+    }
+\end{mycpptwocol}
 
 \subsection{AcWing 4. 多重背包问题}
 \begin{titledbox}{AcWing 4. 多重背包问题}
